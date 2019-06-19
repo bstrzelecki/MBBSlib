@@ -24,14 +24,6 @@ namespace MBBSlib.IO
             {
                 Directory.CreateDirectory(data);
             }
-            if (!Directory.Exists(data + @"\Saves"))
-            {
-                Directory.CreateDirectory(data + @"\Saves");
-            }
-            if (!Directory.Exists(data + @"\Saves\OSS"))
-            {
-                Directory.CreateDirectory(data + @"\Saves\OSS");
-            }
             return data;
         }
         public static void ConfigureDirectory()
