@@ -10,7 +10,7 @@ namespace MBBSlib.MonoGame
 {
     public class GameMain : Game, IGetTexture
     {
-        private GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private IStartingPoint start;
 
@@ -24,17 +24,26 @@ namespace MBBSlib.MonoGame
 
         public Texture2D GetTexture(string key)
         {
-            throw new NotImplementedException();
+            if (ContainsTextureKey(key))
+            {
+                return textures[key];
+            }
+            return null;
         }
 
         public bool ContainsTextureKey(string key)
         {
-            throw new NotImplementedException();
+            return textures.ContainsKey(key);
+
         }
 
         public SpriteFont GetFont(string key)
         {
-            throw new NotImplementedException();
+            if (fonts.ContainsKey(key))
+            {
+                return fonts[key];
+            }
+            return null;
         }
 
         public GameMain(IStartingPoint main)
@@ -103,17 +112,16 @@ namespace MBBSlib.MonoGame
             }
 
             queuedUpdates.Clear();
-
+            if (updates.Count <= 0) return;
             foreach (IUpdateable update in updates)
             {
                 update.Update();
             }
-
-            base.Update(gameTime);
         }
+        public Color BackgroundColor = Color.Black;
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(BackgroundColor);
 
             foreach (IDrawable update in queuedRenderers)
             {
@@ -122,6 +130,7 @@ namespace MBBSlib.MonoGame
 
             queuedRenderers.Clear();
 
+            if (renderers.Count <= 0) return;
             spriteBatch.Begin();
             foreach (IDrawable draw in renderers)
             {
@@ -129,8 +138,6 @@ namespace MBBSlib.MonoGame
             }
 
             spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }

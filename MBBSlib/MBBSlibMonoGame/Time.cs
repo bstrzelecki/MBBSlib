@@ -19,7 +19,8 @@ namespace MBBSlib.MonoGame
             if (tickCounter > tickTime)
             {
                 tickCounter = 0;
-                OnTick();
+                if(OnTick != null)
+                    OnTick();
             }
         }
     }
