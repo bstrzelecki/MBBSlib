@@ -51,7 +51,7 @@ namespace MBBSlib
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Command:" + cmd + " " + e.ToString());
+                    Debug.WriteLine($"Command:{cmd} {e.ToString()}");
                 }
             }
             cmds.Clear();
@@ -106,7 +106,7 @@ namespace MBBSlib
             }
             else
             {
-                Debug.WriteLine("Cant convert value to int !!!!");
+                Debug.WriteLine($"Cant convert {Values[i]} to bool !!!!");
             }
             return 0;
         }
@@ -124,7 +124,7 @@ namespace MBBSlib
             }
             else
             {
-                Debug.WriteLine("Cant convert value to bool !!!!");
+                Debug.WriteLine($"Cant convert {Values[i]} to bool !!!!");
             }
             return false;
         }
