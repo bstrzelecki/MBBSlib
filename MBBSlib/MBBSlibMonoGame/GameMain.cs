@@ -64,7 +64,7 @@ namespace MBBSlib.MonoGame
         protected override void Initialize()
         {
             Sprite.TextureStorage = this;
-            start.Start();
+            start.Start(this);
             RegisterUpdate(new Time());
             IsMouseVisible = true;
             base.Initialize();

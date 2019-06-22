@@ -2,6 +2,6 @@
 {
     public interface IStartingPoint
     {
-        void Start();
+        void Start(GameMain game);
     }
 }

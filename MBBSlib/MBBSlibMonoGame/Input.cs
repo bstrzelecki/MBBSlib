@@ -51,6 +51,11 @@ namespace MBBSlib.MonoGame
             }
             return false;
         }
+        public static int GetMouseScrollDelta()
+        {
+            MouseState state = Mouse.GetState();
+            return state.ScrollWheelValue;
+        }
         public static bool IsMouseKeyDown(int btn)
         {
             MouseState state = Mouse.GetState();

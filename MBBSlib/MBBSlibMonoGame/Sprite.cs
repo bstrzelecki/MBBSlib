@@ -19,12 +19,12 @@ namespace MBBSlib.MonoGame
             if (TextureStorage.ContainsTextureKey(sprite))
             {
                 Texture = TextureStorage.GetTexture(sprite);
+                //Size = Texture.Bounds;
             }
             else
             {
                 textureName = sprite;
             }
-            Size = Texture.Bounds;
         }
         public static implicit operator Texture2D(Sprite sprite)
         {
@@ -34,7 +34,7 @@ namespace MBBSlib.MonoGame
             }
             if (sprite.Texture == null)
             {
-                sprite.Texture = new Texture2D(null, 1, 1);
+                sprite.Texture = new Texture2D(null , 1, 1);
             }
 
             return sprite.Texture;
