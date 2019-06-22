@@ -10,7 +10,7 @@ namespace MBBSlib.MonoGame
 {
     public class GameMain : Game, IGetTexture
     {
-        public GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private IStartingPoint start;
 

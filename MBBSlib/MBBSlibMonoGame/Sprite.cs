@@ -34,7 +34,8 @@ namespace MBBSlib.MonoGame
             }
             if (sprite.Texture == null)
             {
-                sprite.Texture = new Texture2D(null , 1, 1);
+                sprite.Texture = new Texture2D(GameMain.graphics.GraphicsDevice, 1, 1);
+                
             }
 
             return sprite.Texture;
