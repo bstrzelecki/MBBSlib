@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace MBBSlib.AI
 {
-    class Pathfinding
+    public class Pathfinding
     {
         float[,] map;
         int maxX = 0;
@@ -46,8 +46,7 @@ namespace MBBSlib.AI
         }
         private bool CheckPoint(Point p)
         {
-            if (p.X >= 0 && p.X < maxX) return true;
-            if (p.Y >= 0 && p.Y < maxY) return true;
+            if (p.X >= 0 && p.X < maxX && p.Y >= 0 && p.Y < maxY) return true;
             return false;
         }
         public List<Point> GetPath(Point start, Point end)
@@ -59,8 +58,14 @@ namespace MBBSlib.AI
 
             Dictionary<Point, Point> origins = new Dictionary<Point, Point>();
             Dictionary<Point, float> scores = new Dictionary<Point, float>();
-
-            scores.Add(start, 0);
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    scores.Add(new Point(x, y), float.PositiveInfinity);
+                }
+            }
+            scores[start] = 0;
 
             Dictionary<Point, float> finalScores = new Dictionary<Point, float>();
             for(int x = 0; x < map.GetUpperBound(0); x++)
@@ -75,7 +80,7 @@ namespace MBBSlib.AI
 
             while(discovered.Count > 0)
             {
-                Point current = (from n in discovered orderby finalScores[n] descending select n).First();
+                Point current = (from n in discovered orderby finalScores[n] ascending select n).First();
 
                 if (current == end)
                     return ReconstructPath(origins, current);
@@ -87,7 +92,7 @@ namespace MBBSlib.AI
                 {
                     if (evaluated.Contains(point)) continue;
 
-                    float tScore = scores[current] + (Distance(current, point) * map[current.X, current.Y]);
+                    float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
 
                     if (!discovered.Contains(point))
                     {
@@ -97,7 +102,7 @@ namespace MBBSlib.AI
                         continue;
                     }
                     origins.Add(point, current);
-                    scores.Add(point, tScore);
+                    scores[point] = tScore;
                     finalScores[point] = scores[point] + heuristic_cost_estimate(point, end);
                 }
             }
