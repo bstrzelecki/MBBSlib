@@ -80,7 +80,7 @@ namespace MBBSlib.AI
 
             while(discovered.Count > 0)
             {
-                Point current = (from n in discovered orderby finalScores[n] ascending select n).First();
+                Point current = discovered.OrderBy(n => finalScores[n]).First();
 
                 if (current == end)
                     return ReconstructPath(origins, current);
@@ -90,14 +90,16 @@ namespace MBBSlib.AI
 
                 foreach(Point point in GetNeighbors(current))
                 {
-                    if (evaluated.Contains(point)) continue;
+                    //FIXME: optimalization needed
+                    if (ContainsPoint(evaluated, point)) continue;
 
                     float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
 
                     if (!discovered.Contains(point))
                     {
                         discovered.Add(point);
-                    }else if(tScore >= scores[point])
+                    }
+                    else if (tScore >= scores[point])
                     {
                         continue;
                     }
@@ -108,6 +110,17 @@ namespace MBBSlib.AI
             }
             throw new Exception("Something went wrong");
         }
+
+        private static bool ContainsPoint(List<Point> evaluated, Point point)
+        {
+            //return evaluated.Contains(point);
+            foreach(Point p in evaluated)
+            {
+                if (p == point) return true;
+            }
+            return false;
+        }
+
         private float Distance(Point a, Point b)
         {
             var ac = (double)(b.X - a.X);
