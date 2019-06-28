@@ -24,5 +24,9 @@ namespace MBBSlib.AI
                 return true;
             return false;
         }
+        public override string ToString()
+        {
+            return $"({X}, {Y})";
+        }
     }
 }

@@ -108,8 +108,10 @@ namespace MBBSlib.AI
                     {
                         continue;
                     }
-
-                    origins.Add(point, current);
+                    if (!ContainsPoint(origins, point))
+                        origins.Add(point, current);
+                    else
+                        origins[point] = current;
                     scores[point] = tScore;
                     finalScores[point] = scores[point] + heuristic_cost_estimate(point, end);
                 }
@@ -119,8 +121,15 @@ namespace MBBSlib.AI
 
         private static bool ContainsPoint(List<Point> evaluated, Point point)
         {
-            //return evaluated.Contains(point);
             foreach(Point p in evaluated)
+            {
+                if (p == point) return true;
+            }
+            return false;
+        }
+        private static bool ContainsPoint(Dictionary<Point, Point> evaluated, Point point)
+        {
+            foreach (Point p in evaluated.Keys)
             {
                 if (p == point) return true;
             }
