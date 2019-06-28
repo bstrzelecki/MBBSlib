@@ -35,6 +35,11 @@ namespace MBBSlib.AI
             AddPoint(new Point(x - 1, y), points);
             AddPoint(new Point(x, y + 1), points);
             AddPoint(new Point(x, y - 1), points);
+
+            AddPoint(new Point(x + 1, y + 1), points);
+            AddPoint(new Point(x + 1, y - 1), points);
+            AddPoint(new Point(x - 1, y + 1), points);
+            AddPoint(new Point(x - 1, y - 1), points);
             //TODO add more connections
 
             return points;
@@ -46,7 +51,7 @@ namespace MBBSlib.AI
         }
         private bool CheckPoint(Point p)
         {
-            if (p.X >= 0 && p.X < maxX && p.Y >= 0 && p.Y < maxY) return true;
+            if (p.X >= 0 && p.X < maxX + 1 && p.Y >= 0 && p.Y < maxY + 1) return true;
             return false;
         }
         public List<Point> GetPath(Point start, Point end)
@@ -80,6 +85,7 @@ namespace MBBSlib.AI
 
             while(discovered.Count > 0)
             {
+                //TODO optimalize
                 Point current = discovered.OrderBy(n => finalScores[n]).First();
 
                 if (current == end)
@@ -90,7 +96,6 @@ namespace MBBSlib.AI
 
                 foreach(Point point in GetNeighbors(current))
                 {
-                    //FIXME: optimalization needed
                     if (ContainsPoint(evaluated, point)) continue;
 
                     float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
@@ -103,6 +108,7 @@ namespace MBBSlib.AI
                     {
                         continue;
                     }
+
                     origins.Add(point, current);
                     scores[point] = tScore;
                     finalScores[point] = scores[point] + heuristic_cost_estimate(point, end);
@@ -123,8 +129,8 @@ namespace MBBSlib.AI
 
         private float Distance(Point a, Point b)
         {
-            var ac = (double)(b.X - a.X);
-            var bc = (double)(b.Y - a.Y);
+            var ac = b.X - a.X;
+            var bc = b.Y - a.Y;
 
             return (float)Math.Sqrt(ac * ac + bc * bc);
         }
