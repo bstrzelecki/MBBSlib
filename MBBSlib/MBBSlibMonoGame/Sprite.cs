@@ -7,7 +7,7 @@ namespace MBBSlib.MonoGame
     {
         public Texture2D Texture { get; protected set; }
         public Rectangle Size { get; protected set; }
-        private string textureName = string.Empty;
+        protected string textureName = string.Empty;
         public static IGetTexture TextureStorage;
         public Sprite(Texture2D sprite)
         {
