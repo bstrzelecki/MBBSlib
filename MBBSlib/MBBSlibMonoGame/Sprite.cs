@@ -21,10 +21,7 @@ namespace MBBSlib.MonoGame
                 Texture = TextureStorage.GetTexture(sprite);
                 //Size = Texture.Bounds;
             }
-            else
-            {
-                textureName = sprite;
-            }
+            textureName = sprite;
         }
         public static implicit operator Texture2D(Sprite sprite)
         {
