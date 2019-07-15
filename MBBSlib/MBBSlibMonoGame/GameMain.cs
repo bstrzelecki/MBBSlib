@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace MBBSlib.MonoGame
 {
@@ -18,7 +19,10 @@ namespace MBBSlib.MonoGame
         protected static List<IUpdateable> updates = new List<IUpdateable>();
         protected static List<IDrawable> queuedRenderers = new List<IDrawable>();
         protected static List<IUpdateable> queuedUpdates = new List<IUpdateable>();
+        protected static List<IDrawable> rmQueuedRenderers = new List<IDrawable>();
+        protected static List<IUpdateable> rmQueuedUpdates = new List<IUpdateable>();
 
+        protected static List<IDrawable> priorityRenderers = new List<IDrawable>();
         public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
         public static Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
 
@@ -60,6 +64,31 @@ namespace MBBSlib.MonoGame
         public static void RegisterRenderer(IDrawable renderer)
         {
             queuedRenderers.Add(renderer);
+        }
+        public static void UnregisterUpdate(IUpdateable update)
+        {
+            rmQueuedUpdates.Add(update);
+        }
+        public static void UnregisterRenderer(IDrawable renderer)
+        {
+            if(renderers.Contains(renderer))
+                rmQueuedRenderers.Add(renderer);
+            if (priorityRenderers.Contains(renderer))
+                priorityRenderers.Remove(renderer);
+        }
+        public static void DealyUpdate(IUpdateable update)
+        {
+            rmQueuedUpdates.Add(update);
+            queuedUpdates.Add(update);
+        }
+        public static void DealyRenderer(IDrawable renderer)
+        {
+            rmQueuedRenderers.Add(renderer);
+            queuedRenderers.Add(renderer);
+        }
+        public static void RegisterPriorityRenderer(IDrawable renderer)
+        {
+            priorityRenderers.Add(renderer);
         }
         protected override void Initialize()
         {
@@ -105,6 +134,11 @@ namespace MBBSlib.MonoGame
             {
                 Exit();
             }
+            foreach(IUpdateable update in rmQueuedUpdates)
+            {
+                if(updates.Contains(update))
+                    updates.Remove(update);
+            }
 
             foreach (IUpdateable update in queuedUpdates)
             {
@@ -123,18 +157,29 @@ namespace MBBSlib.MonoGame
         {
             GraphicsDevice.Clear(BackgroundColor);
 
+            foreach(IDrawable draw in rmQueuedRenderers)
+            {
+                if (renderers.Contains(draw))
+                    renderers.Remove(draw);
+            }
             foreach (IDrawable update in queuedRenderers)
             {
                 renderers.Add(update);
             }
-
             queuedRenderers.Clear();
 
-            if (renderers.Count <= 0) return;
             spriteBatch.Begin();
+            foreach (IDrawable draw in priorityRenderers)
+            {
+                if (draw == null) continue;
+                draw.Draw(spriteBatch);
+            }
+
+            if (renderers.Count <= 0) return;
             foreach (IDrawable draw in renderers)
             {
-                draw.Draw(spriteBatch);
+                if (draw == null) continue;
+                    draw.Draw(spriteBatch);
             }
 
             spriteBatch.End();
