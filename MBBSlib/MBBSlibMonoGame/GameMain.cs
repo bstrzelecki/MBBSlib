@@ -14,12 +14,29 @@ namespace MBBSlib.MonoGame
         public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private IStartingPoint start;
-
-        protected static List<IDrawable> renderers = new List<IDrawable>();
+        protected struct Renderer
+        {
+            public int layer;
+            public IDrawable drawable;
+            public Renderer(int l, IDrawable draw)
+            {
+                layer = l;
+                drawable = draw;
+            }
+            public override bool Equals(object obj)
+            {
+                if(obj is Renderer r)
+                {
+                    return ((r.layer == layer) && (r.drawable == drawable));
+                }
+                return false;
+            }
+        }
+        protected static List<Renderer> renderers = new List<Renderer>();
         protected static List<IUpdateable> updates = new List<IUpdateable>();
-        protected static List<IDrawable> queuedRenderers = new List<IDrawable>();
+        protected static List<Renderer> queuedRenderers = new List<Renderer>();
         protected static List<IUpdateable> queuedUpdates = new List<IUpdateable>();
-        protected static List<IDrawable> rmQueuedRenderers = new List<IDrawable>();
+        protected static List<Renderer> rmQueuedRenderers = new List<Renderer>();
         protected static List<IUpdateable> rmQueuedUpdates = new List<IUpdateable>();
 
         protected static List<IDrawable> priorityRenderers = new List<IDrawable>();
@@ -61,34 +78,19 @@ namespace MBBSlib.MonoGame
         {
             queuedUpdates.Add(update);
         }
-        public static void RegisterRenderer(IDrawable renderer)
+        public static void RegisterRenderer(IDrawable renderer, int layer = 5)
         {
-            queuedRenderers.Add(renderer);
+            queuedRenderers.Add(new Renderer(layer, renderer));
         }
         public static void UnregisterUpdate(IUpdateable update)
         {
             rmQueuedUpdates.Add(update);
         }
-        public static void UnregisterRenderer(IDrawable renderer)
+        public static void UnregisterRenderer(IDrawable renderer, int layer = 5)
         {
-            if(renderers.Contains(renderer))
-                rmQueuedRenderers.Add(renderer);
-            if (priorityRenderers.Contains(renderer))
-                priorityRenderers.Remove(renderer);
-        }
-        public static void DealyUpdate(IUpdateable update)
-        {
-            rmQueuedUpdates.Add(update);
-            queuedUpdates.Add(update);
-        }
-        public static void DealyRenderer(IDrawable renderer)
-        {
-            rmQueuedRenderers.Add(renderer);
-            queuedRenderers.Add(renderer);
-        }
-        public static void RegisterPriorityRenderer(IDrawable renderer)
-        {
-            priorityRenderers.Add(renderer);
+            Renderer r = new Renderer(layer, renderer);
+            if(renderers.Contains(r))
+                rmQueuedRenderers.Add(r);
         }
         protected override void Initialize()
         {
@@ -157,29 +159,24 @@ namespace MBBSlib.MonoGame
         {
             GraphicsDevice.Clear(BackgroundColor);
 
-            foreach(IDrawable draw in rmQueuedRenderers)
+            foreach(Renderer draw in rmQueuedRenderers)
             {
                 if (renderers.Contains(draw))
                     renderers.Remove(draw);
             }
-            foreach (IDrawable update in queuedRenderers)
+            foreach (Renderer update in queuedRenderers)
             {
                 renderers.Add(update);
+                renderers = renderers.OrderBy(n => n.layer).ToList();
             }
             queuedRenderers.Clear();
 
-            spriteBatch.Begin();
-            foreach (IDrawable draw in priorityRenderers)
-            {
-                if (draw == null) continue;
-                draw.Draw(spriteBatch);
-            }
 
             if (renderers.Count <= 0) return;
-            foreach (IDrawable draw in renderers)
+            spriteBatch.Begin();
+            foreach (Renderer draw in renderers)
             {
-                if (draw == null) continue;
-                    draw.Draw(spriteBatch);
+                    draw.drawable.Draw(spriteBatch);
             }
 
             spriteBatch.End();

@@ -8,9 +8,20 @@ namespace MBBSlib.AI
 {
     public class Pathfinding
     {
-        float[,] map;
-        int maxX = 0;
-        int maxY = 0;
+        readonly float[,] map;
+        readonly int maxX = 0;
+        readonly int maxY = 0;
+        float GetTileValue(Point p)
+        {
+            if(CheckPoint(p))
+            return map[p.X, p.Y];
+            return float.MaxValue;
+        }
+        float GetTileValue(Point p, int offX, int offY)
+        {
+            return GetTileValue(new Point(p.X + offX, p.Y + offY));
+        }
+        public bool IgnoreClipping { get; set; } = false;
         public Pathfinding(float[,] map)
         {
             this.map = map;
@@ -36,11 +47,14 @@ namespace MBBSlib.AI
             AddPoint(new Point(x, y + 1), points);
             AddPoint(new Point(x, y - 1), points);
 
-            AddPoint(new Point(x + 1, y + 1), points);
-            AddPoint(new Point(x + 1, y - 1), points);
-            AddPoint(new Point(x - 1, y + 1), points);
-            AddPoint(new Point(x - 1, y - 1), points);
-            //TODO add more connections
+            if(GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
+                AddPoint(new Point(x + 1, y + 1), points);
+            if (GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, -1) != float.MaxValue)
+                AddPoint(new Point(x + 1, y - 1), points);
+            if (GetTileValue(point, -1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
+                AddPoint(new Point(x - 1, y + 1), points);
+            if (GetTileValue(point, -1, 0) != float.MaxValue && GetTileValue(point, 0, -1) != float.MaxValue)
+                AddPoint(new Point(x - 1, y - 1), points);
 
             return points;
         }
