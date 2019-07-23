@@ -100,8 +100,7 @@ namespace MBBSlib.AI
             while(discovered.Count > 0)
             {
                 //TODO optimalize
-                Point current = discovered.OrderBy(n => finalScores[n]).First();
-
+                Point current = discovered.OrderBy(n => finalScores[n]).Take(1).Single();
                 if (current == end)
                     return ReconstructPath(origins, current);
 
@@ -131,6 +130,29 @@ namespace MBBSlib.AI
                 }
             }
             throw new Exception("Something went wrong");
+        }
+
+        private Point GetCurrent(List<Point> discovered, Dictionary<Point, float> finalScores)
+        {
+            float min = float.MaxValue;
+            Point point = new Point(0,0);
+            bool init = false;
+            foreach(Point p in discovered)
+            {
+                float score = finalScores[p];
+                if (!init)
+                {
+                    min = score;
+                    point = p;
+                    continue;
+                }
+                if (score < min)
+                {
+                    min = score;
+                    point = p;
+                }
+            }
+            return point;
         }
 
         private static bool ContainsPoint(List<Point> evaluated, Point point)
