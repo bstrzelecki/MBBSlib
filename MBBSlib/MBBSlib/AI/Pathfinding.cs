@@ -132,6 +132,79 @@ namespace MBBSlib.AI
             throw new Exception("Something went wrong");
         }
 
+        public List<Point> GetPath(List<Point> starts, Point target)
+        {
+            List<Point> evaluated = new List<Point>();
+
+            List<Point> discovered = new List<Point>();
+            foreach(Point s in starts)
+            {
+                discovered.Add(s);
+
+            }
+
+            Dictionary<Point, Point> origins = new Dictionary<Point, Point>();
+            Dictionary<Point, float> scores = new Dictionary<Point, float>();
+
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    scores.Add(new Point(x, y), float.PositiveInfinity);
+                }
+            }
+            foreach(Point s in starts)
+            {
+                scores[s] = 0;
+            }
+            Dictionary<Point, float> finalScores = new Dictionary<Point, float>();
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    finalScores.Add(new Point(x, y), float.PositiveInfinity);
+                }
+            }
+
+            foreach(Point s in starts)
+            {
+                finalScores[s] = heuristic_cost_estimate(s, target);
+            }
+            while (discovered.Count > 0)
+            {
+                //TODO optimalize
+                Point current = discovered.OrderBy(n => finalScores[n]).Take(1).Single();
+                if (current == target)
+                    return ReconstructPath(origins, current);
+
+                discovered.Remove(current);
+                evaluated.Add(current);
+
+                foreach (Point point in GetNeighbors(current))
+                {
+                    if (ContainsPoint(evaluated, point)) continue;
+
+                    float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
+
+                    if (!discovered.Contains(point))
+                    {
+                        discovered.Add(point);
+                    }
+                    else if (tScore >= scores[point])
+                    {
+                        continue;
+                    }
+                    if (!ContainsPoint(origins, point))
+                        origins.Add(point, current);
+                    else
+                        origins[point] = current;
+                    scores[point] = tScore;
+                    finalScores[point] = scores[point] + heuristic_cost_estimate(point, target);
+                }
+            }
+            return null;
+        }
+
         private Point GetCurrent(List<Point> discovered, Dictionary<Point, float> finalScores)
         {
             float min = float.MaxValue;
