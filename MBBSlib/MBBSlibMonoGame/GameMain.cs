@@ -110,6 +110,7 @@ namespace MBBSlib.MonoGame
                 {
                     string f = file.Remove(0, file.LastIndexOf('\\') + 1);
                     f = f.Remove(f.Length - 4, 4);
+                    Debug.WriteLine("Trying to load "+f);
                     if (!textures.ContainsKey(f) || fonts.ContainsKey(f))
                     {
                         Load(f);
@@ -123,11 +124,25 @@ namespace MBBSlib.MonoGame
         }
         public void Load(string id)
         {
-            textures.Add(id, Content.Load<Texture2D>(id));
-        }
+            try
+            {
+                textures.Add(id, Content.Load<Texture2D>(id));
+                Debug.WriteLine("Loaded " + id);
+            }catch(Exception e)
+            {
+                Debug.WriteLine("Error while loading sprite retrying " + e.ToString());
+                LoadFont(id);
+            }
+         }
         public void LoadFont(string id)
         {
-            fonts.Add(id, Content.Load<SpriteFont>(id));
+            try
+            {
+                fonts.Add(id, Content.Load<SpriteFont>(id));
+            }catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
         }
         public static bool DebugExit = false;
         protected override void Update(GameTime gameTime)

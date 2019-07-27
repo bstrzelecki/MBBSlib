@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace MBBSlib.MonoGame
 {
@@ -20,6 +21,10 @@ namespace MBBSlib.MonoGame
             {
                 Texture = TextureStorage.GetTexture(sprite);
                 //Size = Texture.Bounds;
+            }
+            else
+            {
+                Debug.WriteLine("Cannot find " + sprite);
             }
             textureName = sprite;
         }
