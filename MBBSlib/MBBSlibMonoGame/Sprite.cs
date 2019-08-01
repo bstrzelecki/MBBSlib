@@ -42,5 +42,9 @@ namespace MBBSlib.MonoGame
 
             return sprite.Texture;
         }
+        public override string ToString()
+        {
+            return textureName;
+        }
     }
 }
