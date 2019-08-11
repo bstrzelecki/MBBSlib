@@ -14,6 +14,7 @@ namespace MBBSlib.MonoGame
         public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private IStartingPoint start;
+        public static GameMain lastCopy;
         protected struct Renderer
         {
             public int layer;
@@ -70,6 +71,7 @@ namespace MBBSlib.MonoGame
         public GameMain(IStartingPoint main)
         {
             graphics = new GraphicsDeviceManager(this);
+            lastCopy = this;
             Content.RootDirectory = "Content";
             start = main;
         }
@@ -170,6 +172,7 @@ namespace MBBSlib.MonoGame
             }
         }
         public Color BackgroundColor = Color.Black;
+        public static GraphicsDevice graphicsDevice { get { return GameMain.lastCopy.GraphicsDevice; } }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(BackgroundColor);
