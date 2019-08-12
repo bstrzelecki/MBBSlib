@@ -30,7 +30,8 @@ namespace MBBSlib.MonoGame
                 Debug.WriteLine("Cannot find " + sprite);
                 Assembly myAssembly = Assembly.GetExecutingAssembly();
                 Stream myStream = myAssembly.GetManifestResourceStream("MBBSlib.MonoGame.Content.WhitePixel.png");
-                Texture = Texture2D.FromStream(GameMain.graphicsDevice, myStream);
+                if(myStream != null)
+                    Texture = Texture2D.FromStream(GameMain.graphicsDevice, myStream);
             }
             textureName = sprite;
         }
