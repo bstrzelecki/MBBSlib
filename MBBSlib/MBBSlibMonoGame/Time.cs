@@ -12,7 +12,11 @@ namespace MBBSlib.MonoGame
         private const int tickTime = 30;
         public void Update()
         {
-            if (IsPaused) return;
+            if (IsPaused)
+            {
+                DeltaTime = 0;
+                return;
+            }
             DeltaTime = DateTime.Now.Millisecond - start;
             DeltaTime = DeltaTime > 0 ? DeltaTime : 0;
             start = DateTime.Now.Millisecond;
