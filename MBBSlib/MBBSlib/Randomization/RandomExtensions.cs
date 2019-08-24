@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MBBSlib.Randomization
 {
-    public static class Extensions
+    public static class RandomExtensions
     {
         public static IEnumerable<int> Take(this Random random, int i)
         {
