@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MBBSlib
+﻿namespace MBBSlib
 {
-    public class Utilities
+    public static class Utilities
     {
         public static float Lerp(float a, float b, float t)
         {

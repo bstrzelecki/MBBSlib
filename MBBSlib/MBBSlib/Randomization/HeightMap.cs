@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MBBSlib.Random
+namespace MBBSlib.Randomization
 {
-    class CaveMap
+    class HeightMap
     {
     }
 }
