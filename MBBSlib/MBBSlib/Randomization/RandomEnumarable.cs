@@ -9,19 +9,34 @@ namespace MBBSlib.Randomization
     {
         Random r;
         int i;
+        int min = 0;
+        int max = int.MaxValue;
         public RandomEnumarable(Random random, int amount)
         {
             r = random;
             i = amount;
         }
+        public RandomEnumarable(Random random, int amount, int max)
+        {
+            r = random;
+            i = amount;
+            this.max = max;
+        }
+        public RandomEnumarable(Random random, int amount, int min, int max)
+        {
+            r = random;
+            i = amount;
+            this.min = min;
+            this.max = max;
+        }
         public IEnumerator<int> GetEnumerator()
         {
-            return new RandomEnumerator(r, i);
+            return new RandomEnumerator(r, i, min, max);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new RandomEnumerator(r, i);
+            return new RandomEnumerator(r, i, min, max);
         }
     }
     public class RandomEnumerator : IEnumerator<int>
@@ -31,13 +46,15 @@ namespace MBBSlib.Randomization
         object IEnumerator.Current => Current;
         Random rng;
         int i;
-
-        public RandomEnumerator(Random random, int amount)
+        int min;
+        int max;
+        public RandomEnumerator(Random random, int amount, int min ,int max)
         {
             rng = random;
             i = amount;
+            this.min = min;
+            this.max = max;
         }
-
         public void Dispose()
         {
             rng = null;
@@ -47,7 +64,7 @@ namespace MBBSlib.Randomization
         {
             if(i > 0)
             {
-                Current = rng.Next();
+                Current = rng.Next(min,max);
                 i--;
                 return true;
             }

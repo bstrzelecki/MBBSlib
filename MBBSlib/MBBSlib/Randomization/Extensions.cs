@@ -9,5 +9,13 @@ namespace MBBSlib.Randomization
         {
             return new RandomEnumarable(random, i);
         }
+        public static IEnumerable<int> Take(this Random random, int i, int max)
+        {
+            return new RandomEnumarable(random, i, max);
+        }
+        public static IEnumerable<int> Take(this Random random, int i, int min, int max)
+        {
+            return new RandomEnumarable(random, i, min, max);
+        }
     }
 }
