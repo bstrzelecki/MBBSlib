@@ -16,6 +16,7 @@ namespace MBBSlib.Randomization
         public static IEnumerable<int> Take(this Random random, int i, int min, int max)
         {
             return new RandomEnumarable(random, i, min, max);
+            
         }
     }
 }

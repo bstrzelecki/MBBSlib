@@ -7,17 +7,19 @@
             return (1f - t) * a + t * b;
         }
         internal static System.Random rng = new System.Random();
-        internal static float[,,] Gradient; 
-        internal static void CalculateGradient()
+        internal static float[,,] Gradient = CalculateGradient(); 
+        internal static float[,,] CalculateGradient()
         {
+            float[,,] gradient = new float[256,256,2];
             for (int x = 0; x < 255; x++)
             {
                 for (int y = 0; y < 255; y++)
                 {
-                    Gradient[x, y, 0] = (float)rng.NextDouble();
-                    Gradient[x, y, 1] = (float)rng.NextDouble();
+                    gradient[x, y, 0] = (float)rng.NextDouble();
+                    gradient[x, y, 1] = (float)rng.NextDouble();
                 }
             }
+            return gradient;
         }
         public static float DotGridGradient (int x1, int y1, float x2, float y2)
         {

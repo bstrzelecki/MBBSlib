@@ -41,6 +41,7 @@ namespace MBBSlib.Randomization
     }
     public class RandomEnumerator : IEnumerator<int>
     {
+        
         public int Current { get; private set; } = 0;
 
         object IEnumerator.Current => Current;
