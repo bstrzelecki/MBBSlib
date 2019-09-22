@@ -9,30 +9,12 @@ using System.Linq;
 
 namespace MBBSlib.MonoGame
 {
-    public class GameMain : Game, IGetTexture
+    public partial class GameMain : Game, IGetTexture
     {
         public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private IStartingPoint start;
         public static GameMain lastCopy;
-        protected struct Renderer
-        {
-            public int layer;
-            public IDrawable drawable;
-            public Renderer(int l, IDrawable draw)
-            {
-                layer = l;
-                drawable = draw;
-            }
-            public override bool Equals(object obj)
-            {
-                if(obj is Renderer r)
-                {
-                    return ((r.layer == layer) && (r.drawable == drawable));
-                }
-                return false;
-            }
-        }
         protected static List<Renderer> renderers = new List<Renderer>();
         protected static List<IUpdateable> updates = new List<IUpdateable>();
         protected static List<Renderer> queuedRenderers = new List<Renderer>();
