@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MBBSlib.MonoGame
 {
-    class StaticResource<T>
+    public class StaticResource<T>
     {
         public string Key { get; set; }
         public T Resource
@@ -14,6 +15,14 @@ namespace MBBSlib.MonoGame
                 if (_resource == null)
                 {
                     _resource = (T)StaticResources.GetResource(Key);
+                    if(_resource == null && GameMain.textures[Key] is T t)
+                    { 
+                        _resource = t;
+                    }
+                    if (_resource == null && GameMain.fonts[Key] is T y)
+                    {
+                        _resource = y;
+                    }
                 }
                 if(_resource != null)
                 {
