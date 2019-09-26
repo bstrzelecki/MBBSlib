@@ -4,11 +4,16 @@ using System.Text;
 
 namespace MBBSlib.MonoGame.UI
 {
-    class Window : ContentPane
+    class Window : ContentPane, IDisposable
     {
         public Window()
         {
+            GameMain.RegisterRenderer(this);
         }
 
+        public void Dispose()
+        {
+            GameMain.UnregisterRenderer(this);
+        }
     }
 }
