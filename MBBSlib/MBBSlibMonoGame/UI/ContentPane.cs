@@ -15,6 +15,7 @@ namespace MBBSlib.MonoGame.UI
 
         public virtual void Draw(SpriteBatch sprite)
         {
+            if (sprite == null) return;
             sprite.Draw(Background, Transform, BackgroundColor);
         }
     }
