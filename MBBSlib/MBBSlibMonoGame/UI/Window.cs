@@ -31,12 +31,12 @@ namespace MBBSlib.MonoGame.UI
         public override void Draw(SpriteBatch sprite)
         {
             if (!IsVisible) return;
-            base.Draw(sprite);
             if(topBar != null && exitBtn != null)
             {
                 sprite.Draw(topBar, new Rectangle(Transform.Location, new Point(TopBarWidth, 12)));
                 sprite.Draw(exitBtn, new Rectangle(TopBarWidth, 0, exitBtn.Size.Width, exitBtn.Size.Height));
             }
+            base.Draw(sprite);
 
         }
     }
