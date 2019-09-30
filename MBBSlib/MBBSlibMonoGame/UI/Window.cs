@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MBBSlib.MonoGame.UI
 {
-    class Window : ContentPane, IDisposable
+    class Window : ContentPane, IDisposable, IUpdateable
     {
         public string Title { get; set; } = "Window.";
         public Sprite topBar;
@@ -38,6 +38,15 @@ namespace MBBSlib.MonoGame.UI
             }
             base.Draw(sprite);
 
+        }
+
+        public void Update()
+        {
+            if (!IsVisible) return;
+            //if(Input.GetMousePosition() > new Vector2(TopBarWidth, 0) && Input.GetMousePosition() < new Vector2(TopBarWidth + 12, 12))
+            {
+
+            }
         }
     }
 }
