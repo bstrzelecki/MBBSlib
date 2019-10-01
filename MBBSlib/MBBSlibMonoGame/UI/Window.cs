@@ -11,6 +11,7 @@ namespace MBBSlib.MonoGame.UI
         public string Title { get; set; } = "Window.";
         public Sprite topBar;
         public Sprite exitBtn;
+        public SpriteFont font;
         public bool IsVisible { get; set; } = true;
         public int TopBarWidth
         {
@@ -35,6 +36,7 @@ namespace MBBSlib.MonoGame.UI
             {
                 sprite.Draw(topBar, new Rectangle(Transform.Location, new Point(TopBarWidth, 12)));
                 sprite.Draw(exitBtn, new Rectangle(TopBarWidth, 0, exitBtn.Size.Width, exitBtn.Size.Height));
+                sprite.DrawString(font, Title, Transform.Location.ToVector2(), Color.White);
             }
             base.Draw(sprite);
 
