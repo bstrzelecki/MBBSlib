@@ -11,7 +11,7 @@ namespace MBBSlib.Integrations
         public string Descrition { get; }
         public string Key { get; set; }
         public bool IsTriggered { get; protected set; }
-        public event Action OnAchievementTriggered;
+        public event Action<Achievement> OnAchievementTriggered;
         public Achievement(string title, string desc)
         {
             Title = title;
@@ -20,7 +20,7 @@ namespace MBBSlib.Integrations
         public void Trigger()
         {
             IsTriggered = true;
-            OnAchievementTriggered?.Invoke();
+            OnAchievementTriggered?.Invoke(this);
         }
         public XElement Serialize()
         {
