@@ -11,11 +11,18 @@ namespace MBBSlib.Integrations
         public string Descrition { get; }
         public string Key { get; set; }
         public bool IsTriggered { get; protected set; }
-        public event Action<Achievement> OnAchievementTriggered;
+        public static event Action<Achievement> OnAchievementTriggered;
         public Achievement(string title, string desc)
         {
             Title = title;
             Descrition = desc;
+        }
+        public Achievement(XElement data)
+        {
+            Title = data.Element("Title").Value;
+            Descrition = data.Element("Desc").Value;
+            Key = data.Element("Key").Value;
+            IsTriggered = bool.Parse(data.Element("IsTriggered").Value);
         }
         public void Trigger()
         {
@@ -24,7 +31,11 @@ namespace MBBSlib.Integrations
         }
         public XElement Serialize()
         {
-            return new XElement("Hello, World");
+            return new XElement("Achievement", new XElement("Title", Title)
+                                             , new XElement("Desc", Descrition)
+                                             , new XElement("Key", Key)
+                                             , new XElement("IsTriggered", IsTriggered));
         }
+
     }
 }
