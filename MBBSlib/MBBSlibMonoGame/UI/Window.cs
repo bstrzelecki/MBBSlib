@@ -9,9 +9,15 @@ namespace MBBSlib.MonoGame.UI
     class Window : ContentPane, IDisposable, IUpdateable
     {
         public string Title { get; set; } = "Window.";
+#pragma warning disable CS0649 // Field 'Window.topBar' is never assigned to, and will always have its default value null
         public Sprite topBar;
+#pragma warning restore CS0649 // Field 'Window.topBar' is never assigned to, and will always have its default value null
+#pragma warning disable CS0649 // Field 'Window.exitBtn' is never assigned to, and will always have its default value null
         public Sprite exitBtn;
+#pragma warning restore CS0649 // Field 'Window.exitBtn' is never assigned to, and will always have its default value null
+#pragma warning disable CS0649 // Field 'Window.font' is never assigned to, and will always have its default value null
         public SpriteFont font;
+#pragma warning restore CS0649 // Field 'Window.font' is never assigned to, and will always have its default value null
         public bool IsVisible { get; set; } = true;
         public int TopBarWidth
         {
