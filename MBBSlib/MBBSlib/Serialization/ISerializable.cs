@@ -8,6 +8,5 @@ namespace MBBSlib.Serialization
     {
         void Load(NBTCompund compund);
         void Save(NBTCompund compund);
-        bool IsSerializable();
     }
 }
