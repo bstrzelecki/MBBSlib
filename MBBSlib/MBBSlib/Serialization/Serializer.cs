@@ -27,9 +27,14 @@ namespace MBBSlib.Serialization
             }
             doc.Save(file);
         }
-        public static void Load()
+        public static void Load(string file)
         {
-
+            XDocument doc = XDocument.Load(file);
+            XElement root = doc.Root;
+            foreach(var id in objs.Keys)
+            {
+                objs[id].Load(new NBTCompund(root.Element(id)););
+            }
         }
     }
 }
