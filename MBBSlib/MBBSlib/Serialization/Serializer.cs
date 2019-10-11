@@ -33,7 +33,7 @@ namespace MBBSlib.Serialization
             XElement root = doc.Root;
             foreach(var id in objs.Keys)
             {
-                objs[id].Load(new NBTCompund(root.Element(id)););
+                objs[id].Load(new NBTCompund(root.Element(id)));
             }
         }
     }
