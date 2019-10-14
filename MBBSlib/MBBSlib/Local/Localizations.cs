@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 
 namespace MBBSlib.Local
 {
@@ -10,7 +11,13 @@ namespace MBBSlib.Local
 
         public static void LoadTranslation(string fileName)
         {
-            //TODO
+            XDocument doc = XDocument.Load(fileName);
+            XElement root = doc.Root;
+
+            foreach(var n in root.Elements("t"))
+            {
+                locals.Add(n.Element("key").Value, n.Element("string").Value);
+            }
         }
         public static string T(this string t)
         {
