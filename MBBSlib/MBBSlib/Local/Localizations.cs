@@ -24,7 +24,7 @@ namespace MBBSlib.Local
             }
         }
         /// <summary>
-        /// alias for Translate()
+        /// Alias for Translate()
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
@@ -32,7 +32,7 @@ namespace MBBSlib.Local
         {
             if (!locals.ContainsKey(t))
             {
-                return t;
+                return "(ULT):" + t;
             }
             return locals[t];
         }
@@ -45,7 +45,7 @@ namespace MBBSlib.Local
         {
             if (!locals.ContainsKey(t))
             {
-                return t;
+                return "(ULT):" + t;
             }
             return locals[t];
         }

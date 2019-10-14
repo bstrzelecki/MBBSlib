@@ -9,6 +9,11 @@ namespace MBBSlib.Serialization
     {
         static Dictionary<string, ISerializable> objs = new Dictionary<string, ISerializable>();
 
+        /// <summary>
+        /// Registers objects and issues serialization during static calls
+        /// </summary>
+        /// <param name="id">key of an object</param>
+        /// <param name="serializable"></param>
         public static void Register(string id, ISerializable serializable)
         {
             objs.Add(id, serializable);
