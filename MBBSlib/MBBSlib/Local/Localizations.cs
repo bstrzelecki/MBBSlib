@@ -24,6 +24,18 @@ namespace MBBSlib.Local
             }
         }
         /// <summary>
+        /// Generates template document for quick copy/paste
+        /// </summary>
+        /// <returns>Save output with .Save(s) or access via IntelliSense</returns>
+        public static XDocument GetTemplate()
+        {
+            XDocument doc = new XDocument();
+            doc.Add(new XElement("root"));
+            XElement root = doc.Root;
+            root.Add(new XElement("t", new XElement("key"), new XElement("string")));
+            return doc;
+        }
+        /// <summary>
         /// Alias for Translate()
         /// </summary>
         /// <param name="t"></param>
