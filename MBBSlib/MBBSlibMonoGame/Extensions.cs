@@ -13,5 +13,13 @@ namespace MBBSlib.MonoGame
         {
             sprite.Draw(texture, position, Color.White);
         }
+        public static void Draw(this SpriteBatch sprite, string textureName, Vector2 position)
+        {
+            sprite.Draw(new Sprite(textureName), position, Color.White);
+        }
+        public static void Draw(this SpriteBatch sprite, string textureName, Vector2 position, Color color)
+        {
+            sprite.Draw(new Sprite(textureName), position, color);
+        }
     }
 }

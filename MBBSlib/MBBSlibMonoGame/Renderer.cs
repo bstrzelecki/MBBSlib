@@ -1,10 +1,10 @@
-﻿namespace MBBSlib.MonoGame
+﻿using System.Collections.Generic;
+
+namespace MBBSlib.MonoGame
 {
     public partial class GameMain
     {
-#pragma warning disable CS0659 // 'GameMain.Renderer' overrides Object.Equals(object o) but does not override Object.GetHashCode()
         protected struct Renderer
-#pragma warning restore CS0659 // 'GameMain.Renderer' overrides Object.Equals(object o) but does not override Object.GetHashCode()
         {
             public int layer;
             public IDrawable drawable;
@@ -20,6 +20,14 @@
                     return ((r.layer == layer) && (r.drawable == drawable));
                 }
                 return false;
+            }
+
+            public override int GetHashCode()
+            {
+                var hashCode = -628141515;
+                hashCode = hashCode * -1521134295 + layer.GetHashCode();
+                hashCode = hashCode * -1521134295 + EqualityComparer<IDrawable>.Default.GetHashCode(drawable);
+                return hashCode;
             }
         }
     }
