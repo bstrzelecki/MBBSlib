@@ -28,7 +28,7 @@ namespace MBBSlib.AI
             maxX = map.GetUpperBound(0);
             maxY = map.GetUpperBound(1);
         }
-        float heuristic_cost_estimate(Point start, Point end)
+        private float HeuristicCostEstimate(Point start, Point end)
         {
 
             return (float)Math.Sqrt(
@@ -72,8 +72,10 @@ namespace MBBSlib.AI
         {
             List<Point> evaluated = new List<Point>();
 
-            List<Point> discovered = new List<Point>();
-            discovered.Add(start);
+            List<Point> discovered = new List<Point>
+            {
+                start
+            };
 
             Dictionary<Point, Point> origins = new Dictionary<Point, Point>();
             Dictionary<Point, float> scores = new Dictionary<Point, float>();
@@ -95,7 +97,7 @@ namespace MBBSlib.AI
                 }
             }
 
-            finalScores[start] = heuristic_cost_estimate(start, end);
+            finalScores[start] = HeuristicCostEstimate(start, end);
 
             while(discovered.Count > 0)
             {
@@ -126,7 +128,7 @@ namespace MBBSlib.AI
                     else
                         origins[point] = current;
                     scores[point] = tScore;
-                    finalScores[point] = scores[point] + heuristic_cost_estimate(point, end);
+                    finalScores[point] = scores[point] + HeuristicCostEstimate(point, end);
                 }
             }
             throw new Exception("Something went wrong");
@@ -168,7 +170,7 @@ namespace MBBSlib.AI
 
             foreach(Point s in starts)
             {
-                finalScores[s] = heuristic_cost_estimate(s, target);
+                finalScores[s] = HeuristicCostEstimate(s, target);
             }
             while (discovered.Count > 0)
             {
@@ -199,7 +201,7 @@ namespace MBBSlib.AI
                     else
                         origins[point] = current;
                     scores[point] = tScore;
-                    finalScores[point] = scores[point] + heuristic_cost_estimate(point, target);
+                    finalScores[point] = scores[point] + HeuristicCostEstimate(point, target);
                 }
             }
             return null;
@@ -255,8 +257,10 @@ namespace MBBSlib.AI
 
         private List<Point> ReconstructPath(Dictionary<Point, Point> origins, Point current)
         {
-            List<Point> path = new List<Point>();
-            path.Add(current);
+            List<Point> path = new List<Point>
+            {
+                current
+            };
             while (origins.ContainsKey(current))
             {
                 current = origins[current];
