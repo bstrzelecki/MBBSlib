@@ -207,29 +207,6 @@ namespace MBBSlib.AI
             return null;
         }
 
-        private Point GetCurrent(List<Point> discovered, Dictionary<Point, float> finalScores)
-        {
-            float min = float.MaxValue;
-            Point point = new Point(0,0);
-            bool init = false;
-            foreach(Point p in discovered)
-            {
-                float score = finalScores[p];
-                if (!init)
-                {
-                    min = score;
-                    point = p;
-                    continue;
-                }
-                if (score < min)
-                {
-                    min = score;
-                    point = p;
-                }
-            }
-            return point;
-        }
-
         private static bool ContainsPoint(List<Point> evaluated, Point point)
         {
             foreach(Point p in evaluated)
