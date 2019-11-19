@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using System.Diagnostics;
 
 namespace MBBSlib.AI
 {
@@ -13,8 +11,8 @@ namespace MBBSlib.AI
         readonly int maxY = 0;
         float GetTileValue(Point p)
         {
-            if(CheckPoint(p))
-            return map[p.X, p.Y];
+            if (CheckPoint(p))
+                return map[p.X, p.Y];
             return float.MaxValue;
         }
         float GetTileValue(Point p, int offX, int offY)
@@ -32,13 +30,14 @@ namespace MBBSlib.AI
         {
 
             return (float)Math.Sqrt(
-            Math.Pow(start.X -end.X, 2) +
-            Math.Pow(start.Y -end.Y, 2)
+            Math.Pow(start.X - end.X, 2) +
+            Math.Pow(start.Y - end.Y, 2)
         );
 
 
         }
-        private List<Point> GetNeighbors(Point point) {
+        private List<Point> GetNeighbors(Point point)
+        {
             List<Point> points = new List<Point>();
             int x = point.X;
             int y = point.Y;
@@ -47,7 +46,7 @@ namespace MBBSlib.AI
             AddPoint(new Point(x, y + 1), points);
             AddPoint(new Point(x, y - 1), points);
 
-            if(GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
+            if (GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
                 AddPoint(new Point(x + 1, y + 1), points);
             if (GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, -1) != float.MaxValue)
                 AddPoint(new Point(x + 1, y - 1), points);
@@ -89,9 +88,9 @@ namespace MBBSlib.AI
             scores[start] = 0;
 
             Dictionary<Point, float> finalScores = new Dictionary<Point, float>();
-            for(int x = 0; x < map.GetUpperBound(0); x++)
+            for (int x = 0; x < map.GetUpperBound(0); x++)
             {
-                for(int y = 0; y < map.GetUpperBound(1); y++)
+                for (int y = 0; y < map.GetUpperBound(1); y++)
                 {
                     finalScores.Add(new Point(x, y), float.PositiveInfinity);
                 }
@@ -99,7 +98,7 @@ namespace MBBSlib.AI
 
             finalScores[start] = HeuristicCostEstimate(start, end);
 
-            while(discovered.Count > 0)
+            while (discovered.Count > 0)
             {
                 //TODO optimalize
                 Point current = discovered.OrderBy(n => finalScores[n]).Take(1).Single();
@@ -109,7 +108,7 @@ namespace MBBSlib.AI
                 discovered.Remove(current);
                 evaluated.Add(current);
 
-                foreach(Point point in GetNeighbors(current))
+                foreach (Point point in GetNeighbors(current))
                 {
                     if (ContainsPoint(evaluated, point)) continue;
 
@@ -139,7 +138,7 @@ namespace MBBSlib.AI
             List<Point> evaluated = new List<Point>();
 
             List<Point> discovered = new List<Point>();
-            foreach(Point s in starts)
+            foreach (Point s in starts)
             {
                 discovered.Add(s);
 
@@ -155,7 +154,7 @@ namespace MBBSlib.AI
                     scores.Add(new Point(x, y), float.PositiveInfinity);
                 }
             }
-            foreach(Point s in starts)
+            foreach (Point s in starts)
             {
                 scores[s] = 0;
             }
@@ -168,7 +167,7 @@ namespace MBBSlib.AI
                 }
             }
 
-            foreach(Point s in starts)
+            foreach (Point s in starts)
             {
                 finalScores[s] = HeuristicCostEstimate(s, target);
             }
@@ -209,7 +208,7 @@ namespace MBBSlib.AI
 
         private static bool ContainsPoint(List<Point> evaluated, Point point)
         {
-            foreach(Point p in evaluated)
+            foreach (Point p in evaluated)
             {
                 if (p == point) return true;
             }
