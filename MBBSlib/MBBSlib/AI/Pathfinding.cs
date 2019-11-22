@@ -19,7 +19,15 @@ namespace MBBSlib.AI
         {
             return GetTileValue(new Point(p.X + offX, p.Y + offY));
         }
+        /// <summary>
+        /// If true will ignore choke points
+        /// </summary>
         public bool IgnoreClipping { get; set; } = false;
+
+        /// <summary>
+        /// Crerates pathfinding instance
+        /// </summary>
+        /// <param name="map">weight map</param>
         public Pathfinding(float[,] map)
         {
             this.map = map;
@@ -67,6 +75,12 @@ namespace MBBSlib.AI
             if (p.X >= 0 && p.X < maxX + 1 && p.Y >= 0 && p.Y < maxY + 1) return true;
             return false;
         }
+        /// <summary>
+        /// Finds shortest bath from point A to point B
+        /// </summary>
+        /// <param name="start">Entry point</param>
+        /// <param name="end">Destination</param>
+        /// <returns></returns>
         public List<Point> GetPath(Point start, Point end)
         {
             List<Point> evaluated = new List<Point>();
@@ -132,7 +146,12 @@ namespace MBBSlib.AI
             }
             throw new Exception("Something went wrong");
         }
-
+        /// <summary>
+        /// Finds shortest path from closest point
+        /// </summary>
+        /// <param name="starts">Entry point</param>
+        /// <param name="target">Destination</param>
+        /// <returns></returns>
         public List<Point> GetPath(List<Point> starts, Point target)
         {
             List<Point> evaluated = new List<Point>();
