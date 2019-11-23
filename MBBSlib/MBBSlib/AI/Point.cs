@@ -6,7 +6,15 @@ namespace MBBSlib.AI
 {
     public struct Point
     {
+        /// <summary>
+        /// Integer coordinate
+        /// </summary>
         public int X, Y;
+        /// <summary>
+        /// Defoult constructor
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public Point(int x, int y)
         {
             X = x;
