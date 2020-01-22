@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MBBSlib.Randomization
 {
@@ -41,7 +40,7 @@ namespace MBBSlib.Randomization
     }
     public class RandomEnumerator : IEnumerator<int>
     {
-        
+
         public int Current { get; private set; } = 0;
 
         object IEnumerator.Current => Current;
@@ -49,7 +48,7 @@ namespace MBBSlib.Randomization
         int i;
         int min;
         int max;
-        public RandomEnumerator(Random random, int amount, int min ,int max)
+        public RandomEnumerator(Random random, int amount, int min, int max)
         {
             rng = random;
             i = amount;
@@ -63,9 +62,9 @@ namespace MBBSlib.Randomization
 
         public bool MoveNext()
         {
-            if(i > 0)
+            if (i > 0)
             {
-                Current = rng.Next(min,max);
+                Current = rng.Next(min, max);
                 i--;
                 return true;
             }

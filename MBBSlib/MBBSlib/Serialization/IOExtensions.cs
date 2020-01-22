@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MBBSlib.Serialization
+﻿namespace MBBSlib.Serialization
 {
     public static class IOExtensions
     {

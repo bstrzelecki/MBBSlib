@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace MBBSlib.Serialization
@@ -24,7 +22,7 @@ namespace MBBSlib.Serialization
             doc.Add(new XElement("Root"));
             XElement root = doc.Root;
 
-            foreach(string id in objs.Keys)
+            foreach (string id in objs.Keys)
             {
                 NBTCompund compund = new NBTCompund(id);
                 objs[id].Save(compund);
@@ -36,7 +34,7 @@ namespace MBBSlib.Serialization
         {
             XDocument doc = XDocument.Load(file);
             XElement root = doc.Root;
-            foreach(var id in objs.Keys)
+            foreach (var id in objs.Keys)
             {
                 objs[id].Load(new NBTCompund(root.Element(id)));
             }

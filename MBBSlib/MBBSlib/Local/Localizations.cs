@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace MBBSlib.Local
@@ -18,7 +16,7 @@ namespace MBBSlib.Local
             XDocument doc = XDocument.Load(fileName);
             XElement root = doc.Root;
 
-            foreach(var n in root.Elements("t"))
+            foreach (var n in root.Elements("t"))
             {
                 locals.Add(n.Element("key").Value, n.Element("string").Value);
             }
