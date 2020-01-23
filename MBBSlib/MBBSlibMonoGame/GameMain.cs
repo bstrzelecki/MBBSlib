@@ -13,7 +13,7 @@ namespace MBBSlib.MonoGame
     {
         public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private BasicEffect basicEffect;
+        private readonly BasicEffect basicEffect;
 
         private IStartingPoint start;
         public static GameMain lastCopy;
