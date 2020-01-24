@@ -8,6 +8,7 @@ namespace MBBSlib.MonoGame._3D
 {
     public class Camera
     {
+        #region public properties
         public Vector3 Position
         {
             get
@@ -80,13 +81,16 @@ namespace MBBSlib.MonoGame._3D
                 RecalculateProjectionMatrix();
             }
         }
+        #endregion
         public BasicEffect GetBasicEffect(GraphicsDevice graphicsDevice)
         {
-            BasicEffect basicEffect = new BasicEffect(graphicsDevice);
-            basicEffect.Projection = projectionMatrix;
-            basicEffect.World = worldMatrix;
-            basicEffect.View = viewMatrix;
-            return 
+            BasicEffect basicEffect = new BasicEffect(graphicsDevice)
+            {
+                Projection = projectionMatrix,
+                World = worldMatrix,
+                View = viewMatrix
+            };
+            return basicEffect; 
         }
         Vector3 target;
         Vector3 position;
