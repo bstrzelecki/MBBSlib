@@ -75,7 +75,7 @@ namespace MBBSlib.MonoGame
         public static void UnregisterRenderer(IDrawable renderer, int layer = 5)
         {
             Renderer r = new Renderer(layer, renderer);
-            if(renderers.Contains(r))
+            if (renderers.Contains(r))
                 rmQueuedRenderers.Add(r);
         }
         protected override void Initialize()
@@ -85,6 +85,12 @@ namespace MBBSlib.MonoGame
             RegisterUpdate(new Time());
             IsMouseVisible = true;
             base.Initialize();
+        }
+        public void SetResolution(Resolution resolution)
+        {
+            graphics.PreferredBackBufferWidth = resolution.Width;
+            graphics.PreferredBackBufferHeight = resolution.Height;
+            graphics.ApplyChanges();
         }
         protected override void LoadContent()
         {
@@ -96,7 +102,7 @@ namespace MBBSlib.MonoGame
                 {
                     string f = file.Remove(0, file.LastIndexOf('\\') + 1);
                     f = f.Remove(f.Length - 4, 4);
-                    Debug.WriteLine("Trying to load "+f);
+                    Debug.WriteLine("Trying to load " + f);
                     if (!textures.ContainsKey(f) || fonts.ContainsKey(f))
                     {
                         Load(f);
@@ -114,18 +120,18 @@ namespace MBBSlib.MonoGame
             {
                 textures.Add(id, Content.Load<Texture2D>(id));
                 Debug.WriteLine("Loaded " + id);
-            }catch(Exception e)
+            } catch (Exception e)
             {
                 Debug.WriteLine("Error while loading sprite retrying " + e.ToString());
                 LoadFont(id);
             }
-         }
+        }
         public void LoadFont(string id)
         {
             try
             {
                 fonts.Add(id, Content.Load<SpriteFont>(id));
-            }catch (Exception e)
+            } catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
             }
@@ -137,9 +143,9 @@ namespace MBBSlib.MonoGame
             {
                 Exit();
             }
-            foreach(IUpdateable update in rmQueuedUpdates)
+            foreach (IUpdateable update in rmQueuedUpdates)
             {
-                if(updates.Contains(update))
+                if (updates.Contains(update))
                     updates.Remove(update);
             }
 
@@ -162,7 +168,7 @@ namespace MBBSlib.MonoGame
         {
             GraphicsDevice.Clear(BackgroundColor);
 
-            foreach(Renderer draw in rmQueuedRenderers)
+            foreach (Renderer draw in rmQueuedRenderers)
             {
                 if (renderers.Contains(draw))
                     renderers.Remove(draw);
@@ -179,10 +185,55 @@ namespace MBBSlib.MonoGame
             spriteBatch.Begin();
             foreach (Renderer draw in renderers)
             {
-                    draw.drawable.Draw(spriteBatch);
+                draw.drawable.Draw(spriteBatch);
             }
 
             spriteBatch.End();
+        }
+    }
+    public struct Resolution
+    {
+        public int Width;
+        public int Height;
+        public Vector2 Size { get { return new Vector2(Width, Height); } }
+
+        /// <summary>
+        /// 3840x2160
+        /// </summary>
+        public static Resolution UHD { get{ return new Resolution(3840, 2160); } } 
+        /// <summary>
+        /// 3200x1800
+        /// </summary>
+        public static Resolution QXGA { get{ return new Resolution(3200, 1800); } } 
+        /// <summary>
+        /// 2560x1440
+        /// </summary>
+        public static Resolution QHD { get{ return new Resolution(2560, 1440); } } 
+        /// <summary>
+        /// 2048x1152
+        /// </summary>
+        public static Resolution QWXGA { get{ return new Resolution(2048, 1152); } } 
+        /// <summary>
+        /// 1920x1080
+        /// </summary>
+        public static Resolution FHD { get{ return new Resolution(1920, 1080); } } 
+        /// <summary>
+        /// 1600x900
+        /// </summary>
+        public static Resolution HDp { get{ return new Resolution(1600, 900); } } 
+        /// <summary>
+        /// 1280x720
+        /// </summary>
+        public static Resolution XGA { get{ return new Resolution(1280, 720); } } 
+        /// <summary>
+        /// 960x540
+        /// </summary>
+        public static Resolution qHD { get{ return new Resolution(960, 540); } } 
+
+        private Resolution(int width, int height)
+        {
+            Width = width;
+            Height = height;
         }
     }
 }
