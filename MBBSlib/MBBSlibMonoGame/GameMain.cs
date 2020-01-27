@@ -220,7 +220,7 @@ namespace MBBSlib.MonoGame
         /// <summary>
         /// 1600x900
         /// </summary>
-        public static Resolution HDp { get{ return new Resolution(1600, 900); } } 
+        public static Resolution HD { get{ return new Resolution(1600, 900); } } 
         /// <summary>
         /// 1280x720
         /// </summary>
