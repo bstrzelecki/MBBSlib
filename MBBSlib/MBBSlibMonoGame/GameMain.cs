@@ -120,7 +120,8 @@ namespace MBBSlib.MonoGame
             {
                 textures.Add(id, Content.Load<Texture2D>(id));
                 Debug.WriteLine("Loaded " + id);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Debug.WriteLine("Error while loading sprite retrying " + e.ToString());
                 LoadFont(id);
@@ -131,7 +132,8 @@ namespace MBBSlib.MonoGame
             try
             {
                 fonts.Add(id, Content.Load<SpriteFont>(id));
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
             }
@@ -200,35 +202,35 @@ namespace MBBSlib.MonoGame
         /// <summary>
         /// 3840x2160
         /// </summary>
-        public static Resolution UHD { get{ return new Resolution(3840, 2160); } } 
+        public static Resolution UHD { get { return new Resolution(3840, 2160); } }
         /// <summary>
         /// 3200x1800
         /// </summary>
-        public static Resolution QXGA { get{ return new Resolution(3200, 1800); } } 
+        public static Resolution QXGA { get { return new Resolution(3200, 1800); } }
         /// <summary>
         /// 2560x1440
         /// </summary>
-        public static Resolution QHD { get{ return new Resolution(2560, 1440); } } 
+        public static Resolution QHD { get { return new Resolution(2560, 1440); } }
         /// <summary>
         /// 2048x1152
         /// </summary>
-        public static Resolution QWXGA { get{ return new Resolution(2048, 1152); } } 
+        public static Resolution QWXGA { get { return new Resolution(2048, 1152); } }
         /// <summary>
         /// 1920x1080
         /// </summary>
-        public static Resolution FHD { get{ return new Resolution(1920, 1080); } } 
+        public static Resolution FHD { get { return new Resolution(1920, 1080); } }
         /// <summary>
         /// 1600x900
         /// </summary>
-        public static Resolution HD { get{ return new Resolution(1600, 900); } } 
+        public static Resolution HDp { get { return new Resolution(1600, 900); } }
         /// <summary>
         /// 1280x720
         /// </summary>
-        public static Resolution XGA { get{ return new Resolution(1280, 720); } } 
+        public static Resolution XGA { get { return new Resolution(1280, 720); } }
         /// <summary>
         /// 960x540
         /// </summary>
-        public static Resolution qHD { get{ return new Resolution(960, 540); } } 
+        public static Resolution qHD { get { return new Resolution(960, 540); } }
 
         private Resolution(int width, int height)
         {

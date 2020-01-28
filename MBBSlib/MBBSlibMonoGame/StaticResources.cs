@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+﻿using System.Collections.Generic;
 namespace MBBSlib.MonoGame
 {
     public static class StaticResources
@@ -15,7 +12,7 @@ namespace MBBSlib.MonoGame
             {
                 return Resources[key];
             }
-            foreach(ISearchMethod s in SearchLocations)
+            foreach (ISearchMethod s in SearchLocations)
             {
                 if (s.Get().ContainsKey(key))
                 {
@@ -31,7 +28,7 @@ namespace MBBSlib.MonoGame
         private static Dictionary<TKey, TValue> Merge<TKey, TValue>(Dictionary<TKey, TValue> a, Dictionary<TKey, TValue> b)
         {
             var result = new Dictionary<TKey, TValue>();
-            foreach(var key in a.Keys)
+            foreach (var key in a.Keys)
             {
                 if (result.ContainsKey(key)) continue;
                 result.Add(key, a[key]);

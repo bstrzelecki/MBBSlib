@@ -15,7 +15,7 @@ namespace MBBSlib.MonoGame
             }
             public override bool Equals(object obj)
             {
-                if(obj is Renderer r)
+                if (obj is Renderer r)
                 {
                     return ((r.layer == layer) && (r.drawable == drawable));
                 }

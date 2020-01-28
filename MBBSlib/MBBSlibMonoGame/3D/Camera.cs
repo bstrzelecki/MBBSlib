@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MBBSlib.MonoGame._3D
 {
@@ -90,7 +87,7 @@ namespace MBBSlib.MonoGame._3D
                 World = worldMatrix,
                 View = viewMatrix
             };
-            return basicEffect; 
+            return basicEffect;
         }
         Vector3 target;
         Vector3 position;
@@ -100,7 +97,7 @@ namespace MBBSlib.MonoGame._3D
         Matrix worldMatrix;
 
         private float fov = MathHelper.ToRadians(45f);
-        private float aspectRatio = 16/9;
+        private float aspectRatio = 16 / 9;
         private float nearPlane = 1f;
         private float farPlane = 1000f;
 

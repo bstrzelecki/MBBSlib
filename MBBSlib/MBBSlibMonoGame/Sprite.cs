@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Resources;
 
 namespace MBBSlib.MonoGame
 {
@@ -30,7 +29,7 @@ namespace MBBSlib.MonoGame
                 Debug.WriteLine("Cannot find " + sprite);
                 Assembly myAssembly = Assembly.GetExecutingAssembly();
                 Stream myStream = myAssembly.GetManifestResourceStream("MBBSlib.MonoGame.Content.WhitePixel.png");
-                if(myStream != null)
+                if (myStream != null)
                     Texture = Texture2D.FromStream(GameMain.graphicsDevice, myStream);
             }
             textureName = sprite;
@@ -44,7 +43,7 @@ namespace MBBSlib.MonoGame
             if (sprite.Texture == null)
             {
                 sprite.Texture = new Texture2D(GameMain.graphics.GraphicsDevice, 1, 1);
-                
+
             }
 
             return sprite.Texture;
