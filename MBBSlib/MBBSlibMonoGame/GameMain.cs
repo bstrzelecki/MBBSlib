@@ -88,8 +88,12 @@ namespace MBBSlib.MonoGame
         }
         public void SetResolution(Resolution resolution)
         {
-            graphics.PreferredBackBufferWidth = resolution.Width;
-            graphics.PreferredBackBufferHeight = resolution.Height;
+            SetResolution(resolution.Width, resolution.Height);
+        }
+        public void SetResolution(int width, int height)
+        {
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
             graphics.ApplyChanges();
         }
         protected override void LoadContent()
