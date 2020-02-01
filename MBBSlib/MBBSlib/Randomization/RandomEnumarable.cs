@@ -6,10 +6,10 @@ namespace MBBSlib.Randomization
 {
     public class RandomEnumarable : IEnumerable<int>
     {
-        Random r;
-        int i;
-        int min = 0;
-        int max = int.MaxValue;
+        readonly Random r;
+        readonly int i;
+        readonly int min = 0;
+        readonly int max = int.MaxValue;
         public RandomEnumarable(Random random, int amount)
         {
             r = random;
@@ -46,8 +46,8 @@ namespace MBBSlib.Randomization
         object IEnumerator.Current => Current;
         Random rng;
         int i;
-        int min;
-        int max;
+        readonly int min;
+        readonly int max;
         public RandomEnumerator(Random random, int amount, int min, int max)
         {
             rng = random;
