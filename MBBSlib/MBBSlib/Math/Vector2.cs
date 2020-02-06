@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MBBSlib.Math
+﻿namespace MBBSlib.Math
 {
     public struct Vector2
     {
@@ -38,7 +34,7 @@ namespace MBBSlib.Math
         }
         public static Vector2 operator /(Vector2 a, float b)
         {
-            return new Vector2(a.x /b, a.y / b);
+            return new Vector2(a.x / b, a.y / b);
         }
     }
 }
