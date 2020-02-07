@@ -10,7 +10,8 @@
         public static Vector2 Zero { get { return new Vector2(0, 0); } }
 
         public float Magnitude { get { return (float)(System.Math.Sqrt((x * x) + (y * y))); } }
-
+        //TODO
+        public float Normalized { get { return (float)(System.Math.Sqrt((x * x) + (y * y))); } }
         public float x;
         public float y;
 
