@@ -7,6 +7,8 @@ namespace MBBSlib.MonoGame
     public class Input
     {
         public static Vector2 cameraOffset;
+        public static Vector2 MousePosition { get { return GetMousePosition(); } }
+        public static int MouseScrollDelta { get { return GetMouseScrollDelta(); } }
         public static bool IsKeyDown(Keys key)
         {
             KeyboardState state = Keyboard.GetState();
