@@ -37,9 +37,9 @@ namespace MBBSlib.AI
         private float HeuristicCostEstimate(Point start, Point end)
         {
 
-            return (float)Math.Sqrt(
-            Math.Pow(start.X - end.X, 2) +
-            Math.Pow(start.Y - end.Y, 2)
+            return (float)System.Math.Sqrt(
+            System.Math.Pow(start.X - end.X, 2) +
+            System.Math.Pow(start.Y - end.Y, 2)
         );
 
 
@@ -247,7 +247,7 @@ namespace MBBSlib.AI
             var ac = b.X - a.X;
             var bc = b.Y - a.Y;
 
-            return (float)Math.Sqrt(ac * ac + bc * bc);
+            return (float)System.Math.Sqrt(ac * ac + bc * bc);
         }
 
         private List<Point> ReconstructPath(Dictionary<Point, Point> origins, Point current)

@@ -1,18 +1,58 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
+using MBBSlib.Networking.Shared;
 
-namespace MBBSLib.Networking.Server
+namespace MBBSlib.Networking.Server
 {
-    internal class ConnectedClient
+    public class ConnectedClient
     {
-        readonly Socket _socket;
+        readonly TcpClient _socket;
         static int _id;
         public int Id { get; set; } = 0;
-        public ConnectedClient(Socket client)
+        internal static int bufferSize = 1024;
+        private NetworkStream _stream;
+        private TCPServer _server;
+        private byte[] recieveBuffer = new byte[bufferSize];
+        internal ConnectedClient(TcpClient client, TCPServer server)
         {
-            _socket = client;
             Id = ++_id;
+            _server = server;
+            _socket = client;
+            _socket.ReceiveBufferSize = bufferSize;
+            _socket.SendBufferSize = bufferSize;
+
+            _stream = _socket.GetStream();
+            SendData(new Command(1, 0, BitConverter.GetBytes(Id)));
+
+            _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallBack, null);
         }
-        public Socket GetSocket()
+        public void SendData(Command cmd)
+        {
+            _stream.BeginWrite(cmd, 0, cmd.Size, SendCallback, null);
+        }
+
+        private void SendCallback(IAsyncResult ar)
+        {
+            
+        }
+
+        private void RecieveCallBack(IAsyncResult ar)
+        {
+            int bytes = _stream.EndRead(ar);
+            byte[] input = new byte[bytes];
+            Array.Copy(recieveBuffer, 0, input, 0, bytes);
+            Command cmd = new Command(input);
+
+            PacketRecieved(cmd);
+            _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallBack, null);
+        }
+
+        private void PacketRecieved(Command cmd)
+        {
+            _server.OnCommandRecieved?.Invoke(this, cmd);   
+        }
+
+        public TcpClient GetSocket()
         {
             return _socket;
         }

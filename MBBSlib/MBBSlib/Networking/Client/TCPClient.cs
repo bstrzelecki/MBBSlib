@@ -1,67 +1,64 @@
-﻿using MBBSLib.Networking;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-
-namespace MBBSLib.Networking.Client
+using MBBSlib.Networking.Shared;
+namespace MBBSlib.Networking.Client
 {
     public class TCPClient
     {
-        Socket _socket;
+        TcpClient _socket;
         int id = -1;
+        internal static int bufferSize = 1024;
         public int Id{ get { return id;} }
-
-        readonly volatile Queue<Command> recievedData = new Queue<Command>();
-        public TCPClient(string ip, int port)
+        public Action<Command> OnCommandRecieved;
+        public Action OnConnected;
+        public Action OnCommandSent;
+        private NetworkStream _stream;
+        private byte[] recieveBuffer = new byte[bufferSize];
+        public void Connect(string ip, int port)
         {
-            _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-            _socket.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
-            SendData(1, new byte[0]);
-            Command cmd = RecieveData();
-            if(cmd == 1)
+            _socket = new TcpClient
             {
-                id = BitConverter.ToInt32(cmd.DataForm);
-            }
-            new Thread(() => 
-            {
-                recievedData.Enqueue(RecieveData());
-            }).Start();
-
-        }
-        public Command GetRecievedData()
-        {
-            if(recievedData.Count > 0)
-            {
-                return recievedData.Dequeue();
-            }
-            else
-            {
-                return null;
-            }
+                ReceiveBufferSize = bufferSize,
+                SendBufferSize = bufferSize
+            };
+            _socket.BeginConnect(IPAddress.Parse(ip), port, ConnectCallback, _socket);
         }
         public void SendData(int cmd, byte[] data)
         {
-            byte[] command = new byte[(8 + data.Length)];
-            BitConverter.GetBytes(cmd).CopyTo(command, 0);
-            BitConverter.GetBytes(id).CopyTo(command, 4);
-            Debug.WriteLine(command[4..8]);
-            data.CopyTo(command, 8);
-            _socket.BeginSend(command, 0, command.Length, SocketFlags.None, SendCallback, null);
+            Command c = new Command(cmd, id, data);
+            _stream.BeginWrite(c, 0, c.Size, SendCallback, null);
         }
-        private void SendCallback(IAsyncResult a)
+        private void SendCallback(IAsyncResult ar)
         {
-            Debug.WriteLine("Package sent");
+            OnCommandSent?.Invoke();
         }
-        public Command RecieveData()
+        private void ConnectCallback(IAsyncResult ar)
         {
-            byte[] buff = new byte[256];
+            _socket.EndConnect(ar);
+            _stream = _socket.GetStream();
+            OnConnected?.Invoke();
+            _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallback, null);
+        }
 
-            _socket.Receive(buff);
-            return new Command(buff);
+        private void RecieveCallback(IAsyncResult ar)
+        {
+            int bytes = _stream.EndRead(ar);
+            byte[] input = new byte[bytes];
+            Array.Copy(recieveBuffer, 0, input, 0, bytes);
+            PacketRecieved(new Command(input));
+            _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallback, null);
+        }
+        private void PacketRecieved(Command cmd)
+        {
+            if(cmd.Id == 1)
+            {
+                id = BitConverter.ToInt32(cmd.DataForm);
+            }
+            OnCommandRecieved?.Invoke(cmd);
         }
     }
 }
