@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MBBSlib.Networking.Shared;
+using System;
 using System.Net.Sockets;
-using MBBSlib.Networking.Shared;
 
 namespace MBBSlib.Networking.Server
 {
@@ -32,20 +32,21 @@ namespace MBBSlib.Networking.Server
             {
                 _stream.BeginWrite(cmd, 0, cmd.Size, SendCallback, null);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.Write(e.StackTrace);
+                _server.OnSocketException?.Invoke(e);
             }
         }
 
         private void SendCallback(IAsyncResult ar)
         {
-            
+
         }
 
         private void RecieveCallBack(IAsyncResult ar)
         {
-            try {
+            try
+            {
                 int bytes = _stream.EndRead(ar);
                 byte[] input = new byte[bytes];
                 Array.Copy(recieveBuffer, 0, input, 0, bytes);
@@ -53,15 +54,16 @@ namespace MBBSlib.Networking.Server
 
                 PacketRecieved(cmd);
                 _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallBack, null);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Console.Write(e.StackTrace);
+                _server.OnSocketException?.Invoke(e);
             }
         }
 
         private void PacketRecieved(Command cmd)
         {
-            _server.OnCommandRecieved?.Invoke(this, cmd);   
+            _server.OnCommandRecieved?.Invoke(this, cmd);
         }
 
         public TcpClient GetSocket()

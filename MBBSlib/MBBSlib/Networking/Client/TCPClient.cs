@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using MBBSlib.Networking.Shared;
+using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using MBBSlib.Networking.Shared;
 namespace MBBSlib.Networking.Client
 {
     public class TCPClient
@@ -12,7 +9,7 @@ namespace MBBSlib.Networking.Client
         TcpClient _socket;
         int id = -1;
         internal static int bufferSize = 1024;
-        public int Id{ get { return id;} }
+        public int Id { get { return id; } }
         public Action<Command> OnCommandRecieved;
         public Action OnConnected;
         public Action OnCommandSent;
@@ -54,7 +51,7 @@ namespace MBBSlib.Networking.Client
         }
         private void PacketRecieved(Command cmd)
         {
-            if(cmd.Id == 1)
+            if (cmd.Id == 1)
             {
                 id = BitConverter.ToInt32(cmd.DataForm);
             }

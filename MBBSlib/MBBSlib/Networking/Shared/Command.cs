@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace MBBSlib.Networking.Shared
@@ -8,9 +6,13 @@ namespace MBBSlib.Networking.Shared
     public class Command
     {
         readonly byte[] _data = new byte[256];
-        public int Size { get {
+        public int Size
+        {
+            get
+            {
                 return _data.Length;
-            } }
+            }
+        }
 
         public int Id { get; private set; }
         public byte[] DataForm { get; private set; }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MBBSlib.Math
+﻿namespace MBBSlib.Math
 {
     public struct Vector3
     {
@@ -29,11 +25,11 @@ namespace MBBSlib.Math
 
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
-            return new Vector3(a.x + b.x, a.y + b.y, a.z+b.z);
+            return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
         }
         public static Vector3 operator -(Vector3 a, Vector3 b)
         {
-            return new Vector3(a.x - b.x, a.y - b.y, a.z-b.z);
+            return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
         }
         public static Vector3 operator *(Vector3 a, float b)
         {

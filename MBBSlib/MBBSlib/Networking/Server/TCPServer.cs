@@ -1,13 +1,11 @@
-﻿using System;
+﻿using MBBSlib.Networking.Shared;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using MBBSlib.Networking.Shared;
 namespace MBBSlib.Networking.Server
 {
-    public class TCPServer :IDisposable
+    public class TCPServer : IDisposable
     {
         public int Port { get; set; } = 25565;
 
@@ -15,6 +13,7 @@ namespace MBBSlib.Networking.Server
         readonly List<ConnectedClient> _clients = new List<ConnectedClient>();
         public Action<ConnectedClient> OnClientConnected;
         public Action<ConnectedClient, Command> OnCommandRecieved;
+        public Action<Exception> OnSocketException;
         public void Start()
         {
             _server = new TcpListener(IPAddress.Any, Port);
@@ -33,9 +32,10 @@ namespace MBBSlib.Networking.Server
                 OnClientConnected?.Invoke(cl);
                 Console.WriteLine($"{client.Client.RemoteEndPoint} connected.");
                 _server.BeginAcceptTcpClient(AccepetedClientCallback, null);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Console.Write(e.StackTrace);
+                OnSocketException?.Invoke(e);
             }
         }
         public void Dispose()
@@ -44,11 +44,11 @@ namespace MBBSlib.Networking.Server
         }
     }
     public enum CommandId
-        {
-            Error,
-            Join,
-            Disconnect,
-            ConnectionAccepted,
-            Ping
-        }
+    {
+        Error,
+        Join,
+        Disconnect,
+        ConnectionAccepted,
+        Ping
+    }
 }
