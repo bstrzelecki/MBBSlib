@@ -28,7 +28,14 @@ namespace MBBSlib.Networking.Server
         }
         public void SendData(Command cmd)
         {
-            _stream.BeginWrite(cmd, 0, cmd.Size, SendCallback, null);
+            try
+            {
+                _stream.BeginWrite(cmd, 0, cmd.Size, SendCallback, null);
+            }
+            catch(Exception e)
+            {
+                Console.Write(e.StackTrace);
+            }
         }
 
         private void SendCallback(IAsyncResult ar)
@@ -38,13 +45,18 @@ namespace MBBSlib.Networking.Server
 
         private void RecieveCallBack(IAsyncResult ar)
         {
-            int bytes = _stream.EndRead(ar);
-            byte[] input = new byte[bytes];
-            Array.Copy(recieveBuffer, 0, input, 0, bytes);
-            Command cmd = new Command(input);
+            try {
+                int bytes = _stream.EndRead(ar);
+                byte[] input = new byte[bytes];
+                Array.Copy(recieveBuffer, 0, input, 0, bytes);
+                Command cmd = new Command(input);
 
-            PacketRecieved(cmd);
-            _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallBack, null);
+                PacketRecieved(cmd);
+                _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallBack, null);
+            }catch(Exception e)
+            {
+                Console.Write(e.StackTrace);
+            }
         }
 
         private void PacketRecieved(Command cmd)

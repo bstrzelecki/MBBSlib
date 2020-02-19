@@ -24,13 +24,19 @@ namespace MBBSlib.Networking.Server
         }
         private void AccepetedClientCallback(IAsyncResult a)
         {
-            TcpClient client = _server.EndAcceptTcpClient(a);
+            try
+            {
+                TcpClient client = _server.EndAcceptTcpClient(a);
 
-            ConnectedClient cl = new ConnectedClient(client, this);
-            _clients.Add(cl);
-            OnClientConnected?.Invoke(cl);
-            Console.WriteLine($"{client.Client.RemoteEndPoint} connected.");
-            _server.BeginAcceptTcpClient(AccepetedClientCallback, null);
+                ConnectedClient cl = new ConnectedClient(client, this);
+                _clients.Add(cl);
+                OnClientConnected?.Invoke(cl);
+                Console.WriteLine($"{client.Client.RemoteEndPoint} connected.");
+                _server.BeginAcceptTcpClient(AccepetedClientCallback, null);
+            }catch(Exception e)
+            {
+                Console.Write(e.StackTrace);
+            }
         }
         public void Dispose()
         {
