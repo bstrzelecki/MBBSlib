@@ -3,9 +3,14 @@ using System.Text;
 
 namespace MBBSlib.Networking.Shared
 {
+    /// <summary>
+    /// Default class for labeling tcp data
+    /// </summary>
     public class Command
     {
-        readonly byte[] _data = new byte[256];
+        /// <summary>
+        /// Lengh of transmitted data
+        /// </summary>
         public int Size
         {
             get
@@ -13,25 +18,35 @@ namespace MBBSlib.Networking.Shared
                 return _data.Length;
             }
         }
-
+        /// <summary>
+        /// Command id
+        /// </summary>
         public int Id { get; private set; }
+        /// <summary>
+        /// Transmited data
+        /// </summary>
         public byte[] DataForm { get; private set; }
+        /// <summary>
+        /// Id of origin ipendpoit (0 is reserved for server transmission)
+        /// </summary>
         public int Sender { get; private set; }
+
+        readonly byte[] _data = new byte[ConnectionData.BUFFER_SIZE];
         public Command(int commandId, int sender, byte[] data)
         {
             Array.Copy(BitConverter.GetBytes(commandId), 0, _data, 0, 4);
             Array.Copy(BitConverter.GetBytes(sender), 0, _data, 4, 4);
             Array.Copy(data, 0, _data, 8, data.Length);
-
+            Array.Resize(ref _data, 8 + data.Length);
 
             Id = BitConverter.ToInt32(_data[0..4]);
             Sender = BitConverter.ToInt32(_data[4..8]);
             DataForm = _data[8..];
         }
-        public Command(byte[] data)
+        internal Command(byte[] data)
         {
             _data = data;
-
+            Array.Resize(ref _data, 8 + data.Length);
             Id = BitConverter.ToInt32(_data[0..4]);
             Sender = BitConverter.ToInt32(_data[4..8]);
             DataForm = data[8..];
@@ -40,17 +55,9 @@ namespace MBBSlib.Networking.Shared
         {
             return cmd._data;
         }
-        public static implicit operator string(Command cmd)
-        {
-            return Encoding.ASCII.GetString(cmd.DataForm);
-        }
         public override string ToString()
         {
             return Encoding.ASCII.GetString(DataForm);
-        }
-        public static implicit operator int(Command cmd)
-        {
-            return cmd.Id;
         }
     }
 }

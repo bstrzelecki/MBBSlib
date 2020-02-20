@@ -1,32 +1,32 @@
 ﻿using MBBSlib.Networking.Shared;
 using System;
 using System.Net.Sockets;
+using static MBBSlib.Networking.Shared.ConnectionData;
 
 namespace MBBSlib.Networking.Server
 {
-    public class ConnectedClient
+    internal class ConnectedClient : IDisposable
     {
         readonly TcpClient _socket;
-        static int _id;
-        public int Id { get; set; } = 0;
-        internal static int bufferSize = 1024;
-        private NetworkStream _stream;
-        private TCPServer _server;
-        private byte[] recieveBuffer = new byte[bufferSize];
-        internal ConnectedClient(TcpClient client, TCPServer server)
+        public int Id { get; protected set; } = 0;
+        
+        private readonly NetworkStream _stream;
+        private readonly TCPServer _server;
+        private byte[] recieveBuffer = new byte[BUFFER_SIZE];
+        internal ConnectedClient(int id, TcpClient client, TCPServer server)
         {
-            Id = ++_id;
+            Id = id;
             _server = server;
             _socket = client;
-            _socket.ReceiveBufferSize = bufferSize;
-            _socket.SendBufferSize = bufferSize;
+            _socket.ReceiveBufferSize = BUFFER_SIZE;
+            _socket.SendBufferSize = BUFFER_SIZE;
 
             _stream = _socket.GetStream();
             SendData(new Command(1, 0, BitConverter.GetBytes(Id)));
 
-            _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallBack, null);
+            _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
         }
-        public void SendData(Command cmd)
+        internal void SendData(Command cmd)
         {
             try
             {
@@ -53,22 +53,28 @@ namespace MBBSlib.Networking.Server
                 Command cmd = new Command(input);
 
                 PacketRecieved(cmd);
-                _stream.BeginRead(recieveBuffer, 0, bufferSize, RecieveCallBack, null);
+                _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
             }
             catch (Exception e)
             {
                 _server.OnSocketException?.Invoke(e);
+                this.Dispose();
             }
         }
 
         private void PacketRecieved(Command cmd)
         {
-            _server.OnCommandRecieved?.Invoke(this, cmd);
+            _server.OnCommandRecieved?.Invoke(Id, cmd);
         }
 
-        public TcpClient GetSocket()
+        public void Dispose()
         {
-            return _socket;
+            _socket.Close();
+            _stream.Close();
+            _socket.Dispose();
+            _stream.Dispose();
+            _server.OnMessageBroadCast?.Invoke($"Client with id:{Id} disconnected form the server.");
+            Id = -1;
         }
     }
 }
