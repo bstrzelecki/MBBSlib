@@ -64,7 +64,7 @@ namespace MBBSlib.Networking.Server
 
         private void PacketRecieved(Command cmd)
         {
-            _server.OnCommandRecieved?.Invoke(Id, cmd);
+            _server.OnCommandRecieved?.Invoke(cmd);
         }
 
         public void Dispose()

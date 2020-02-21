@@ -1,6 +1,7 @@
 ﻿using MBBSlib.Networking.Shared;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 namespace MBBSlib.Networking.Server
@@ -22,7 +23,7 @@ namespace MBBSlib.Networking.Server
         /// <summary>
         /// Event that fires when server recieves command from client
         /// </summary>
-        public Action<int, Command> OnCommandRecieved;
+        public Action<Command> OnCommandRecieved;
         /// <summary>
         /// Event that fires when excentpion is thrown
         /// </summary>
@@ -31,7 +32,7 @@ namespace MBBSlib.Networking.Server
         /// Event that fires when servers outputs debug information
         /// </summary>
         public Action<string> OnMessageBroadCast;
-        
+
         TcpListener _server;
         readonly List<ConnectedClient> _clients = new List<ConnectedClient>();
         /// <summary>
@@ -43,6 +44,34 @@ namespace MBBSlib.Networking.Server
             _server.Start();
             _server.BeginAcceptTcpClient(AccepetedClientCallback, null);
             OnMessageBroadCast?.Invoke("Server started.");
+        }
+        /// <summary>
+        /// Sends data to specified client
+        /// </summary>
+        /// <param name="clientid">Id of the client data will be sent</param>
+        /// <param name="cmd">Command that will be delivered to specified client</param>
+        public void SendData(int clientid, Command cmd)
+        {
+            foreach (ConnectedClient c in _clients)
+            {
+                if (c.Id == clientid)
+                {
+                    c.SendData(cmd);
+                }
+            }
+        }
+        /// <summary>
+        /// Sends data to all connected clients exept specified ones
+        /// </summary>
+        /// <param name="cmd">Command that will be delivered to clients</param>
+        /// <param name="ids">List of ids to which command will not be sent</param>
+        public void BroadcastData(Command cmd, params int[] ids)
+        {
+            foreach (ConnectedClient c in _clients)
+            {
+                if(!ids.Contains(c.Id))
+                    c.SendData(cmd);
+            }
         }
         private void AccepetedClientCallback(IAsyncResult a)
         {
@@ -62,7 +91,7 @@ namespace MBBSlib.Networking.Server
                             break;
                         }
                     }
-                    if(isValid)
+                    if (isValid)
                         id = i;
                 }
 
@@ -79,14 +108,14 @@ namespace MBBSlib.Networking.Server
         }
         private void ClearClientList()
         {
-            for(int i = 0; i < _clients.Count; i++)
+            for (int i = 0; i < _clients.Count; i++)
             {
                 if (_clients[i].Id == -1) _clients.RemoveAt(i);
             }
         }
         public void Dispose()
         {
-            foreach(ConnectedClient c in _clients)
+            foreach (ConnectedClient c in _clients)
             {
                 c.Dispose();
             }
