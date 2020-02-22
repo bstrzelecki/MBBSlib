@@ -51,7 +51,7 @@ namespace MBBSlib.Networking.Client
         /// <summary>
         /// Sends data directly to connected remote host.
         /// </summary>
-        /// <param name="cmd">Id of data type (5-int.max)</param>
+        /// <param name="cmd">Id of data type (1-int.max)</param>
         /// <param name="data">1024 byte data array</param>
         public void SendData(int cmd, byte[] data)
         {

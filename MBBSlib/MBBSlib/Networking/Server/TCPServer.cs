@@ -122,12 +122,4 @@ namespace MBBSlib.Networking.Server
             _server.Stop();
         }
     }
-    public enum CommandId
-    {
-        Error,
-        Join,
-        Disconnect,
-        ConnectionAccepted,
-        Ping
-    }
 }
