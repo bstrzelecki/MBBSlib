@@ -9,7 +9,7 @@ namespace MBBSlib.Networking.Server
     {
         readonly TcpClient _socket;
         public int Id { get; protected set; } = 0;
-        
+
         private readonly NetworkStream _stream;
         private readonly TCPServer _server;
         private byte[] recieveBuffer = new byte[BUFFER_SIZE];

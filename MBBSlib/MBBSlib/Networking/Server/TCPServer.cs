@@ -69,7 +69,7 @@ namespace MBBSlib.Networking.Server
         {
             foreach (ConnectedClient c in _clients)
             {
-                if(!ids.Contains(c.Id))
+                if (!ids.Contains(c.Id))
                     c.SendData(cmd);
             }
         }

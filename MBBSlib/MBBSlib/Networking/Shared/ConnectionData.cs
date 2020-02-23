@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MBBSlib.Networking.Shared
+﻿namespace MBBSlib.Networking.Shared
 {
     class ConnectionData
     {

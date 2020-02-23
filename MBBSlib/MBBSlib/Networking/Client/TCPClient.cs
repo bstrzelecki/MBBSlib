@@ -56,12 +56,12 @@ namespace MBBSlib.Networking.Client
         public void SendData(int cmd, byte[] data)
         {
             if (Id == -1)
-                throw new Exception("Client has not connected to a remote host."); 
-            
+                throw new Exception("Client has not connected to a remote host.");
+
             Command c = new Command(cmd, Id, data);
             _stream.BeginWrite(c, 0, c.Size, SendCallback, null);
-        
-        
+
+
         }
 
         private void SendCallback(IAsyncResult ar)
