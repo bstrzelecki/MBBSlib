@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MBBSlib.MonoGame</name>
+    </assembly>
+    <members>
+        <member name="P:MBBSlib.MonoGame.Resolution.UHD">
+            <summary>
+            3840x2160
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Resolution.QXGA">
+            <summary>
+            3200x1800
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Resolution.QHD">
+            <summary>
+            2560x1440
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Resolution.QWXGA">
+            <summary>
+            2048x1152
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Resolution.FHD">
+            <summary>
+            1920x1080
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Resolution.HDp">
+            <summary>
+            1600x900
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Resolution.XGA">
+            <summary>
+            1280x720
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Resolution.qHD">
+            <summary>
+            960x540
+            </summary>
+        </member>
+        <member name="T:MBBSlib.MonoGame.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.Properties.Resources.WhitePixel">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+    </members>
+</doc>
