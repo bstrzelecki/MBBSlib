@@ -10,7 +10,7 @@ namespace MBBSlib.MonoGame.UI
         public Color BackgroundColor { get; set; } = Color.White;
         public bool Focused { get; set; }
 
-        public virtual void Draw(SpriteBatch sprite)
+        public virtual void Draw(RenderBatch sprite)
         {
             if (sprite == null) return;
             sprite.Draw(Background, Transform, BackgroundColor);

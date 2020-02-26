@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MBBSlib.MonoGame._3D;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -11,23 +12,33 @@ namespace MBBSlib.MonoGame
 {
     public partial class GameMain : Game, IGetTexture
     {
+        /// <summary>
+        /// Defoult menager of graphics device
+        /// </summary>
         public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private readonly BasicEffect basicEffect;
-
+        /// <summary>
+        /// Last copy of GameMain class
+        /// </summary>
+        public static GameMain instance { get; private set; }
+        public Camera camera = new Camera();
         private IStartingPoint start;
-        public static GameMain lastCopy;
-        protected static List<Renderer> renderers = new List<Renderer>();
-        protected static List<IUpdateable> updates = new List<IUpdateable>();
-        protected static List<Renderer> queuedRenderers = new List<Renderer>();
-        protected static List<IUpdateable> queuedUpdates = new List<IUpdateable>();
-        protected static List<Renderer> rmQueuedRenderers = new List<Renderer>();
-        protected static List<IUpdateable> rmQueuedUpdates = new List<IUpdateable>();
+        private static List<Renderer> renderers = new List<Renderer>();
+        private static List<IUpdateable> updates = new List<IUpdateable>();
+        private readonly static List<Renderer> queuedRenderers = new List<Renderer>();
+        private readonly static List<IUpdateable> queuedUpdates = new List<IUpdateable>();
+        private readonly static List<Renderer> rmQueuedRenderers = new List<Renderer>();
+        private readonly static List<IUpdateable> rmQueuedUpdates = new List<IUpdateable>();
 
-        protected static List<IDrawable> priorityRenderers = new List<IDrawable>();
-        public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-        public static Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
-
+        private static List<IDrawable> priorityRenderers = new List<IDrawable>();
+        private static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        private static readonly Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
+        /// <summary>
+        /// Returns a texture that corresponds to a given key
+        /// </summary>
+        /// <param name="key">key of a textur</param>
+        /// <returns>2D texture</returns>
         public Texture2D GetTexture(string key)
         {
             if (ContainsTextureKey(key))
@@ -36,13 +47,21 @@ namespace MBBSlib.MonoGame
             }
             return null;
         }
-
+        /// <summary>
+        /// Checks if the registry contains specified key
+        /// </summary>
+        /// <param name="key">key of a texture</param>
+        /// <returns></returns>
         public bool ContainsTextureKey(string key)
         {
             return textures.ContainsKey(key);
 
         }
-
+        /// <summary>
+        /// Returns specified font from the registry 
+        /// </summary>
+        /// <param name="key">key of a font</param>
+        /// <returns>spritefont reference</returns>
         public SpriteFont GetFont(string key)
         {
             if (fonts.ContainsKey(key))
@@ -51,11 +70,14 @@ namespace MBBSlib.MonoGame
             }
             return null;
         }
-
+        /// <summary>
+        /// Base class of a game
+        /// </summary>
+        /// <param name="main"></param>
         public GameMain(IStartingPoint main)
         {
             graphics = new GraphicsDeviceManager(this);
-            lastCopy = this;
+            instance = this;
             Content.RootDirectory = "Content";
             start = main;
         }
@@ -167,12 +189,19 @@ namespace MBBSlib.MonoGame
                 update.Update();
             }
         }
-
+        /// <summary>
+        /// Color of an background
+        /// </summary>
         public Color BackgroundColor = Color.Black;
-        public static GraphicsDevice graphicsDevice { get { return GameMain.lastCopy.GraphicsDevice; } }
+        /// <summary>
+        /// Defoult graphic device
+        /// </summary>
+        public static GraphicsDevice graphicsDevice { get { return instance.GraphicsDevice; } }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(BackgroundColor);
+
+            
 
             foreach (Renderer draw in rmQueuedRenderers)
             {
@@ -189,18 +218,32 @@ namespace MBBSlib.MonoGame
 
             if (renderers.Count <= 0) return;
             spriteBatch.Begin();
+            RenderBatch batch = new RenderBatch(spriteBatch, GraphicsDevice);
             foreach (Renderer draw in renderers)
             {
-                draw.drawable.Draw(spriteBatch);
+                draw.drawable.Draw(batch);
             }
             
             spriteBatch.End();
         }
     }
+    /// <summary>
+    /// Registry of supported resolutions
+    /// </summary>
     public struct Resolution
     {
+
+        /// <summary>
+        /// Width in pixels
+        /// </summary>
         public int Width;
+        /// <summary>
+        /// Height in pixels
+        /// </summary>
         public int Height;
+        /// <summary>
+        /// SIze of windown in vector2
+        /// </summary>
         public Vector2 Size { get { return new Vector2(Width, Height); } }
 
         /// <summary>

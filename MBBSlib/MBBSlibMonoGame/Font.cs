@@ -12,7 +12,7 @@ namespace MBBSlib.MonoGame
 
         public static implicit operator SpriteFont(Font font)
         {
-            return GameMain.fonts[font.font];
+            return GameMain.instance.GetFont(font.font);
         }
     }
 }

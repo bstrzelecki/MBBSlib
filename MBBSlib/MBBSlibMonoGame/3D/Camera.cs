@@ -92,15 +92,17 @@ namespace MBBSlib.MonoGame._3D
         Vector3 target;
         Vector3 position;
 
-        Matrix projectionMatrix;
-        Matrix viewMatrix;
-        Matrix worldMatrix;
+        public Matrix projectionMatrix;
+        public Matrix viewMatrix;
+        public Matrix worldMatrix;
 
         private float fov = MathHelper.ToRadians(45f);
         private float aspectRatio = 16 / 9;
         private float nearPlane = 1f;
         private float farPlane = 1000f;
-
+        /// <summary>
+        /// Standard perspective camera class
+        /// </summary>
         public Camera()
         {
             target = Vector3.Zero;

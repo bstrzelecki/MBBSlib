@@ -4,6 +4,6 @@ namespace MBBSlib.MonoGame
 {
     public interface IDrawable
     {
-        void Draw(SpriteBatch sprite);
+        void Draw(RenderBatch sprite);
     }
 }

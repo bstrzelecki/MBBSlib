@@ -27,7 +27,7 @@ namespace MBBSlib.MonoGame.UI
         {
             GameMain.UnregisterRenderer(this);
         }
-        public override void Draw(SpriteBatch sprite)
+        public override void Draw(RenderBatch sprite)
         {
             if (!IsVisible) return;
             if (topBar != null && exitBtn != null)
