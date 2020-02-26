@@ -38,7 +38,7 @@ namespace MBBSlib.MonoGame
         {
             spriteBatch.Draw(new Sprite(textureName), position, color);
         }
-        public void DrawString(Font font, string text, Vector2 position, Color color)
+        public void DrawString(SpriteFont font, string text, Vector2 position, Color color)
         {
             spriteBatch.DrawString(font, text, position, color);
         }
@@ -74,7 +74,7 @@ namespace MBBSlib.MonoGame
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, mesh, 0, mesh.Length);
+                graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, mesh, 0, mesh.Length - 1);
             }
         }
         public void DrawPrimitives(VertexPositionColor[] mesh)
@@ -85,11 +85,16 @@ namespace MBBSlib.MonoGame
                 Projection = GameMain.instance.camera.projectionMatrix,
                 VertexColorEnabled = true
             };
-
+            RasterizerState rasterizerState = new RasterizerState();
+            rasterizerState.CullMode = CullMode.None;
+            graphicsDevice.RasterizerState = rasterizerState;
+            var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), 3, BufferUsage.WriteOnly);
+            vertexBuffer.SetData(mesh);
+            graphicsDevice.SetVertexBuffer(vertexBuffer);  
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, mesh, 0, mesh.Length);
+                graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, mesh.Length);
             }
         }
 
