@@ -61,7 +61,7 @@ namespace MBBSlib.MonoGame
                 mesh.Draw();
             }
         }
-        public void DrawPrimitives(VertexPositionTexture[] mesh, Texture2D texture)
+        public void DrawPrimitives(VertexPositionTexture[] mesh, Texture2D texture, bool disableCulling = false)
         {
             BasicEffect effect = new BasicEffect(graphicsDevice)
             {
@@ -70,14 +70,50 @@ namespace MBBSlib.MonoGame
                 TextureEnabled = true,
                 Texture = texture
             };
-
+            if (!disableCulling)
+            {
+                RasterizerState rasterizerState = new RasterizerState();
+                rasterizerState.CullMode = CullMode.None;
+                graphicsDevice.RasterizerState = rasterizerState;
+            }
+            var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionTexture), 3, BufferUsage.WriteOnly);
+            vertexBuffer.SetData(mesh);
+            graphicsDevice.SetVertexBuffer(vertexBuffer);
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, mesh, 0, mesh.Length - 1);
+                graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, mesh.Length);
             }
         }
-        public void DrawPrimitives(VertexPositionColor[] mesh)
+        public void DrawPrimitives(VertexPositionTexture[] mesh, Vector3 position, Texture2D texture, bool disableCulling = false)
+        {
+            BasicEffect effect = new BasicEffect(graphicsDevice)
+            {
+                View = GameMain.instance.camera.viewMatrix,
+                Projection = GameMain.instance.camera.projectionMatrix,
+                TextureEnabled = true,
+                Texture = texture
+            };
+            if (!disableCulling)
+            {
+                RasterizerState rasterizerState = new RasterizerState();
+                rasterizerState.CullMode = CullMode.None;
+                graphicsDevice.RasterizerState = rasterizerState;
+            }
+            for(int i = 0; i < mesh.Length; i++)
+            {
+                mesh[i].Position += position;
+            }
+            var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionTexture), 3, BufferUsage.WriteOnly);
+            vertexBuffer.SetData(mesh);
+            graphicsDevice.SetVertexBuffer(vertexBuffer);
+            foreach (var pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, mesh.Length);
+            }
+        }
+        public void DrawPrimitives(VertexPositionColor[] mesh, bool disableCulling = false)
         {
             BasicEffect effect = new BasicEffect(graphicsDevice)
             {
@@ -85,9 +121,39 @@ namespace MBBSlib.MonoGame
                 Projection = GameMain.instance.camera.projectionMatrix,
                 VertexColorEnabled = true
             };
-            RasterizerState rasterizerState = new RasterizerState();
-            rasterizerState.CullMode = CullMode.None;
-            graphicsDevice.RasterizerState = rasterizerState;
+            if (!disableCulling)
+            {
+                RasterizerState rasterizerState = new RasterizerState();
+                rasterizerState.CullMode = CullMode.None;
+                graphicsDevice.RasterizerState = rasterizerState;
+            }
+            var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), 3, BufferUsage.WriteOnly);
+            vertexBuffer.SetData(mesh);
+            graphicsDevice.SetVertexBuffer(vertexBuffer);  
+            foreach (var pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, mesh.Length);
+            }
+        }
+        public void DrawPrimitives(VertexPositionColor[] mesh, Vector3 position, bool disableCulling = false)
+        {
+            BasicEffect effect = new BasicEffect(graphicsDevice)
+            {
+                View = GameMain.instance.camera.viewMatrix,
+                Projection = GameMain.instance.camera.projectionMatrix,
+                VertexColorEnabled = true
+            };
+            if (!disableCulling)
+            {
+                RasterizerState rasterizerState = new RasterizerState();
+                rasterizerState.CullMode = CullMode.None;
+                graphicsDevice.RasterizerState = rasterizerState;
+            }
+            for (int i = 0; i < mesh.Length; i++)
+            {
+                mesh[i].Position += position;
+            }
             var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), 3, BufferUsage.WriteOnly);
             vertexBuffer.SetData(mesh);
             graphicsDevice.SetVertexBuffer(vertexBuffer);  
