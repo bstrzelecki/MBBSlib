@@ -30,10 +30,10 @@ namespace MBBSlib.MonoGame
         private readonly static List<IUpdateable> queuedUpdates = new List<IUpdateable>();
         private readonly static List<Renderer> rmQueuedRenderers = new List<Renderer>();
         private readonly static List<IUpdateable> rmQueuedUpdates = new List<IUpdateable>();
-
         private static List<IDrawable> priorityRenderers = new List<IDrawable>();
         private static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
         private static readonly Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
+        private static readonly Dictionary<string, Model> models = new Dictionary<string, Model>();
         /// <summary>
         /// Returns a texture that corresponds to a given key
         /// </summary>
@@ -46,6 +46,18 @@ namespace MBBSlib.MonoGame
                 return textures[key];
             }
             return null;
+        }
+        public Model GetModel(string key)
+        {
+            if (ContainsModel(key))
+            {
+                return models[key];
+            }
+            return null;
+        }
+        public bool ContainsModel(string key)
+        {
+            return models.ContainsKey(key);
         }
         /// <summary>
         /// Checks if the registry contains specified key
@@ -124,6 +136,7 @@ namespace MBBSlib.MonoGame
             try
             {
                 string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Content");
+                
                 foreach (string file in files)
                 {
                     string f = file.Remove(0, file.LastIndexOf('\\') + 1);
@@ -145,12 +158,26 @@ namespace MBBSlib.MonoGame
             try
             {
                 textures.Add(id, Content.Load<Texture2D>(id));
-                Debug.WriteLine("Loaded " + id);
+                Debug.WriteLine("Loaded sprite: " + id);
             }
-            catch (Exception e)
+            catch
             {
-                Debug.WriteLine("Error while loading sprite retrying " + e.ToString());
-                LoadFont(id);
+                try
+                {
+                    LoadFont(id);
+                    Debug.WriteLine("Loaded font: " + id);
+                }
+                catch
+                {
+                    try
+                    {
+                        models.Add(id, Content.Load<Model>(id));
+                        Debug.WriteLine("Loaded model: " + id);
+                    }catch(Exception e)
+                    {
+                        Debug.WriteLine(e.ToString());
+                    }
+                }
             }
         }
         public void LoadFont(string id)
