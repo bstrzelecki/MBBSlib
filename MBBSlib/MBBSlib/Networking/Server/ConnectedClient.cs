@@ -23,24 +23,19 @@ namespace MBBSlib.Networking.Server
 
             _stream = _socket.GetStream();
             SendData(new Command(1, 0, BitConverter.GetBytes(Id)));
-
+            _server.BroadcastData(new Command(0, Id, BitConverter.GetBytes(0)), Id);
             _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
         }
         internal void SendData(Command cmd)
         {
             try
             {
-                _stream.BeginWrite(cmd, 0, cmd.Size, SendCallback, null);
+                _stream.BeginWrite(cmd, 0, cmd.Size, null, null);
             }
             catch (Exception e)
             {
                 _server.OnSocketException?.Invoke(e);
             }
-        }
-
-        private void SendCallback(IAsyncResult ar)
-        {
-
         }
 
         private void RecieveCallBack(IAsyncResult ar)
@@ -73,7 +68,9 @@ namespace MBBSlib.Networking.Server
             _stream.Close();
             _socket.Dispose();
             _stream.Dispose();
-            _server.OnMessageBroadCast?.Invoke($"Client with id:{Id} disconnected form the server.");
+            _server.OnMessageBroadcast?.Invoke($"Client with id:{Id} disconnected form the server.");
+            //Send Disconnect Packet
+            _server.BroadcastData(new Command(2, Id, BitConverter.GetBytes(int.MaxValue)), Id);
             Id = -1;
         }
     }

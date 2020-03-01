@@ -15,7 +15,7 @@ namespace MBBSlib.Networking.Client
         /// </summary>
         public int Id { get; private set; } = -1;
         /// <summary>
-        /// Event that fires when client reciueves a command.
+        /// Event that fires when client recieves a command.
         /// </summary>
         public event Action<Command> OnCommandRecieved;
         /// <summary>
@@ -26,6 +26,18 @@ namespace MBBSlib.Networking.Client
         /// Event that fires when client sents command to a remote host.
         /// </summary>
         public event Action OnCommandSent;
+        /// <summary>
+        /// Event that fires when client recieves a command and wasnt managed by preprocessor.
+        /// </summary>
+        public event Action<Command> OnNotManagedCommand;
+        /// <summary>
+        /// Event that fires when another client connects to the remote host.
+        /// </summary>
+        public event Action<int> OnClientConnected;
+        /// <summary>
+        /// Event that fires when another client disconnects to the remote host.
+        /// </summary>
+        public event Action<int> OnClientDisconnected;
 
         readonly TcpClient _socket;
 
@@ -86,9 +98,20 @@ namespace MBBSlib.Networking.Client
         }
         private void PacketRecieved(Command cmd)
         {
-            if (cmd.Id == 1)
+            switch (cmd.Id)
             {
-                Id = BitConverter.ToInt32(cmd.DataForm);
+                case 0:
+                    OnClientConnected?.Invoke(cmd.Sender);
+                    break;
+                case 1:
+                    Id = BitConverter.ToInt32(cmd.DataForm);
+                    break;
+                case 2:
+                    OnClientDisconnected?.Invoke(cmd.Sender);
+                    break;
+                default:
+                    OnNotManagedCommand?.Invoke(cmd);
+                    break;
             }
             OnCommandRecieved?.Invoke(cmd);
         }

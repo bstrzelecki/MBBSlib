@@ -31,7 +31,7 @@ namespace MBBSlib.Networking.Server
         /// <summary>
         /// Event that fires when servers outputs debug information
         /// </summary>
-        public Action<string> OnMessageBroadCast;
+        public Action<string> OnMessageBroadcast;
 
         TcpListener _server;
         readonly List<ConnectedClient> _clients = new List<ConnectedClient>();
@@ -43,7 +43,7 @@ namespace MBBSlib.Networking.Server
             _server = new TcpListener(IPAddress.Any, Port);
             _server.Start();
             _server.BeginAcceptTcpClient(AccepetedClientCallback, null);
-            OnMessageBroadCast?.Invoke("Server started.");
+            OnMessageBroadcast?.Invoke("Server started.");
         }
         /// <summary>
         /// Sends data to specified client
@@ -98,7 +98,7 @@ namespace MBBSlib.Networking.Server
                 ConnectedClient cl = new ConnectedClient(id, client, this);
                 _clients.Add(cl);
                 OnClientConnected?.Invoke(cl.Id);
-                OnMessageBroadCast?.Invoke($"{client.Client.RemoteEndPoint} connected.");
+                OnMessageBroadcast?.Invoke($"{client.Client.RemoteEndPoint} connected.");
                 _server.BeginAcceptTcpClient(AccepetedClientCallback, null);
             }
             catch (Exception e)
