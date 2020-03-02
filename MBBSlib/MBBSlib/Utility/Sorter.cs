@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MBBSlib.Utility
 {
@@ -9,7 +7,7 @@ namespace MBBSlib.Utility
         List<int> a = new List<int>();
         public Sorter()
         {
-            
+
         }
     }
     public static class SortExtensions
