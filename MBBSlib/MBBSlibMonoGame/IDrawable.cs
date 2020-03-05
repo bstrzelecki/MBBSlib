@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace MBBSlib.MonoGame
+﻿namespace MBBSlib.MonoGame
 {
     public interface IDrawable
     {

@@ -136,7 +136,7 @@ namespace MBBSlib.MonoGame
             try
             {
                 string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Content");
-                
+
                 foreach (string file in files)
                 {
                     string f = file.Remove(0, file.LastIndexOf('\\') + 1);
@@ -173,7 +173,8 @@ namespace MBBSlib.MonoGame
                     {
                         models.Add(id, Content.Load<Model>(id));
                         Debug.WriteLine("Loaded model: " + id);
-                    }catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Debug.WriteLine(e.ToString());
                     }
@@ -228,7 +229,7 @@ namespace MBBSlib.MonoGame
         {
             GraphicsDevice.Clear(BackgroundColor);
 
-            
+
 
             foreach (Renderer draw in rmQueuedRenderers)
             {
@@ -250,7 +251,7 @@ namespace MBBSlib.MonoGame
             {
                 draw.drawable.Draw(batch);
             }
-            
+
             spriteBatch.End();
         }
     }

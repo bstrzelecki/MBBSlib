@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MBBSlib.MonoGame
 {
@@ -18,7 +16,8 @@ namespace MBBSlib.MonoGame
         public void Draw(Texture2D texture, Rectangle size)
         {
             spriteBatch.Draw(texture, size, Color.White);
-        }public void Draw(Texture2D texture, Rectangle size, Color color)
+        }
+        public void Draw(Texture2D texture, Rectangle size, Color color)
         {
             spriteBatch.Draw(texture, size, color);
         }
@@ -30,7 +29,7 @@ namespace MBBSlib.MonoGame
         {
             spriteBatch.Draw(texture, position, color);
         }
-        public void Draw( string textureName, Vector2 position)
+        public void Draw(string textureName, Vector2 position)
         {
             spriteBatch.Draw(new Sprite(textureName), position, Color.White);
         }
@@ -50,7 +49,7 @@ namespace MBBSlib.MonoGame
         {
             foreach (ModelMesh mesh in model.Meshes)
             {
-                foreach(BasicEffect effect in mesh.Effects)
+                foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
                     effect.AmbientLightColor = new Vector3(1f, 0, 0);
@@ -100,7 +99,7 @@ namespace MBBSlib.MonoGame
                 rasterizerState.CullMode = CullMode.None;
                 graphicsDevice.RasterizerState = rasterizerState;
             }
-            for(int i = 0; i < mesh.Length; i++)
+            for (int i = 0; i < mesh.Length; i++)
             {
                 mesh[i].Position += position;
             }
@@ -129,7 +128,7 @@ namespace MBBSlib.MonoGame
             }
             var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), 3, BufferUsage.WriteOnly);
             vertexBuffer.SetData(mesh);
-            graphicsDevice.SetVertexBuffer(vertexBuffer);  
+            graphicsDevice.SetVertexBuffer(vertexBuffer);
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
@@ -156,7 +155,7 @@ namespace MBBSlib.MonoGame
             }
             var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), 3, BufferUsage.WriteOnly);
             vertexBuffer.SetData(mesh);
-            graphicsDevice.SetVertexBuffer(vertexBuffer);  
+            graphicsDevice.SetVertexBuffer(vertexBuffer);
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
