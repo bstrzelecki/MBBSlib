@@ -1,6 +1,5 @@
-﻿using System;
+﻿using MBBSlib.AI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MBBSlib.AI;
 
 namespace MBBSUnitTests
 {
@@ -22,11 +21,11 @@ namespace MBBSUnitTests
 
             Pathfinding pathfinding = new Pathfinding(map);
             int errors = 0;
-            Point firstFail = new Point(0,0);
-            Point firstFailend = new Point(0,0);
+            Point firstFail = new Point(0, 0);
+            Point firstFailend = new Point(0, 0);
             for (int xs = 0; xs < 16; xs++)
             {
-                for(int ys = 0; ys < 16; ys++)
+                for (int ys = 0; ys < 16; ys++)
                 {
                     Point p = new Point(xs, ys);
                     for (int xe = 0; xe < 16; xe++)
@@ -39,9 +38,9 @@ namespace MBBSUnitTests
                             {
                                 pathfinding.GetPath(p, e);
                             }
-                            catch 
+                            catch
                             {
-                                if (firstFail == new Point(0,0))
+                                if (firstFail == new Point(0, 0))
                                     firstFail = p;
                                 if (firstFailend == new Point(0, 0))
                                     firstFailend = e;
