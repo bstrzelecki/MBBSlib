@@ -17,20 +17,13 @@ namespace MBBSlib.MonoGame
         /// </summary>
         public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private readonly BasicEffect basicEffect;
         /// <summary>
         /// Last copy of GameMain class
         /// </summary>
-        public static GameMain instance { get; private set; }
+        public static GameMain Instance { get; private set; }
         public Camera camera = new Camera();
-        private IStartingPoint start;
-        private static List<Renderer> renderers = new List<Renderer>();
-        private static List<IUpdateable> updates = new List<IUpdateable>();
-        private readonly static List<Renderer> queuedRenderers = new List<Renderer>();
-        private readonly static List<IUpdateable> queuedUpdates = new List<IUpdateable>();
-        private readonly static List<Renderer> rmQueuedRenderers = new List<Renderer>();
-        private readonly static List<IUpdateable> rmQueuedUpdates = new List<IUpdateable>();
-        private static List<IDrawable> priorityRenderers = new List<IDrawable>();
+        private readonly IStartingPoint start;
+        
         private static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
         private static readonly Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
         private static readonly Dictionary<string, Model> models = new Dictionary<string, Model>();
@@ -89,7 +82,7 @@ namespace MBBSlib.MonoGame
         public GameMain(IStartingPoint main)
         {
             graphics = new GraphicsDeviceManager(this);
-            instance = this;
+            Instance = this;
             Content.RootDirectory = "Content";
             start = main;
         }
@@ -224,7 +217,7 @@ namespace MBBSlib.MonoGame
         /// <summary>
         /// Defoult graphic device
         /// </summary>
-        public static GraphicsDevice graphicsDevice { get { return instance.GraphicsDevice; } }
+        public static GraphicsDevice graphicsDevice { get { return Instance.GraphicsDevice; } }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(BackgroundColor);
