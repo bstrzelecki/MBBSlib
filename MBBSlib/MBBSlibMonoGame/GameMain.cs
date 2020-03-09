@@ -23,7 +23,7 @@ namespace MBBSlib.MonoGame
         public static GameMain Instance { get; private set; }
         public Camera camera = new Camera();
         private readonly IStartingPoint start;
-        
+
         private static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
         private static readonly Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
         private static readonly Dictionary<string, Model> models = new Dictionary<string, Model>();
