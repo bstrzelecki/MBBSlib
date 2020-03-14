@@ -11,7 +11,10 @@ namespace MBBSlib.MonoGame
         private readonly static List<IUpdateable> queuedUpdates = new List<IUpdateable>();
         private readonly static List<Renderer> rmQueuedRenderers = new List<Renderer>();
         private readonly static List<IUpdateable> rmQueuedUpdates = new List<IUpdateable>();
-
+        /// <summary>
+        /// Registers existing audio source
+        /// </summary>
+        /// <param name="source"></param>
         public void RegisterAudioSource(IAudioSource source)
         {
             audioSources.Add(source);
