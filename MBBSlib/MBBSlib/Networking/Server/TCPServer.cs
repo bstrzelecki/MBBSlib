@@ -35,6 +35,20 @@ namespace MBBSlib.Networking.Server
 
         TcpListener _server;
         readonly List<ConnectedClient> _clients = new List<ConnectedClient>();
+        internal readonly Dictionary<int, ICommandInterpreter> _interpreters = new Dictionary<int, ICommandInterpreter>(); 
+
+        public void RegisterInterpreter(int id, ICommandInterpreter ici)
+        {
+            _interpreters.Add(id, ici);
+        }
+        public void UnregisterInterpreter(ICommandInterpreter ici)
+        {
+            foreach(var i in _interpreters.Keys)
+            {
+                if (_interpreters[i] == ici)
+                    _interpreters.Remove(i);
+            }
+        }
         /// <summary>
         /// Start listening on predefined port
         /// </summary>
