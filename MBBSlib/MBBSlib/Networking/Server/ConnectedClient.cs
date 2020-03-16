@@ -59,6 +59,8 @@ namespace MBBSlib.Networking.Server
 
         private void PacketRecieved(Command cmd)
         {
+            if (_server._interpreters.ContainsKey(cmd.Id))
+                _server._interpreters[cmd.Id].ExecuteCommand(cmd.Sender, cmd.DataForm);
             _server.OnCommandRecieved?.Invoke(cmd);
         }
 
