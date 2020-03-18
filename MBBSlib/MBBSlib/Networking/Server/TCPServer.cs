@@ -36,11 +36,19 @@ namespace MBBSlib.Networking.Server
         TcpListener _server;
         readonly List<ConnectedClient> _clients = new List<ConnectedClient>();
         internal readonly Dictionary<int, ICommandInterpreter> _interpreters = new Dictionary<int, ICommandInterpreter>();
-
+        /// <summary>
+        /// Registers command interpreter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ici"></param>
         public void RegisterInterpreter(int id, ICommandInterpreter ici)
         {
             _interpreters.Add(id, ici);
         }
+        /// <summary>
+        /// Unregisters command interpreter
+        /// </summary>
+        /// <param name="ici"></param>
         public void UnregisterInterpreter(ICommandInterpreter ici)
         {
             foreach (var i in _interpreters.Keys)
