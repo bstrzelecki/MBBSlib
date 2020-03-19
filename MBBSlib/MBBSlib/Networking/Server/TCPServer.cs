@@ -135,6 +135,9 @@ namespace MBBSlib.Networking.Server
                 if (_clients[i].Id == -1) _clients.RemoveAt(i);
             }
         }
+        /// <summary>
+        /// Clears memory and disconects all clients
+        /// </summary>
         public void Dispose()
         {
             foreach (ConnectedClient c in _clients)
