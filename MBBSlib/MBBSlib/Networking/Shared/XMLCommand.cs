@@ -12,14 +12,33 @@ namespace MBBSlib.Networking.Shared
         XDocument doc;
 
 
-        public byte[] Serialize()
+        public XMLCommand()
+        {
+            doc = new XDocument();
+            doc.Add(new XElement("Packet"));
+
+        }
+        public void AddKey(string key, object data)
+        {
+             XElement e = new XElement(key);
+             e.SetAttributeValue("type", data.GetType().ToString());
+             e.Value = data.ToString();
+        }
+        public XElement GetKey(string key)
+        {
+            return doc.Root.Element(key);
+        }
+        public IEnumerable<XElement> GetKeys(string key)
+        {
+            return doc.Root.Elements(key);
+        }
+        internal byte[] Serialize()
         {
             string data = doc.ToString();
             byte[] arr = Encoding.UTF8.GetBytes(data);
             arr = Compress(arr);
             return arr;
         }
-
         internal XMLCommand(byte[] arr)
         {
             arr = Decompress(arr);
@@ -45,6 +64,10 @@ namespace MBBSlib.Networking.Shared
                 dstream.CopyTo(output);
             }
             return output.ToArray();
+        }
+        public static implicit operator XElement(XMLCommand cmd)
+        {
+            return cmd.doc.Root;
         }
     }
 }
