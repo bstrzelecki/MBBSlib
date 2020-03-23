@@ -9,14 +9,13 @@ namespace MBBSlib.Networking.Shared
 {
     public class XMLCommand
     {
-        XDocument doc;
+        private readonly XDocument doc;
 
 
         public XMLCommand()
         {
             doc = new XDocument();
             doc.Add(new XElement("Packet"));
-
         }
         public void AddKey(string key, object data)
         {
