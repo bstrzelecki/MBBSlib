@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -19,9 +18,9 @@ namespace MBBSlib.Networking.Shared
         }
         public void AddKey(string key, object data)
         {
-             XElement e = new XElement(key);
-             e.SetAttributeValue("type", data.GetType().ToString());
-             e.Value = data.ToString();
+            XElement e = new XElement(key);
+            e.SetAttributeValue("type", data.GetType().ToString());
+            e.Value = data.ToString();
         }
         public XElement GetKey(string key)
         {
