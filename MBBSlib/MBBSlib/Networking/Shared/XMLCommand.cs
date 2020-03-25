@@ -6,11 +6,16 @@ using System.Xml.Linq;
 
 namespace MBBSlib.Networking.Shared
 {
+    /// <summary>
+    /// TCP packet represented as xml document
+    /// </summary>
     public class XMLCommand
     {
         private readonly XDocument doc;
 
-
+        /// <summary>
+        /// Initializes object with default packet formating
+        /// </summary>
         public XMLCommand()
         {
             doc = new XDocument();
