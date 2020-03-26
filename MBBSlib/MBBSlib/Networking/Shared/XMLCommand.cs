@@ -21,16 +21,31 @@ namespace MBBSlib.Networking.Shared
             doc = new XDocument();
             doc.Add(new XElement("Packet"));
         }
+        /// <summary>
+        /// Adds key to the serializable packet
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="data"></param>
         public void AddKey(string key, object data)
         {
             XElement e = new XElement(key);
             e.SetAttributeValue("type", data.GetType().ToString());
             e.Value = data.ToString();
         }
+        /// <summary>
+        /// Deserializes key from packet data
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public XElement GetKey(string key)
         {
             return doc.Root.Element(key);
         }
+        /// <summary>
+        /// Deserializes multiple keys from packet data with the same id
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public IEnumerable<XElement> GetKeys(string key)
         {
             return doc.Root.Elements(key);
