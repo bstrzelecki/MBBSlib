@@ -12,7 +12,6 @@ namespace MBBSlib.Networking.Shared
     public class XMLCommand
     {
         private readonly XDocument doc;
-
         /// <summary>
         /// Initializes object with default packet formating
         /// </summary>

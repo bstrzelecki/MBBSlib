@@ -71,8 +71,23 @@ namespace MBBSlib.Networking.Server
         /// Sends data to specified client
         /// </summary>
         /// <param name="clientid">Id of the client data will be sent</param>
-        /// <param name="cmd">Command that will be delivered to specified client</param>
-        public void SendData(int clientid, Command cmd)
+        /// <param name="cmd">Legacy command that will be delivered to specified client</param>
+        [Obsolete("Use xml version instead.")]public void SendData(int clientid, Command cmd)
+        {
+            foreach (ConnectedClient c in _clients)
+            {
+                if (c.Id == clientid)
+                {
+                    c.SendData(cmd);
+                }
+            }
+        }
+        /// <summary>
+        /// Sends data to specified client
+        /// </summary>
+        /// <param name="clientid">Id of the client data will be sent</param>
+        /// <param name="cmd">XML formatted command that will be delivered to specified client</param>
+        public void SendData(int clientid, XMLCommand cmd)
         {
             foreach (ConnectedClient c in _clients)
             {

@@ -37,6 +37,18 @@ namespace MBBSlib.Networking.Server
                 _server.OnSocketException?.Invoke(e);
             }
         }
+        internal void SendData(XMLCommand cmd)
+        {
+            try
+            {
+                byte[] arr = cmd.Serialize();
+                _stream.BeginWrite(arr, 0, arr.Length, null, null);
+            }
+            catch (Exception e)
+            {
+                _server.OnSocketException?.Invoke(e);
+            }
+        }
 
         private void RecieveCallBack(IAsyncResult ar)
         {
