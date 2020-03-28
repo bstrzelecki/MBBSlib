@@ -10,6 +10,6 @@
         /// </summary>
         /// <param name="sender">Client id</param>
         /// <param name="data">byte array of non compressed data stream</param>
-        void ExecuteCommand(int sender, byte[] data);
+        void ExecuteCommand(XMLCommand cmd);
     }
 }

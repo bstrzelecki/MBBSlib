@@ -1,6 +1,7 @@
 ﻿using MBBSlib.Networking.Shared;
 using System;
 using System.Net.Sockets;
+using System.Xml.Linq;
 using static MBBSlib.Networking.Shared.ConnectionData;
 
 namespace MBBSlib.Networking.Server
@@ -22,11 +23,11 @@ namespace MBBSlib.Networking.Server
             _socket.SendBufferSize = BUFFER_SIZE;
 
             _stream = _socket.GetStream();
-            SendData(new Command(1, 0, BitConverter.GetBytes(Id)));
-            _server.BroadcastData(new Command(0, Id, BitConverter.GetBytes(0)), Id);
+            SendData(new XMLCommand(1, 0, new XElement("grantedId",Id.ToString())));
+            _server.BroadcastData(new XMLCommand(0, Id, new XElement("grantedId", Id)),Id);
             _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
         }
-        internal void SendData(Command cmd)
+        [Obsolete] internal void SendData(Command cmd)
         {
             try
             {
@@ -57,7 +58,7 @@ namespace MBBSlib.Networking.Server
                 int bytes = _stream.EndRead(ar);
                 byte[] input = new byte[bytes];
                 Array.Copy(recieveBuffer, 0, input, 0, bytes);
-                Command cmd = new Command(input);
+                XMLCommand cmd = new XMLCommand(input);
 
                 PacketRecieved(cmd);
                 _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
@@ -69,10 +70,10 @@ namespace MBBSlib.Networking.Server
             }
         }
 
-        private void PacketRecieved(Command cmd)
+        private void PacketRecieved(XMLCommand cmd)
         {
             if (_server._interpreters.ContainsKey(cmd.Id))
-                _server._interpreters[cmd.Id].ExecuteCommand(cmd.Sender, cmd.DataForm);
+                _server._interpreters[cmd.Id].ExecuteCommand(cmd);
             _server.OnCommandRecieved?.Invoke(cmd);
         }
 
@@ -84,7 +85,7 @@ namespace MBBSlib.Networking.Server
             _stream.Dispose();
             _server.OnMessageBroadcast?.Invoke($"Client with id:{Id} disconnected form the server.");
             //Send Disconnect Packet
-            _server.BroadcastData(new Command(2, Id, BitConverter.GetBytes(int.MaxValue)), Id);
+            _server.BroadcastData(new XMLCommand(2, Id, new XElement("disconnectInfo", "null")), Id);
             Id = -1;
         }
     }

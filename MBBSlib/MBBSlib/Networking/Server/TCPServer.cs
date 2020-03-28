@@ -23,7 +23,7 @@ namespace MBBSlib.Networking.Server
         /// <summary>
         /// Event that fires when server recieves command from client
         /// </summary>
-        public Action<Command> OnCommandRecieved;
+        public Action<XMLCommand> OnCommandRecieved;
         /// <summary>
         /// Event that fires when excentpion is thrown
         /// </summary>
@@ -102,7 +102,7 @@ namespace MBBSlib.Networking.Server
         /// </summary>
         /// <param name="cmd">Command that will be delivered to clients</param>
         /// <param name="ids">List of ids to which command will not be sent</param>
-        public void BroadcastData(Command cmd, params int[] ids)
+        public void BroadcastData(XMLCommand cmd, params int[] ids)
         {
             foreach (ConnectedClient c in _clients)
             {

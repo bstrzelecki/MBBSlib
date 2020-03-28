@@ -6,7 +6,7 @@ namespace MBBSlib.Networking.Shared
     /// <summary>
     /// Default class for labeling tcp data
     /// </summary>
-    public class Command
+    [Obsolete("Use XMLCommand instead.")]public class Command
     {
         /// <summary>
         /// Lengh of transmitted data
@@ -50,6 +50,15 @@ namespace MBBSlib.Networking.Shared
             Id = BitConverter.ToInt32(_data[0..4]);
             Sender = BitConverter.ToInt32(_data[4..8]);
             DataForm = data[8..];
+        }
+        public static implicit operator XMLCommand(Command cmd)
+        {
+            XMLCommand c = new XMLCommand();
+            c.AddKey("id", cmd.Id);
+            c.AddKey("sender", cmd.Sender);
+            c.AddKey("data", Encoding.UTF8.GetString(cmd.DataForm));
+
+            return c;
         }
         public static implicit operator byte[](Command cmd)
         {

@@ -12,6 +12,21 @@ namespace MBBSlib.Networking.Shared
     public class XMLCommand
     {
         private readonly XDocument doc;
+
+        public int Id 
+        {
+            get
+            {
+                return int.Parse(doc.Root.Element("id").Value);
+            } 
+        }
+        public int Sender
+        {
+            get
+            {
+                return int.Parse(doc.Root.Element("sender").Value);
+            }
+        }
         /// <summary>
         /// Initializes object with default packet formating
         /// </summary>
@@ -48,6 +63,22 @@ namespace MBBSlib.Networking.Shared
         public IEnumerable<XElement> GetKeys(string key)
         {
             return doc.Root.Elements(key);
+        }
+        public bool ContainsKey(string s)
+        {
+            if (doc.Root.Element(s) != null) return true;
+            return false;
+        }
+        public XMLCommand(int commandId, int sender, params XElement[] data)
+        {
+            doc = new XDocument();
+            doc.Add(new XElement("Packet"));
+            doc.Root.Add(new XElement("id", commandId.ToString()));
+            doc.Root.Add(new XElement("sender", sender.ToString()));
+            foreach(var e in data)
+            {
+                doc.Root.Add(e);
+            }
         }
         internal byte[] Serialize()
         {

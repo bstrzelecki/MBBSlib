@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Xml.Linq;
 using static MBBSlib.Networking.Shared.ConnectionData;
 namespace MBBSlib.Networking.Client
 {
@@ -17,7 +18,7 @@ namespace MBBSlib.Networking.Client
         /// <summary>
         /// Event that fires when client recieves a command.
         /// </summary>
-        public event Action<Command> OnCommandRecieved;
+        public event Action<XMLCommand> OnCommandRecieved;
         /// <summary>
         /// Event that fires whent client succesfuly connects to a remote host.
         /// </summary>
@@ -29,7 +30,7 @@ namespace MBBSlib.Networking.Client
         /// <summary>
         /// Event that fires when client recieves a command and wasnt managed by preprocessor.
         /// </summary>
-        public event Action<Command> OnNotManagedCommand;
+        public event Action<XMLCommand> OnNotManagedCommand;
         /// <summary>
         /// Event that fires when another client connects to the remote host.
         /// </summary>
@@ -65,7 +66,7 @@ namespace MBBSlib.Networking.Client
         /// </summary>
         /// <param name="cmd">Id of data type (1-int.max)</param>
         /// <param name="data">1024 byte data array</param>
-        public void SendData(int cmd, byte[] data)
+        [Obsolete] public void SendData(int cmd, byte[] data)
         {
             if (Id == -1)
                 throw new Exception("Client has not connected to a remote host.");
@@ -74,6 +75,23 @@ namespace MBBSlib.Networking.Client
             _stream.BeginWrite(c, 0, c.Size, SendCallback, null);
 
 
+        }
+
+        public void SendData(XMLCommand cmd)
+        {
+            if (Id == -1)
+                throw new Exception("Client has not connected to a remote host.");
+            if (!cmd.ContainsKey("sender"))
+            {
+                cmd.AddKey("sender", Id);
+            }
+            
+            byte[] c = cmd.Serialize();
+            _stream.BeginWrite(c, 0, c.Length, SendCallback, null);
+        }
+        public void SendData(int cmd, params XElement[] element)
+        {
+            SendData(new XMLCommand(cmd, Id, element));
         }
 
         private void SendCallback(IAsyncResult ar)
@@ -93,21 +111,21 @@ namespace MBBSlib.Networking.Client
             int bytes = _stream.EndRead(ar);
             byte[] input = new byte[bytes];
             Array.Copy(recieveBuffer, 0, input, 0, bytes);
-            PacketRecieved(new Command(input));
+            PacketRecieved(new XMLCommand(input));
             _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallback, null);
         }
-        private void PacketRecieved(Command cmd)
+        private void PacketRecieved(XMLCommand cmd)
         {
-            switch (cmd.Id)
+            switch (int.Parse(cmd.GetKey("id").Value))
             {
                 case 0:
-                    OnClientConnected?.Invoke(cmd.Sender);
+                    OnClientConnected?.Invoke(int.Parse(cmd.GetKey("sender").Value));
                     break;
                 case 1:
-                    Id = BitConverter.ToInt32(cmd.DataForm);
+                    Id = int.Parse(cmd.GetKey("grantedId").Value);
                     break;
                 case 2:
-                    OnClientDisconnected?.Invoke(cmd.Sender);
+                    OnClientDisconnected?.Invoke(int.Parse(cmd.GetKey("sender").Value));
                     break;
                 default:
                     OnNotManagedCommand?.Invoke(cmd);
