@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -63,6 +65,32 @@ namespace MBBSlib.Networking.Shared
         public IEnumerable<XElement> GetKeys(string key)
         {
             return doc.Root.Elements(key);
+        }
+        public object GetValue(string key)
+        {
+            string s = doc.Root.Element(key).Value;
+            string t = doc.Root.Element(key).Attribute("type").Value;
+            TypeConverter tc = TypeDescriptor.GetConverter(Type.GetType(t));
+            object obj = tc.ConvertFromString(s);
+
+            return obj;
+        }
+        public T GetValue<T>(string key)
+        {
+            string s = doc.Root.Element(key).Value;
+            string t = doc.Root.Element(key).Attribute("type").Value;
+            TypeConverter tc = TypeDescriptor.GetConverter(Type.GetType(t));
+            object obj = tc.ConvertFromString(s);
+
+            return (T)obj;
+        }
+        public int GetInt(string key)
+        {
+            return int.Parse(GetKey(key).Value);
+        }
+        public string GetString(string key)
+        {
+            return GetKey(key).Value;
         }
         public bool ContainsKey(string s)
         {
