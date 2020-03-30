@@ -80,20 +80,12 @@ namespace MBBSlib.Networking.Client
         public void SendData(XMLCommand cmd)
         {
             if (Id == -1)
-                throw new Exception("Client has not connected to a remote host.");
-            if (!cmd.ContainsKey("sender"))
-            {
-                cmd.AddKey("sender", Id);
-            }
+                throw new Exception("Client has not been connected to a remote host.");
+            cmd.Sender = Id;
             
             byte[] c = cmd.Serialize();
             _stream.BeginWrite(c, 0, c.Length, SendCallback, null);
         }
-        public void SendData(int cmd, params XElement[] element)
-        {
-            SendData(new XMLCommand(cmd, Id, element));
-        }
-
         private void SendCallback(IAsyncResult ar)
         {
             OnCommandSent?.Invoke();
@@ -116,16 +108,16 @@ namespace MBBSlib.Networking.Client
         }
         private void PacketRecieved(XMLCommand cmd)
         {
-            switch (int.Parse(cmd.GetKey("id").Value))
+            switch (cmd.Id)
             {
                 case 0:
-                    OnClientConnected?.Invoke(int.Parse(cmd.GetKey("sender").Value));
+                    OnClientConnected?.Invoke(cmd.Sender);
                     break;
                 case 1:
-                    Id = int.Parse(cmd.GetKey("grantedId").Value);
+                    Id = cmd.GetInt("grantedId");
                     break;
                 case 2:
-                    OnClientDisconnected?.Invoke(int.Parse(cmd.GetKey("sender").Value));
+                    OnClientDisconnected?.Invoke(cmd.Sender);
                     break;
                 default:
                     OnNotManagedCommand?.Invoke(cmd);

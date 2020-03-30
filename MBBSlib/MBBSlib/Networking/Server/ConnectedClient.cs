@@ -23,8 +23,8 @@ namespace MBBSlib.Networking.Server
             _socket.SendBufferSize = BUFFER_SIZE;
 
             _stream = _socket.GetStream();
-            SendData(new XMLCommand(1, 0, new XElement("grantedId",Id.ToString())));
-            _server.BroadcastData(new XMLCommand(0, Id, new XElement("grantedId", Id)),Id);
+            SendData(new XMLCommand(1, 0, "grantedId",Id.ToString()));
+            _server.BroadcastData(new XMLCommand(0, Id, "grantedId", Id),Id);
             _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
         }
         [Obsolete] internal void SendData(Command cmd)
@@ -85,7 +85,7 @@ namespace MBBSlib.Networking.Server
             _stream.Dispose();
             _server.OnMessageBroadcast?.Invoke($"Client with id:{Id} disconnected form the server.");
             //Send Disconnect Packet
-            _server.BroadcastData(new XMLCommand(2, Id, new XElement("disconnectInfo", "null")), Id);
+            _server.BroadcastData(new XMLCommand(2, Id, "disconnectInfo", "null"), Id);
             Id = -1;
         }
     }

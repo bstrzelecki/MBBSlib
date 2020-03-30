@@ -13,20 +13,45 @@ namespace MBBSlib.Networking.Shared
     /// </summary>
     public class XMLCommand
     {
-        private readonly XDocument doc;
+        private XDocument doc;
 
         public int Id 
         {
             get
             {
-                return int.Parse(doc.Root.Element("id").Value);
+                return int.Parse(Header.Element("id").Value);
             } 
         }
         public int Sender
         {
             get
             {
-                return int.Parse(doc.Root.Element("sender").Value);
+                return int.Parse(Header.Element("sender").Value);
+            }
+            set
+            {
+                if(Header.Element("sender") == null)
+                {
+                    Header.Add(new XElement("sender"), value);
+                }
+                else
+                {
+                    Header.Element("sender").Value = value.ToString();
+                }
+            }
+        }
+        public XElement Data
+        {
+            get
+            {
+                return doc.Root.Element("Data");
+            }
+        }
+        internal XElement Header
+        {
+            get
+            {
+                return doc.Root.Element("Header");
             }
         }
         /// <summary>
@@ -34,8 +59,7 @@ namespace MBBSlib.Networking.Shared
         /// </summary>
         public XMLCommand()
         {
-            doc = new XDocument();
-            doc.Add(new XElement("Packet"));
+            InitializeXML();
         }
         /// <summary>
         /// Adds key to the serializable packet
@@ -47,6 +71,7 @@ namespace MBBSlib.Networking.Shared
             XElement e = new XElement(key);
             e.SetAttributeValue("type", data.GetType().ToString());
             e.Value = data.ToString();
+            Data.Add(e);
         }
         /// <summary>
         /// Deserializes key from packet data
@@ -55,7 +80,7 @@ namespace MBBSlib.Networking.Shared
         /// <returns></returns>
         public XElement GetKey(string key)
         {
-            return doc.Root.Element(key);
+            return Data.Element(key);
         }
         /// <summary>
         /// Deserializes multiple keys from packet data with the same id
@@ -68,8 +93,8 @@ namespace MBBSlib.Networking.Shared
         }
         public object GetValue(string key)
         {
-            string s = doc.Root.Element(key).Value;
-            string t = doc.Root.Element(key).Attribute("type").Value;
+            string s = Data.Element(key).Value;
+            string t = Data.Element(key).Attribute("type").Value;
             TypeConverter tc = TypeDescriptor.GetConverter(Type.GetType(t));
             object obj = tc.ConvertFromString(s);
 
@@ -77,12 +102,7 @@ namespace MBBSlib.Networking.Shared
         }
         public T GetValue<T>(string key)
         {
-            string s = doc.Root.Element(key).Value;
-            string t = doc.Root.Element(key).Attribute("type").Value;
-            TypeConverter tc = TypeDescriptor.GetConverter(Type.GetType(t));
-            object obj = tc.ConvertFromString(s);
-
-            return (T)obj;
+            return (T)GetValue(key);
         }
         public int GetInt(string key)
         {
@@ -94,19 +114,24 @@ namespace MBBSlib.Networking.Shared
         }
         public bool ContainsKey(string s)
         {
-            if (doc.Root.Element(s) != null) return true;
+            if (Data.Element(s) != null) return true;
             return false;
         }
-        public XMLCommand(int commandId, int sender, params XElement[] data)
+        public XMLCommand(int commandId, int sender, string key, object value)
+        {
+            InitializeXML();
+            Header.Add(new XElement("id", commandId.ToString()));
+            Header.Add(new XElement("sender", sender.ToString()));
+
+            AddKey(key, value);
+        }
+        private void InitializeXML()
         {
             doc = new XDocument();
-            doc.Add(new XElement("Packet"));
-            doc.Root.Add(new XElement("id", commandId.ToString()));
-            doc.Root.Add(new XElement("sender", sender.ToString()));
-            foreach(var e in data)
-            {
-                doc.Root.Add(e);
-            }
+            XElement packet = new XElement("Packet");
+            packet.Add(new XElement("Header"));
+            packet.Add(new XElement("Data"));
+            doc.Add(packet);
         }
         internal byte[] Serialize()
         {
@@ -143,7 +168,7 @@ namespace MBBSlib.Networking.Shared
         }
         public static implicit operator XElement(XMLCommand cmd)
         {
-            return cmd.doc.Root;
+            return cmd.Data;
         }
     }
 }
