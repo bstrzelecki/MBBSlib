@@ -15,12 +15,12 @@ namespace MBBSlib.Networking.Shared
     {
         private XDocument doc;
 
-        public int Id 
+        public int Id
         {
             get
             {
                 return int.Parse(Header.Element("id").Value);
-            } 
+            }
         }
         public int Sender
         {
@@ -30,7 +30,7 @@ namespace MBBSlib.Networking.Shared
             }
             set
             {
-                if(Header.Element("sender") == null)
+                if (Header.Element("sender") == null)
                 {
                     Header.Add(new XElement("sender"), value);
                 }

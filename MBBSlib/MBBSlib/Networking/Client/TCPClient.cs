@@ -2,7 +2,6 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Xml.Linq;
 using static MBBSlib.Networking.Shared.ConnectionData;
 namespace MBBSlib.Networking.Client
 {
@@ -66,7 +65,8 @@ namespace MBBSlib.Networking.Client
         /// </summary>
         /// <param name="cmd">Id of data type (1-int.max)</param>
         /// <param name="data">1024 byte data array</param>
-        [Obsolete] public void SendData(int cmd, byte[] data)
+        [Obsolete]
+        public void SendData(int cmd, byte[] data)
         {
             if (Id == -1)
                 throw new Exception("Client has not connected to a remote host.");
@@ -82,7 +82,7 @@ namespace MBBSlib.Networking.Client
             if (Id == -1)
                 throw new Exception("Client has not been connected to a remote host.");
             cmd.Sender = Id;
-            
+
             byte[] c = cmd.Serialize();
             _stream.BeginWrite(c, 0, c.Length, SendCallback, null);
         }

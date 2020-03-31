@@ -72,7 +72,8 @@ namespace MBBSlib.Networking.Server
         /// </summary>
         /// <param name="clientid">Id of the client data will be sent</param>
         /// <param name="cmd">Legacy command that will be delivered to specified client</param>
-        [Obsolete("Use xml version instead.")]public void SendData(int clientid, Command cmd)
+        [Obsolete("Use xml version instead.")]
+        public void SendData(int clientid, Command cmd)
         {
             foreach (ConnectedClient c in _clients)
             {

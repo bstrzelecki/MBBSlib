@@ -1,7 +1,6 @@
 ﻿using MBBSlib.Networking.Shared;
 using System;
 using System.Net.Sockets;
-using System.Xml.Linq;
 using static MBBSlib.Networking.Shared.ConnectionData;
 
 namespace MBBSlib.Networking.Server
@@ -23,11 +22,12 @@ namespace MBBSlib.Networking.Server
             _socket.SendBufferSize = BUFFER_SIZE;
 
             _stream = _socket.GetStream();
-            SendData(new XMLCommand(1, 0, "grantedId",Id.ToString()));
-            _server.BroadcastData(new XMLCommand(0, Id, "grantedId", Id),Id);
+            SendData(new XMLCommand(1, 0, "grantedId", Id.ToString()));
+            _server.BroadcastData(new XMLCommand(0, Id, "grantedId", Id), Id);
             _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
         }
-        [Obsolete] internal void SendData(Command cmd)
+        [Obsolete]
+        internal void SendData(Command cmd)
         {
             try
             {
