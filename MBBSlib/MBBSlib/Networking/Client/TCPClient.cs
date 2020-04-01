@@ -76,7 +76,10 @@ namespace MBBSlib.Networking.Client
 
 
         }
-
+        /// <summary>
+        /// Sends data directly to connected remote host.
+        /// </summary>
+        /// <param name="cmd"></param>
         public void SendData(XMLCommand cmd)
         {
             if (Id == -1)
