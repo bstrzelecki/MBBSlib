@@ -128,7 +128,9 @@ namespace MBBSlib.Networking.Client
             }
             OnCommandRecieved?.Invoke(cmd);
         }
-
+        /// <summary>
+        /// Disconnects from servers and frees allocated memory
+        /// </summary>
         public void Dispose()
         {
             _socket.Close();
