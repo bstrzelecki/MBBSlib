@@ -188,6 +188,7 @@ namespace MBBSlib.MonoGame
         public static bool DebugExit = false;
         protected override void Update(GameTime gameTime)
         {
+            
             if (DebugExit && (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)))
             {
                 Exit();

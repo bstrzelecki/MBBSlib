@@ -10,6 +10,16 @@ namespace MBBSlib.MonoGame
             MediaPlayer.Play(song);
             MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
         }
+        public static void Loop(string song)
+        {
+            Song s = Song.FromUri(song, new Uri(Environment.CurrentDirectory + @"Content\Audio\" + song));
+            Loop(s);
+        }
+        public static void Play(string song)
+        {
+            Song s = Song.FromUri(song, new Uri(Environment.CurrentDirectory + @"Content\Audio\" + song));
+            MediaPlayer.Play(s)
+        }
         private static Song _currentSong;
         private static void MediaPlayer_MediaStateChanged(object sender, EventArgs e)
         {
