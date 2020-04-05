@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace MBBSlib.MonoGame
 {
@@ -22,6 +23,7 @@ namespace MBBSlib.MonoGame
         {
             Song s = GetSong(song);
             MediaPlayer.Play(s);
+            dynamic obj = new ExpandoObject();
         }
         private static Song GetSong(string song)
         {
