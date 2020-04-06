@@ -15,7 +15,7 @@ namespace MBBSlib.MonoGame
             MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
         }
         public static void Loop(string song)
-        { 
+        {
             Song s = GetSong(song);
             Loop(s);
         }
