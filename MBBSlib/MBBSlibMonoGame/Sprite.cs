@@ -9,13 +9,27 @@ namespace MBBSlib.MonoGame
     public class Sprite
     {
         public Texture2D Texture { get; protected set; }
-        public Rectangle Size { get; protected set; }
+        public Rectangle Size
+        {
+            get
+            {
+                if (Texture == null && textureName != string.Empty)
+                {
+                    Texture = TextureStorage.GetTexture(textureName);
+                }
+                if (Texture == null)
+                {
+                    Texture = new Texture2D(GameMain.graphics.GraphicsDevice, 1, 1);
+
+                }
+                return Texture.Bounds;
+            }
+        }
         protected string textureName = string.Empty;
         public static IGetTexture TextureStorage;
         public Sprite(Texture2D sprite)
         {
             Texture = sprite;
-            Size = sprite.Bounds;
         }
         public Sprite(string sprite)
         {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace MBBSlib.MonoGame
 {
@@ -111,7 +112,52 @@ namespace MBBSlib.MonoGame
             start.Start(this);
             RegisterUpdate(new Time());
             IsMouseVisible = true;
+            InitializeComponents();
             base.Initialize();
+        }
+
+        private void InitializeComponents()
+        {
+            Assembly ass = Assembly.GetEntryAssembly();
+            foreach(var a in ass.GetTypes())
+            {
+                foreach(Attribute atr in Attribute.GetCustomAttributes(a))
+                {
+                    if(atr is GameComponent)
+                    {
+                        if (a.GetInterface("IDrawable") != null && a.GetInterface("IUpdateable") != null)
+                        {
+                            object o = Activator.CreateInstance(a);
+                            RegisterRenderer((IDrawable)o);
+                            RegisterUpdate((IUpdateable)o);
+                        }
+                        else if (a.GetInterface("IDrawable") != null )
+                        {
+                            object o = Activator.CreateInstance(a);
+                            RegisterRenderer((IDrawable)o);
+                        } 
+                        else if (a.GetInterface("IUpdateable") != null)
+                        {
+                            object o = Activator.CreateInstance(a);
+                            RegisterUpdate((IUpdateable)o);
+                        }
+                    }
+                }
+                
+            }
+        }
+
+        private Resolution _res = Resolution.HDp;
+        public Resolution Resolution
+        {
+            get
+            {
+                return _res;
+            }
+            set
+            {
+                SetResolution(value);
+            }
         }
         public void SetResolution(Resolution resolution)
         {
@@ -119,6 +165,8 @@ namespace MBBSlib.MonoGame
         }
         public void SetResolution(int width, int height)
         {
+            _res.Height = height;
+            _res.Width = width;
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
             graphics.ApplyChanges();
