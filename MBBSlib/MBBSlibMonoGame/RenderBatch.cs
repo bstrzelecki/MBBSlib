@@ -13,6 +13,11 @@ namespace MBBSlib.MonoGame
             spriteBatch = sb;
             graphicsDevice = gd;
         }
+        public void DrawRelative(Texture2D texture, Math.Vector2 position)
+        {
+            Vector2 p = new Vector2(position.x, position.y);
+            spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, Color.White);
+        }
         public void Draw(Texture2D texture, Rectangle size)
         {
             spriteBatch.Draw(texture, size, Color.White);
@@ -34,6 +39,11 @@ namespace MBBSlib.MonoGame
         {
             Vector2 p = new Vector2(position.x, position.y);
             spriteBatch.Draw(new Sprite(texture), p, Color.White);
+        }
+        public void Draw(Texture2D texture, Math.Vector2 position, float rotation, Math.Vector2 origin)
+        {
+            Vector2 p = new Vector2(position.x, position.y);
+            spriteBatch.Draw(new Sprite(texture), new Rectangle((int)position.x, (int)position.y, texture.Width, texture.Height), null, Color.White, rotation, new Vector2(origin.x, origin.y), SpriteEffects.None, 0);
         }
         public void Draw(Texture2D texture, Vector2 position, Color color)
         {
@@ -63,9 +73,9 @@ namespace MBBSlib.MonoGame
                 {
                     effect.EnableDefaultLighting();
                     effect.AmbientLightColor = new Vector3(1f, 0, 0);
-                    effect.View = GameMain.Instance.camera.viewMatrix;
+                    effect.View = GameMain.Instance.camera3D.viewMatrix;
                     effect.World = Matrix.CreateTranslation(position);
-                    effect.Projection = GameMain.Instance.camera.projectionMatrix;
+                    effect.Projection = GameMain.Instance.camera3D.projectionMatrix;
                 }
                 mesh.Draw();
             }
@@ -74,8 +84,8 @@ namespace MBBSlib.MonoGame
         {
             BasicEffect effect = new BasicEffect(graphicsDevice)
             {
-                View = GameMain.Instance.camera.viewMatrix,
-                Projection = GameMain.Instance.camera.projectionMatrix,
+                View = GameMain.Instance.camera3D.viewMatrix,
+                Projection = GameMain.Instance.camera3D.projectionMatrix,
                 TextureEnabled = true,
                 Texture = texture
             };
@@ -98,8 +108,8 @@ namespace MBBSlib.MonoGame
         {
             BasicEffect effect = new BasicEffect(graphicsDevice)
             {
-                View = GameMain.Instance.camera.viewMatrix,
-                Projection = GameMain.Instance.camera.projectionMatrix,
+                View = GameMain.Instance.camera3D.viewMatrix,
+                Projection = GameMain.Instance.camera3D.projectionMatrix,
                 TextureEnabled = true,
                 Texture = texture
             };
@@ -126,8 +136,8 @@ namespace MBBSlib.MonoGame
         {
             BasicEffect effect = new BasicEffect(graphicsDevice)
             {
-                View = GameMain.Instance.camera.viewMatrix,
-                Projection = GameMain.Instance.camera.projectionMatrix,
+                View = GameMain.Instance.camera3D.viewMatrix,
+                Projection = GameMain.Instance.camera3D.projectionMatrix,
                 VertexColorEnabled = true
             };
             if (!disableCulling)
@@ -149,8 +159,8 @@ namespace MBBSlib.MonoGame
         {
             BasicEffect effect = new BasicEffect(graphicsDevice)
             {
-                View = GameMain.Instance.camera.viewMatrix,
-                Projection = GameMain.Instance.camera.projectionMatrix,
+                View = GameMain.Instance.camera3D.viewMatrix,
+                Projection = GameMain.Instance.camera3D.projectionMatrix,
                 VertexColorEnabled = true
             };
             if (!disableCulling)

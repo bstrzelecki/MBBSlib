@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MBBSlib.MonoGame._3D
 {
-    public class Camera
+    public class Camera3D : Camera
     {
         #region public properties
-        public Vector3 Position
+        public new Vector3 Position
         {
             get
             {
@@ -103,7 +103,7 @@ namespace MBBSlib.MonoGame._3D
         /// <summary>
         /// Standard perspective camera class
         /// </summary>
-        public Camera()
+        public Camera3D()
         {
             target = Vector3.Zero;
             position = new Vector3(0, 0, 100f);

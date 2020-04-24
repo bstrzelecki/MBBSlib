@@ -16,7 +16,15 @@ namespace MBBSlib.Math
         public float Normalized { get { return (float)(System.Math.Sqrt((x * x) + (y * y))); } }
         public float x;
         public float y;
-
+        /// <summary>
+        /// Creates vector with magnitude of 1 and given angle
+        /// </summary>
+        /// <param name="rotation">Direction of vector in radians</param>
+        public Vector2(float rotation)
+        {
+            this.x = (float)System.Math.Cos(rotation);
+            this.y = (float)System.Math.Sin(rotation);
+        }
         public Vector2(float x, float y)
         {
             this.x = x;
@@ -36,6 +44,14 @@ namespace MBBSlib.Math
                 Array.Copy(BitConverter.GetBytes(y), 0, b, 4, 4);
                 return b;
             }
+        }
+        public static bool operator ==(Vector2 a, Vector2 b)
+        {
+            return (a.x == b.x && a.y == b.y);
+        }
+        public static bool operator !=(Vector2 a, Vector2 b)
+        {
+            return !(a.x == b.x && a.y == b.y);
         }
         public static Vector2 operator +(Vector2 a, Vector2 b)
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace MBBSlib.MonoGame
@@ -9,6 +10,12 @@ namespace MBBSlib.MonoGame
         public static Vector2 cameraOffset;
         public static Vector2 MousePosition { get { return GetMousePosition(); } }
         public static int MouseScrollDelta { get { return GetMouseScrollDelta(); } }
+
+        internal static readonly Dictionary<Keys, Action> actions = new Dictionary<Keys, Action>();
+        public static void BindKey(Keys key, Action action)
+        {
+            actions.Add(key, action);
+        }
         public static bool IsKeyDown(Keys key)
         {
             KeyboardState state = Keyboard.GetState();

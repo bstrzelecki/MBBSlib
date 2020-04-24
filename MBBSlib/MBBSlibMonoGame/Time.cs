@@ -2,29 +2,44 @@
 
 namespace MBBSlib.MonoGame
 {
-    public class Time : IUpdateable
+    public static class Time
     {
-        public static int DeltaTime { get; private set; }
-        public static bool IsPaused { get; set; } = false;
+        public static int DeltaTime { get => tc.DeltaTime; }
+        public static bool IsPaused { get => tc.IsPaused; set { tc.IsPaused = value; } }
+        public static int TickTime { get => tc.TickTime; set { tc.TickTime = value; } }
         public static event Action OnTick;
-        private static int start;
-        private int tickCounter;
-        private const int tickTime = 30;
-        public void Update()
+        internal static TickCounter tc;
+        internal static void Initialize()
         {
-            if (IsPaused)
+            tc = new TickCounter();
+        }
+        internal class TickCounter : IUpdateable
+        {
+            public int DeltaTime { get; private set; }
+            public bool IsPaused { get; set; } = false;
+            public int TickTime { get; set; } = 30;
+            private static int start;
+            private static int tickCounter;
+            public TickCounter()
             {
-                DeltaTime = 0;
-                return;
+                GameMain.RegisterUpdate(this);
             }
-            DeltaTime = DateTime.Now.Millisecond - start;
-            DeltaTime = DeltaTime > 0 ? DeltaTime : 0;
-            start = DateTime.Now.Millisecond;
-            tickCounter += DeltaTime;
-            if (tickCounter > tickTime)
+            public void Update()
             {
-                tickCounter = 0;
-                OnTick?.Invoke();
+                if (IsPaused)
+                {
+                    DeltaTime = 0;
+                    return;
+                }
+                DeltaTime = DateTime.Now.Millisecond - start;
+                DeltaTime = DeltaTime > 0 ? DeltaTime : 0;
+                start = DateTime.Now.Millisecond;
+                tickCounter += DeltaTime;
+                if (tickCounter > TickTime)
+                {
+                    tickCounter = 0;
+                    OnTick?.Invoke();
+                }
             }
         }
     }

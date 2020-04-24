@@ -22,7 +22,8 @@ namespace MBBSlib.MonoGame
         /// Last copy of GameMain class
         /// </summary>
         public static GameMain Instance { get; private set; }
-        public Camera camera = new Camera();
+        public Camera3D camera3D = new Camera3D();
+        public Camera camera2D = new Camera2D();
         private readonly IStartingPoint start;
 
         private static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
@@ -110,9 +111,10 @@ namespace MBBSlib.MonoGame
         {
             Sprite.TextureStorage = this;
             start.Start(this);
-            RegisterUpdate(new Time());
+            Time.Initialize();
             IsMouseVisible = true;
             InitializeComponents();
+            new InputBindHandler();
             base.Initialize();
         }
 
