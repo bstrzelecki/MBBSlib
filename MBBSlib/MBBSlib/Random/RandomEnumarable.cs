@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace MBBSlib.Randomization
+namespace MBBSlib.Random
 {
     public class RandomEnumarable : IEnumerable<int>
     {
-        readonly Random r;
+        readonly System.Random r;
         readonly int i;
         readonly int min = 0;
         readonly int max = int.MaxValue;
-        public RandomEnumarable(Random random, int amount)
+        public RandomEnumarable(System.Random random, int amount)
         {
             r = random;
             i = amount;
         }
-        public RandomEnumarable(Random random, int amount, int max)
+        public RandomEnumarable(System.Random random, int amount, int max)
         {
             r = random;
             i = amount;
             this.max = max;
         }
-        public RandomEnumarable(Random random, int amount, int min, int max)
+        public RandomEnumarable(System.Random random, int amount, int min, int max)
         {
             r = random;
             i = amount;
@@ -44,11 +43,11 @@ namespace MBBSlib.Randomization
         public int Current { get; private set; } = 0;
 
         object IEnumerator.Current => Current;
-        Random rng;
+        System.Random rng;
         int i;
         readonly int min;
         readonly int max;
-        public RandomEnumerator(Random random, int amount, int min, int max)
+        public RandomEnumerator(System.Random random, int amount, int min, int max)
         {
             rng = random;
             i = amount;
@@ -73,7 +72,7 @@ namespace MBBSlib.Randomization
 
         public void Reset()
         {
-            rng = new Random();
+            rng = new System.Random();
         }
     }
 }

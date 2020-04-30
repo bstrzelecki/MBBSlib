@@ -4,7 +4,7 @@ using System;
 
 namespace MBBSlib.MonoGame.UI
 {
-    class Window : ContentPane, IDisposable, IUpdateable
+    public class Window : ContentPane, IDisposable, IUpdateable
     {
         public string Title { get; set; } = "Window.";
         public Sprite topBar;

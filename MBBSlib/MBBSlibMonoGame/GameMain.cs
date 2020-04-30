@@ -110,10 +110,10 @@ namespace MBBSlib.MonoGame
         protected override void Initialize()
         {
             Sprite.TextureStorage = this;
-            start.Start(this);
-            Time.Initialize();
             IsMouseVisible = true;
             InitializeComponents();
+            start.Start(this);
+            Time.Initialize();
             new InputBindHandler();
             base.Initialize();
         }

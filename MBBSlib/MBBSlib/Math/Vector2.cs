@@ -13,7 +13,7 @@ namespace MBBSlib.Math
 
         public float Magnitude { get { return (float)(System.Math.Sqrt((x * x) + (y * y))); } }
         //TODO
-        public float Normalized { get { return (float)(System.Math.Sqrt((x * x) + (y * y))); } }
+        public Vector2 Normalized { get { return (Magnitude!=0)?new Vector2(x / Magnitude, y / Magnitude):One;  } }
         public float x;
         public float y;
         /// <summary>
@@ -45,6 +45,26 @@ namespace MBBSlib.Math
                 return b;
             }
         }
+        public override bool Equals(object obj)
+        {
+            if(obj is Vector2 b)
+            {
+                return x == b.x && y == b.y;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine<Vector2>(this);
+        }
+
+        public override string ToString()
+        {
+            return $"{x} {y}";
+        }
         public static bool operator ==(Vector2 a, Vector2 b)
         {
             return (a.x == b.x && a.y == b.y);
@@ -62,6 +82,10 @@ namespace MBBSlib.Math
             return new Vector2(a.x - b.x, a.y - b.y);
         }
         public static Vector2 operator *(Vector2 a, float b)
+        {
+            return new Vector2(a.x * b, a.y * b);
+        }
+        public static Vector2 operator *(int b, Vector2 a)
         {
             return new Vector2(a.x * b, a.y * b);
         }

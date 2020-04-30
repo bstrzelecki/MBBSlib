@@ -10,8 +10,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MBBSlib.MonoGame", "MBBSlib
 		{27446167-7D2E-431E-966E-9B43260D8383} = {27446167-7D2E-431E-966E-9B43260D8383}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MBBSUnitTests", "MBBSUnitTests\MBBSUnitTests.csproj", "{FC551B06-7819-4886-9279-9FFC775115C5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,10 +24,6 @@ Global
 		{9D4661F2-8EC6-430C-BA28-F070574E90FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D4661F2-8EC6-430C-BA28-F070574E90FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D4661F2-8EC6-430C-BA28-F070574E90FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC551B06-7819-4886-9279-9FFC775115C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC551B06-7819-4886-9279-9FFC775115C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC551B06-7819-4886-9279-9FFC775115C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC551B06-7819-4886-9279-9FFC775115C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

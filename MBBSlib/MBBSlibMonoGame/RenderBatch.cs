@@ -6,8 +6,8 @@ namespace MBBSlib.MonoGame
 {
     public class RenderBatch : IDisposable
     {
-        SpriteBatch spriteBatch;
-        GraphicsDevice graphicsDevice;
+        readonly SpriteBatch spriteBatch;
+        readonly GraphicsDevice graphicsDevice;
         public RenderBatch(SpriteBatch sb, GraphicsDevice gd)
         {
             spriteBatch = sb;
@@ -17,6 +17,11 @@ namespace MBBSlib.MonoGame
         {
             Vector2 p = new Vector2(position.x, position.y);
             spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, Color.White);
+        }
+        public void DrawRelative(Texture2D texture, Math.Vector2 position, Color color)
+        {
+            Vector2 p = new Vector2(position.x, position.y);
+            spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, color);
         }
         public void Draw(Texture2D texture, Rectangle size)
         {
@@ -42,7 +47,6 @@ namespace MBBSlib.MonoGame
         }
         public void Draw(Texture2D texture, Math.Vector2 position, float rotation, Math.Vector2 origin)
         {
-            Vector2 p = new Vector2(position.x, position.y);
             spriteBatch.Draw(new Sprite(texture), new Rectangle((int)position.x, (int)position.y, texture.Width, texture.Height), null, Color.White, rotation, new Vector2(origin.x, origin.y), SpriteEffects.None, 0);
         }
         public void Draw(Texture2D texture, Vector2 position, Color color)
@@ -91,8 +95,10 @@ namespace MBBSlib.MonoGame
             };
             if (!disableCulling)
             {
-                RasterizerState rasterizerState = new RasterizerState();
-                rasterizerState.CullMode = CullMode.None;
+                RasterizerState rasterizerState = new RasterizerState
+                {
+                    CullMode = CullMode.None
+                };
                 graphicsDevice.RasterizerState = rasterizerState;
             }
             var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionTexture), 3, BufferUsage.WriteOnly);
@@ -115,8 +121,10 @@ namespace MBBSlib.MonoGame
             };
             if (!disableCulling)
             {
-                RasterizerState rasterizerState = new RasterizerState();
-                rasterizerState.CullMode = CullMode.None;
+                RasterizerState rasterizerState = new RasterizerState
+                {
+                    CullMode = CullMode.None
+                };
                 graphicsDevice.RasterizerState = rasterizerState;
             }
             for (int i = 0; i < mesh.Length; i++)
@@ -142,8 +150,10 @@ namespace MBBSlib.MonoGame
             };
             if (!disableCulling)
             {
-                RasterizerState rasterizerState = new RasterizerState();
-                rasterizerState.CullMode = CullMode.None;
+                RasterizerState rasterizerState = new RasterizerState
+                {
+                    CullMode = CullMode.None
+                };
                 graphicsDevice.RasterizerState = rasterizerState;
             }
             var vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), 3, BufferUsage.WriteOnly);
@@ -165,8 +175,10 @@ namespace MBBSlib.MonoGame
             };
             if (!disableCulling)
             {
-                RasterizerState rasterizerState = new RasterizerState();
-                rasterizerState.CullMode = CullMode.None;
+                RasterizerState rasterizerState = new RasterizerState
+                {
+                    CullMode = CullMode.None
+                };
                 graphicsDevice.RasterizerState = rasterizerState;
             }
             for (int i = 0; i < mesh.Length; i++)
