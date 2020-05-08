@@ -35,6 +35,10 @@ namespace MBBSlib.MonoGame
         {
             spriteBatch.Draw(texture, position, Color.White);
         }
+        public void Draw(Texture2D texture, Math.Vector2 position, Color color)
+        {
+            spriteBatch.Draw(texture, new Vector2(position.x,position.y), color);
+        }
         public void Draw(Texture2D texture, Math.Vector2 position)
         {
             Vector2 p = new Vector2(position.x, position.y);
