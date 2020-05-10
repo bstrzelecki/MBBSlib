@@ -2,10 +2,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace MBBSlib.Utility
 {
-    public class Grid<T> : IEnumerable<T>, IGrid<T>
+    public class Grid<T> : IEnumerable<T>, IGrid<T>, ISerializable
     {
         private readonly T[,] array;
         private readonly int width;
@@ -43,6 +44,24 @@ namespace MBBSlib.Utility
             }
             return false;
         }
+        public T[] GetRow(int y)
+        {
+            T[] ar = new T[width];
+            for(int i = 0; i < y; i++)
+            {
+                ar[i] = array[i, y];
+            }
+            return ar;
+        }
+        public T[] GetColumn(int x)
+        {
+            T[] ar = new T[height];
+            for (int i = 0; i < x; i++)
+            {
+                ar[i] = array[x,i];
+            }
+            return ar;
+        }
         public Vector2 IndexOf(T obj)
         {
             for(int i = 0; i < width; i++)
@@ -72,10 +91,24 @@ namespace MBBSlib.Utility
         {
             return GetEnumerator();
         }
+        public Grid(SerializationInfo info, StreamingContext context)
+        {
+            //TOOD
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    info.AddValue($"{i}:{j}", array[i, j], typeof(T));
+                }
+            }
+        }
     }
     public class GridEnumerator<T> : IEnumerator<T>
     {
-        public T Current { get; set; };
+        public T Current { get; set; }
 
         object IEnumerator.Current => Current;
         private T[,] array;

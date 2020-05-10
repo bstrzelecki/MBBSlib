@@ -29,6 +29,18 @@ namespace MBBSlib.MonoGame
         private static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
         private static readonly Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
         private static readonly Dictionary<string, Model> models = new Dictionary<string, Model>();
+
+        private static readonly Dictionary<Type, object> singletons = new Dictionary<Type, object>();
+        
+        private static void AddSingleton(Type t, object obj)
+        {
+            if (singletons.ContainsKey(t)) return;
+            singletons.Add(t, obj);
+        }
+        public static T GetGameComponent<T>()
+        {
+            return (T)singletons[typeof(T)];
+        }
         /// <summary>
         /// Returns a texture that corresponds to a given key
         /// </summary>
@@ -127,20 +139,14 @@ namespace MBBSlib.MonoGame
                 {
                     if(atr is GameComponent)
                     {
-                        if (a.GetInterface("IDrawable") != null && a.GetInterface("IUpdateable") != null)
+                        object o = Activator.CreateInstance(a);
+                        AddSingleton(a, o);
+                        if (a.GetInterface("IDrawable") != null )
                         {
-                            object o = Activator.CreateInstance(a);
-                            RegisterRenderer((IDrawable)o);
-                            RegisterUpdate((IUpdateable)o);
-                        }
-                        else if (a.GetInterface("IDrawable") != null )
-                        {
-                            object o = Activator.CreateInstance(a);
                             RegisterRenderer((IDrawable)o);
                         } 
-                        else if (a.GetInterface("IUpdateable") != null)
+                        if (a.GetInterface("IUpdateable") != null)
                         {
-                            object o = Activator.CreateInstance(a);
                             RegisterUpdate((IUpdateable)o);
                         }
                     }
