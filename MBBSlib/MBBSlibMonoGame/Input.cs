@@ -10,12 +10,17 @@ namespace MBBSlib.MonoGame
         public static Vector2 cameraOffset;
         public static Vector2 MousePosition { get { return GetMousePosition(); } }
         public static int MouseScrollDelta { get { return GetMouseScrollDelta(); } }
-
-        internal static readonly Dictionary<Keys, Action> actions = new Dictionary<Keys, Action>();
-        public static void BindKey(Keys key, Action action)
-        {
-            actions.Add(key, action);
+        private static bool _mouseDrag;
+        public static bool MouseDrag { get => _mouseDrag; set
+            {
+                _mouseDrag = value;
+                GameMain.Instance.IsMouseVisible = !value;
+            }
         }
+        public static Vector2 MouseDragDelta => _mouseDrag ? _mouseDragController.Drag : throw new MemberAccessException("Mouse drag calculation is not enabled");
+        private static MouseDragController _mouseDragController = new MouseDragController();
+        internal static readonly Dictionary<Keys, Action> _actions = new Dictionary<Keys, Action>();
+        public static void BindKey(Keys key, Action action) => _actions.Add(key, action);
         public static bool IsKeyDown(Keys key)
         {
             KeyboardState state = Keyboard.GetState();
@@ -26,37 +31,37 @@ namespace MBBSlib.MonoGame
             KeyboardState state = Keyboard.GetState();
             return state.IsKeyUp(key);
         }
-        private static Dictionary<Keys, bool> keysClicked = new Dictionary<Keys, bool>();
+        private static Dictionary<Keys, bool> _keysClicked = new Dictionary<Keys, bool>();
 
         public static bool IsKeyClicked(Keys key)
         {
-            if (!keysClicked.ContainsKey(key))
+            if (!_keysClicked.ContainsKey(key))
             {
-                keysClicked.Add(key, false);
+                _keysClicked.Add(key, false);
             }
-            if (IsKeyDown(key) && !keysClicked[key])
+            if (IsKeyDown(key) && !_keysClicked[key])
             {
-                keysClicked[key] = true;
+                _keysClicked[key] = true;
                 return true;
             }
-            if (IsKeyUp(key) && keysClicked[key])
+            if (IsKeyUp(key) && _keysClicked[key])
             {
-                keysClicked[key] = false;
+                _keysClicked[key] = false;
             }
             return false;
         }
 
-        private static bool[] btnsClicked = new bool[3];
+        private static readonly bool[] _btnsClicked = new bool[3];
         public static bool IsMouseButtonClicked(int btn)
         {
-            if (IsMouseKeyDown(btn) && !btnsClicked[btn])
+            if (IsMouseKeyDown(btn) && !_btnsClicked[btn])
             {
-                btnsClicked[btn] = true;
+                _btnsClicked[btn] = true;
                 return true;
             }
-            if (IsMouseKeyUp(btn) && btnsClicked[btn])
+            if (IsMouseKeyUp(btn) && _btnsClicked[btn])
             {
-                btnsClicked[btn] = false;
+                _btnsClicked[btn] = false;
             }
             return false;
         }
@@ -68,7 +73,7 @@ namespace MBBSlib.MonoGame
         public static bool IsMouseKeyDown(int btn)
         {
             MouseState state = Mouse.GetState();
-            switch (btn)
+            switch(btn)
             {
                 case 0:
                     return state.LeftButton == ButtonState.Pressed;
@@ -76,6 +81,8 @@ namespace MBBSlib.MonoGame
                     return state.MiddleButton == ButtonState.Pressed;
                 case 2:
                     return state.RightButton == ButtonState.Pressed;
+                default:
+                    break;
             }
             return false;
         }
@@ -98,9 +105,19 @@ namespace MBBSlib.MonoGame
             MouseState mouse = Mouse.GetState();
             return mouse.Position.ToVector2();
         }
-        public static Vector2 ToWorldPosition(Vector2 pos)
+        public static Vector2 ToWorldPosition(Vector2 pos) => pos - cameraOffset;
+
+        private class MouseDragController : IUpdateable
         {
-            return pos - cameraOffset;
+            public Vector2 Drag { get; set; }
+            public MouseDragController() => GameMain.RegisterUpdate(this);
+            public void Update()
+            {
+                if(!MouseDrag) return;
+
+                Drag = MousePosition - new Vector2(GameMain.Instance.Resolution.Width / 2, GameMain.Instance.Resolution.Height / 2);
+                Mouse.SetPosition(GameMain.Instance.Resolution.Width / 2, GameMain.Instance.Resolution.Height / 2);
+            }
         }
     }
 }

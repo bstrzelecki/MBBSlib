@@ -9,9 +9,9 @@
         public static Vector3 Right { get { return new Vector3(1, 0, 0); } }
         public static Vector3 Zero { get { return new Vector3(0, 0, 0); } }
 
-        public float Magnitude { get { return (float)(System.Math.Sqrt((x * x) + (y * y))); } }
+        public float Magnitude => (float)(System.Math.Sqrt((x * x) + (y * y)));
         //TODO
-        public float Normalized { get { return (float)(System.Math.Sqrt((x * x) + (y * y))); } }
+        public float Normalized => (float)(System.Math.Sqrt((x * x) + (y * y)));
         public float x;
         public float y;
         public float z;

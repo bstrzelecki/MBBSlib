@@ -1,5 +1,6 @@
 ﻿using MBBSlib.MonoGame._3D;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -17,105 +18,66 @@ namespace MBBSlib.MonoGame
         /// Defoult menager of graphics device
         /// </summary>
         public static GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        private SpriteBatch _spriteBatch;
         /// <summary>
         /// Last copy of GameMain class
         /// </summary>
         public static GameMain Instance { get; private set; }
-        public Camera3D camera3D = new Camera3D();
+        public Camera3D camera3D;
         public Camera camera2D = new Camera2D();
-        private readonly IStartingPoint start;
+        private readonly IStartingPoint _start;
 
-        private static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-        private static readonly Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
-        private static readonly Dictionary<string, Model> models = new Dictionary<string, Model>();
+        private static readonly Dictionary<string, Texture2D> _textures = new Dictionary<string, Texture2D>();
+        private static readonly Dictionary<string, SpriteFont> _fonts = new Dictionary<string, SpriteFont>();
+        private static readonly Dictionary<string, Model> _models = new Dictionary<string, Model>();
 
-        private static readonly Dictionary<Type, object> singletons = new Dictionary<Type, object>();
-        
+        private static readonly Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
+        private static readonly Dictionary<string, object> _content = new Dictionary<string, object>();
         private static void AddSingleton(Type t, object obj)
         {
-            if (singletons.ContainsKey(t)) return;
-            singletons.Add(t, obj);
+            if (_singletons.ContainsKey(t)) return;
+            _singletons.Add(t, obj);
         }
-        public static T GetGameComponent<T>()
-        {
-            return (T)singletons[typeof(T)];
-        }
+        public static T GetContent<T>(string key) => (T)_content[key];
+        public static T GetGameComponent<T>() => (T)_singletons[typeof(T)];
         /// <summary>
         /// Returns a texture that corresponds to a given key
         /// </summary>
         /// <param name="key">key of a textur</param>
         /// <returns>2D texture</returns>
-        public Texture2D GetTexture(string key)
-        {
-            if (ContainsTextureKey(key))
-            {
-                return textures[key];
-            }
-            return null;
-        }
-        public Model GetModel(string key)
-        {
-            if (ContainsModel(key))
-            {
-                return models[key];
-            }
-            return null;
-        }
-        public bool ContainsModel(string key)
-        {
-            return models.ContainsKey(key);
-        }
+        public Texture2D GetTexture(string key) => ContainsTextureKey(key) ? _textures[key] : null;
+        public Model GetModel(string key) => ContainsModel(key) ? _models[key] : null;
+        public bool ContainsModel(string key) => _models.ContainsKey(key);
         /// <summary>
         /// Checks if the registry contains specified key
         /// </summary>
         /// <param name="key">key of a texture</param>
         /// <returns></returns>
-        public bool ContainsTextureKey(string key)
-        {
-            return textures.ContainsKey(key);
-
-        }
+        public bool ContainsTextureKey(string key) => _textures.ContainsKey(key);
         /// <summary>
         /// Returns specified font from the registry 
         /// </summary>
         /// <param name="key">key of a font</param>
         /// <returns>spritefont reference</returns>
-        public SpriteFont GetFont(string key)
-        {
-            if (fonts.ContainsKey(key))
-            {
-                return fonts[key];
-            }
-            return null;
-        }
+        public SpriteFont GetFont(string key) => _fonts.ContainsKey(key) ? _fonts[key] : null;
         /// <summary>
         /// Base class of a game
         /// </summary>
         /// <param name="main"></param>
         public GameMain(IStartingPoint main)
         {
-            graphics = new GraphicsDeviceManager(this);
             Instance = this;
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            start = main;
+            _start = main;
         }
 
-        public static void RegisterUpdate(IUpdateable update)
-        {
-            queuedUpdates.Add(update);
-        }
-        public static void RegisterRenderer(IDrawable renderer, int layer = 5)
-        {
-            queuedRenderers.Add(new Renderer(layer, renderer));
-        }
-        public static void UnregisterUpdate(IUpdateable update)
-        {
-            rmQueuedUpdates.Add(update);
-        }
+        public static void RegisterUpdate(IUpdateable update) => queuedUpdates.Add(update);
+        public static void RegisterRenderer(IDrawable renderer, int layer = 5) => queuedRenderers.Add(new Renderer(layer, renderer));
+        public static void UnregisterUpdate(IUpdateable update) => rmQueuedUpdates.Add(update);
         public static void UnregisterRenderer(IDrawable renderer, int layer = 5)
         {
-            Renderer r = new Renderer(layer, renderer);
+            var r = new Renderer(layer, renderer);
             if (renderers.Contains(r))
                 rmQueuedRenderers.Add(r);
         }
@@ -124,15 +86,17 @@ namespace MBBSlib.MonoGame
             Sprite.TextureStorage = this;
             IsMouseVisible = true;
             InitializeComponents();
-            start.Start(this);
+            camera3D = new Camera3D(GraphicsDevice, Window);
+            _start.Start(this);
             Time.Initialize();
             new InputBindHandler();
+
             base.Initialize();
         }
 
         private void InitializeComponents()
         {
-            Assembly ass = Assembly.GetEntryAssembly();
+            var ass = Assembly.GetEntryAssembly();
             foreach(var a in ass.GetTypes())
             {
                 foreach(Attribute atr in Attribute.GetCustomAttributes(a))
@@ -158,19 +122,10 @@ namespace MBBSlib.MonoGame
         private Resolution _res = Resolution.HDp;
         public Resolution Resolution
         {
-            get
-            {
-                return _res;
-            }
-            set
-            {
-                SetResolution(value);
-            }
+            get => _res;
+            set => SetResolution(value);
         }
-        public void SetResolution(Resolution resolution)
-        {
-            SetResolution(resolution.Width, resolution.Height);
-        }
+        public void SetResolution(Resolution resolution) => SetResolution(resolution.Width, resolution.Height);
         public void SetResolution(int width, int height)
         {
             _res.Height = height;
@@ -181,17 +136,17 @@ namespace MBBSlib.MonoGame
         }
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
             try
             {
                 string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Content");
-
+                
                 foreach (string file in files)
                 {
                     string f = file.Remove(0, file.LastIndexOf('\\') + 1);
                     f = f.Remove(f.Length - 4, 4);
                     Debug.WriteLine("Trying to load " + f);
-                    if (!textures.ContainsKey(f) || fonts.ContainsKey(f))
+                    if (!_textures.ContainsKey(f) || _fonts.ContainsKey(f))
                     {
                         Load(f);
                     }
@@ -206,21 +161,21 @@ namespace MBBSlib.MonoGame
         {
             try
             {
-                textures.Add(id, Content.Load<Texture2D>(id));
+                _textures.Add(id, Content.Load<Texture2D>(id));
                 Debug.WriteLine("Loaded sprite: " + id);
             }
             catch
             {
                 try
                 {
-                    LoadFont(id);
+                    _fonts.Add(id, Content.Load<SpriteFont>(id));
                     Debug.WriteLine("Loaded font: " + id);
                 }
                 catch
                 {
                     try
                     {
-                        models.Add(id, Content.Load<Model>(id));
+                        _models.Add(id, Content.Load<Model>(id));
                         Debug.WriteLine("Loaded model: " + id);
                     }
                     catch (Exception e)
@@ -230,24 +185,19 @@ namespace MBBSlib.MonoGame
                 }
             }
         }
-        public void LoadFont(string id)
-        {
-            try
-            {
-                fonts.Add(id, Content.Load<SpriteFont>(id));
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.ToString());
-            }
-        }
         public static bool DebugExit = false;
+        public static bool IsMouseCentered = false;
+        public GameTime gameTime;
         protected override void Update(GameTime gameTime)
         {
-
+            this.gameTime = gameTime;
             if (DebugExit && (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)))
             {
                 Exit();
+            }
+            if(IsMouseCentered)
+            {
+                Mouse.SetPosition(Resolution.Width / 2, Resolution.Height / 2);
             }
             foreach (IUpdateable update in rmQueuedUpdates)
             {
@@ -295,14 +245,14 @@ namespace MBBSlib.MonoGame
 
 
             if (renderers.Count <= 0) return;
-            spriteBatch.Begin();
-            RenderBatch batch = new RenderBatch(spriteBatch, GraphicsDevice);
+            _spriteBatch.Begin();
+            var batch = new RenderBatch(_spriteBatch, GraphicsDevice);
             foreach (Renderer draw in renderers)
             {
                 draw.drawable.Draw(batch);
             }
 
-            spriteBatch.End();
+            _spriteBatch.End();
         }
     }
     /// <summary>
@@ -322,40 +272,43 @@ namespace MBBSlib.MonoGame
         /// <summary>
         /// SIze of windown in vector2
         /// </summary>
-        public Vector2 Size { get { return new Vector2(Width, Height); } }
+        public Vector2 Size => new Vector2(Width, Height);
 
         /// <summary>
         /// 3840x2160
         /// </summary>
-        public static Resolution UHD { get { return new Resolution(3840, 2160); } }
+        public static Resolution UHD => new Resolution(3840, 2160);
         /// <summary>
         /// 3200x1800
         /// </summary>
-        public static Resolution QXGA { get { return new Resolution(3200, 1800); } }
+        public static Resolution QXGA => new Resolution(3200, 1800);
         /// <summary>
         /// 2560x1440
         /// </summary>
-        public static Resolution QHD { get { return new Resolution(2560, 1440); } }
+        public static Resolution QHD => new Resolution(2560, 1440);
         /// <summary>
         /// 2048x1152
         /// </summary>
-        public static Resolution QWXGA { get { return new Resolution(2048, 1152); } }
+        public static Resolution QWXGA => new Resolution(2048, 1152);
         /// <summary>
         /// 1920x1080
         /// </summary>
-        public static Resolution FHD { get { return new Resolution(1920, 1080); } }
+        public static Resolution FHD => new Resolution(1920, 1080);
         /// <summary>
         /// 1600x900
         /// </summary>
-        public static Resolution HDp { get { return new Resolution(1600, 900); } }
+        public static Resolution HDp => new Resolution(1600, 900);
         /// <summary>
         /// 1280x720
         /// </summary>
-        public static Resolution XGA { get { return new Resolution(1280, 720); } }
+        public static Resolution XGA => new Resolution(1280, 720);
+
+
         /// <summary>
         /// 960x540
         /// </summary>
-        public static Resolution qHD { get { return new Resolution(960, 540); } }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Current nameing style will create disambiguation between qHD and QHD")]
+        public static Resolution qHD => new Resolution(960, 540);
 
         private Resolution(int width, int height)
         {

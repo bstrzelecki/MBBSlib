@@ -13,11 +13,11 @@ namespace MBBSlib.MonoGame
         }
         public void Update()
         {
-            foreach(Keys key in Input.actions.Keys)
+            foreach(Keys key in Input._actions.Keys)
             {
                 if (Input.IsKeyClicked(key))
                 {
-                    Input.actions[key].Invoke();
+                    Input._actions[key].Invoke();
                 }
             }
         }
