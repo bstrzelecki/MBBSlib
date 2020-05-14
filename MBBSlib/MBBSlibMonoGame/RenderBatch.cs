@@ -13,6 +13,8 @@ namespace MBBSlib.MonoGame
             _spriteBatch = sb;
             _graphicsDevice = gd;
         }
+
+        #region Relative sprite render
         public void DrawRelative(Texture2D texture, Math.Vector2 position)
         {
             var p = new Vector2(position.x, position.y);
@@ -23,6 +25,9 @@ namespace MBBSlib.MonoGame
             var p = new Vector2(position.x, position.y);
             _spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, color);
         }
+        #endregion
+
+        #region Simple draw sprites
         public void Draw(Texture2D texture, Rectangle size)
         {
             _spriteBatch.Draw(texture, size, Color.White);
@@ -65,6 +70,8 @@ namespace MBBSlib.MonoGame
         {
             _spriteBatch.Draw(new Sprite(textureName), position, color);
         }
+        #endregion
+
         public void DrawString(SpriteFont font, string text, Vector2 position, Color color)
         {
             _spriteBatch.DrawString(font, text, position, color);
@@ -73,6 +80,7 @@ namespace MBBSlib.MonoGame
         {
             _spriteBatch.DrawString(new Font("font"), text, position, color);
         }
+        #region 3D renderer
         public void DrawMesh(Model model, Vector3 position)
         {
             foreach (ModelMesh mesh in model.Meshes)
@@ -175,6 +183,7 @@ namespace MBBSlib.MonoGame
             FillMode = FillMode.Solid,
             DepthClipEnable = true
         };
+        #endregion
         public void Dispose()
         {
             _spriteBatch.Dispose();
