@@ -19,12 +19,8 @@ namespace MBBSlib.Utility
         }
         public T this[int x, int y]
         {
-            get {
-                return GetValue(x, y);
-            }
-            set {
-                SetValue(x, y, value);
-            }
+            get => GetValue(x, y);
+            set => SetValue(x, y, value);
         }
         public void SetValue(int x, int y, T value)
         {
@@ -46,7 +42,7 @@ namespace MBBSlib.Utility
         }
         public T[] GetRow(int y)
         {
-            T[] ar = new T[width];
+            var ar = new T[width];
             for(int i = 0; i < y; i++)
             {
                 ar[i] = array[i, y];
@@ -55,7 +51,7 @@ namespace MBBSlib.Utility
         }
         public T[] GetColumn(int x)
         {
-            T[] ar = new T[height];
+            var ar = new T[height];
             for (int i = 0; i < x; i++)
             {
                 ar[i] = array[x,i];
@@ -82,15 +78,9 @@ namespace MBBSlib.Utility
             x = (int)v.x;
             y = (int)v.y;
         }
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new GridEnumerator<T>(array); 
-        }
+        public IEnumerator<T> GetEnumerator() => new GridEnumerator<T>(array);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public Grid(SerializationInfo info, StreamingContext context)
         {
             //TOOD

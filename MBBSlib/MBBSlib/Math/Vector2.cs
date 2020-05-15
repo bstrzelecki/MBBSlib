@@ -46,15 +46,9 @@ namespace MBBSlib.Math
             }
         }
         public override bool Equals(object obj) => obj is Vector2 b ? x == b.x && y == b.y : false;
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(this);
-        }
+        public override int GetHashCode() => HashCode.Combine(this);
 
-        public override string ToString()
-        {
-            return $"{x} {y}";
-        }
+        public override string ToString() => $"{x} {y}";
         public static bool operator ==(Vector2 a, Vector2 b)
         {
             return (a.x == b.x && a.y == b.y);

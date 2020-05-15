@@ -15,10 +15,7 @@ namespace MBBSlib.MonoGame
         /// Registers existing audio source
         /// </summary>
         /// <param name="source"></param>
-        public void RegisterAudioSource(IAudioSource source)
-        {
-            audioSources.Add(source);
-        }
+        public void RegisterAudioSource(IAudioSource source) => audioSources.Add(source);
 
         protected struct Renderer
         {

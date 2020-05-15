@@ -56,10 +56,7 @@ namespace MBBSlib.Networking.Client
         /// </summary>
         /// <param name="ip">ipv4 address (4 bytes string)</param>
         /// <param name="port">Server port</param>
-        public void Connect(string ip, int port)
-        {
-            _socket.BeginConnect(IPAddress.Parse(ip), port, ConnectCallback, _socket);
-        }
+        public void Connect(string ip, int port) => _socket.BeginConnect(IPAddress.Parse(ip), port, ConnectCallback, _socket);
         /// <summary>
         /// Sends data directly to connected remote host.
         /// </summary>
@@ -71,7 +68,7 @@ namespace MBBSlib.Networking.Client
             if (Id == -1)
                 throw new Exception("Client has not connected to a remote host.");
 
-            Command c = new Command(cmd, Id, data);
+            var c = new Command(cmd, Id, data);
             _stream.BeginWrite(c, 0, c.Size, SendCallback, null);
 
 
@@ -89,10 +86,7 @@ namespace MBBSlib.Networking.Client
             byte[] c = cmd.Serialize();
             _stream.BeginWrite(c, 0, c.Length, SendCallback, null);
         }
-        private void SendCallback(IAsyncResult ar)
-        {
-            OnCommandSent?.Invoke();
-        }
+        private void SendCallback(IAsyncResult ar) => OnCommandSent?.Invoke();
         private void ConnectCallback(IAsyncResult ar)
         {
             _socket.EndConnect(ar);

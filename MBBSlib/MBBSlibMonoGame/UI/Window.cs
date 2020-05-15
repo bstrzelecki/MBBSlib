@@ -11,22 +11,13 @@ namespace MBBSlib.MonoGame.UI
         public Sprite exitBtn;
         public SpriteFont font;
         public bool IsVisible { get; set; } = true;
-        public int TopBarWidth
-        {
-            get
-            {
-                return Transform.Width - exitBtn.Size.Width;
-            }
-        }
+        public int TopBarWidth => Transform.Width - exitBtn.Size.Width;
         public Window()
         {
             GameMain.RegisterRenderer(this);
         }
 
-        public void Dispose()
-        {
-            GameMain.UnregisterRenderer(this);
-        }
+        public void Dispose() => GameMain.UnregisterRenderer(this);
         public override void Draw(RenderBatch sprite)
         {
             if (!IsVisible) return;

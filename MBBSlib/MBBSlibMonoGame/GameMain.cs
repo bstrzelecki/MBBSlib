@@ -224,7 +224,7 @@ namespace MBBSlib.MonoGame
         /// <summary>
         /// Defoult graphic device
         /// </summary>
-        public static GraphicsDevice graphicsDevice { get { return Instance.GraphicsDevice; } }
+        public static GraphicsDevice graphicsDevice => Instance.GraphicsDevice;
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(BackgroundColor);

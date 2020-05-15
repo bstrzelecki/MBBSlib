@@ -27,13 +27,10 @@ namespace MBBSlib.Integrations
             IsTriggered = true;
             OnAchievementTriggered?.Invoke(this);
         }
-        public XElement Serialize()
-        {
-            return new XElement("Achievement", new XElement("Title", Title)
+        public XElement Serialize() => new XElement("Achievement", new XElement("Title", Title)
                                              , new XElement("Desc", Descrition)
                                              , new XElement("Key", Key)
                                              , new XElement("IsTriggered", IsTriggered));
-        }
 
     }
 }

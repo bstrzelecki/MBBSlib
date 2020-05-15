@@ -12,14 +12,14 @@ namespace MBBSlib
         private static extern bool AllocConsole();
         public delegate void Command(CommandCompund cmd);
         public static event Command OnCmd;
-        private static List<string> cmds = new List<string>();
+        private static readonly List<string> cmds = new List<string>();
         /// <summary>
         /// Opens new window console (Closing console window will close entire application)
         /// </summary>
         public static void OpenConsole()
         {
             AllocConsole();
-            Thread th = new Thread(() =>
+            var th = new Thread(() =>
             {
                 while (true)
                 {
@@ -39,14 +39,14 @@ namespace MBBSlib
                 {
                     string[] rg = cmd.Split('.');
                     string[] arg = rg[1].Split(' ');
-                    List<string> c = new List<string>();
+                    var c = new List<string>();
                     foreach (string n in arg)
                     {
                         c.Add(n);
                     }
                     string t = c[0];
                     c.RemoveAt(0);
-                    CommandCompund cp = new CommandCompund(rg[0], t, c.ToArray());
+                    var cp = new CommandCompund(rg[0], t, c.ToArray());
                     OnCmd(cp);
                 }
                 catch (Exception e)
@@ -84,10 +84,7 @@ namespace MBBSlib
         /// </summary>
         /// <param name="a">Name of sender class</param>
         /// <returns>Returns confirmation of vatidation sender class</returns>
-        public bool Check(string a)
-        {
-            return Target == a;
-        }
+        public bool Check(string a) => Target == a;
         public static implicit operator String(CommandCompund command)
         {
             return command.Source;

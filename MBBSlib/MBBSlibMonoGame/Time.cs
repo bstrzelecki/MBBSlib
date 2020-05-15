@@ -4,15 +4,12 @@ namespace MBBSlib.MonoGame
 {
     public static class Time
     {
-        public static int DeltaTime { get => tc.DeltaTime; }
-        public static bool IsPaused { get => tc.IsPaused; set { tc.IsPaused = value; } }
-        public static int TickTime { get => tc.TickTime; set { tc.TickTime = value; } }
+        public static int DeltaTime => tc.DeltaTime;
+        public static bool IsPaused { get => tc.IsPaused; set => tc.IsPaused = value; }
+        public static int TickTime { get => tc.TickTime; set => tc.TickTime = value; }
         public static event Action OnTick;
         internal static TickCounter tc;
-        internal static void Initialize()
-        {
-            tc = new TickCounter();
-        }
+        internal static void Initialize() => tc = new TickCounter();
         internal class TickCounter : IUpdateable
         {
             public int DeltaTime { get; private set; }

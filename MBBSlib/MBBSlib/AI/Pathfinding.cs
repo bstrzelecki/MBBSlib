@@ -15,10 +15,7 @@ namespace MBBSlib.AI
                 return map[p.X, p.Y];
             return float.MaxValue;
         }
-        float GetTileValue(Point p, int offX, int offY)
-        {
-            return GetTileValue(new Point(p.X + offX, p.Y + offY));
-        }
+        float GetTileValue(Point p, int offX, int offY) => GetTileValue(new Point(p.X + offX, p.Y + offY));
         /// <summary>
         /// If true will ignore choke points
         /// </summary>
@@ -34,19 +31,13 @@ namespace MBBSlib.AI
             maxX = map.GetUpperBound(0);
             maxY = map.GetUpperBound(1);
         }
-        private float HeuristicCostEstimate(Point start, Point end)
-        {
-
-            return (float)System.Math.Sqrt(
+        private float HeuristicCostEstimate(Point start, Point end) => (float)System.Math.Sqrt(
             System.Math.Pow(start.X - end.X, 2) +
             System.Math.Pow(start.Y - end.Y, 2)
         );
-
-
-        }
         private List<Point> GetNeighbors(Point point)
         {
-            List<Point> points = new List<Point>();
+            var points = new List<Point>();
             int x = point.X;
             int y = point.Y;
             AddPoint(new Point(x + 1, y), points);
@@ -83,15 +74,15 @@ namespace MBBSlib.AI
         /// <returns></returns>
         public List<Point> GetPath(Point start, Point end)
         {
-            List<Point> evaluated = new List<Point>();
+            var evaluated = new List<Point>();
 
-            List<Point> discovered = new List<Point>
+            var discovered = new List<Point>
             {
                 start
             };
 
-            Dictionary<Point, Point> origins = new Dictionary<Point, Point>();
-            Dictionary<Point, float> scores = new Dictionary<Point, float>();
+            var origins = new Dictionary<Point, Point>();
+            var scores = new Dictionary<Point, float>();
             for (int x = 0; x < map.GetUpperBound(0); x++)
             {
                 for (int y = 0; y < map.GetUpperBound(1); y++)
@@ -101,7 +92,7 @@ namespace MBBSlib.AI
             }
             scores[start] = 0;
 
-            Dictionary<Point, float> finalScores = new Dictionary<Point, float>();
+            var finalScores = new Dictionary<Point, float>();
             for (int x = 0; x < map.GetUpperBound(0); x++)
             {
                 for (int y = 0; y < map.GetUpperBound(1); y++)
@@ -154,17 +145,17 @@ namespace MBBSlib.AI
         /// <returns></returns>
         public List<Point> GetPath(List<Point> starts, Point target)
         {
-            List<Point> evaluated = new List<Point>();
+            var evaluated = new List<Point>();
 
-            List<Point> discovered = new List<Point>();
+            var discovered = new List<Point>();
             foreach (Point s in starts)
             {
                 discovered.Add(s);
 
             }
 
-            Dictionary<Point, Point> origins = new Dictionary<Point, Point>();
-            Dictionary<Point, float> scores = new Dictionary<Point, float>();
+            var origins = new Dictionary<Point, Point>();
+            var scores = new Dictionary<Point, float>();
 
             for (int x = 0; x < map.GetUpperBound(0); x++)
             {
@@ -177,7 +168,7 @@ namespace MBBSlib.AI
             {
                 scores[s] = 0;
             }
-            Dictionary<Point, float> finalScores = new Dictionary<Point, float>();
+            var finalScores = new Dictionary<Point, float>();
             for (int x = 0; x < map.GetUpperBound(0); x++)
             {
                 for (int y = 0; y < map.GetUpperBound(1); y++)
@@ -252,7 +243,7 @@ namespace MBBSlib.AI
 
         private List<Point> ReconstructPath(Dictionary<Point, Point> origins, Point current)
         {
-            List<Point> path = new List<Point>
+            var path = new List<Point>
             {
                 current
             };

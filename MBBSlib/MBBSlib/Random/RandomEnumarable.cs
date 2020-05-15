@@ -27,15 +27,9 @@ namespace MBBSlib.Random
             this.min = min;
             this.max = max;
         }
-        public IEnumerator<int> GetEnumerator()
-        {
-            return new RandomEnumerator(r, i, min, max);
-        }
+        public IEnumerator<int> GetEnumerator() => new RandomEnumerator(r, i, min, max);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new RandomEnumerator(r, i, min, max);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => new RandomEnumerator(r, i, min, max);
     }
     public class RandomEnumerator : IEnumerator<int>
     {
@@ -54,10 +48,7 @@ namespace MBBSlib.Random
             this.min = min;
             this.max = max;
         }
-        public void Dispose()
-        {
-            rng = null;
-        }
+        public void Dispose() => rng = null;
 
         public bool MoveNext()
         {
@@ -70,9 +61,6 @@ namespace MBBSlib.Random
             return false;
         }
 
-        public void Reset()
-        {
-            rng = new System.Random();
-        }
+        public void Reset() => rng = new System.Random();
     }
 }

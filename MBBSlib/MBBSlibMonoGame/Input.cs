@@ -8,8 +8,8 @@ namespace MBBSlib.MonoGame
     public class Input
     {
         public static Vector2 cameraOffset;
-        public static Vector2 MousePosition { get { return GetMousePosition(); } }
-        public static int MouseScrollDelta { get { return GetMouseScrollDelta(); } }
+        public static Vector2 MousePosition => GetMousePosition();
+        public static int MouseScrollDelta => GetMouseScrollDelta();
         private static bool _mouseDrag;
         public static bool MouseDrag { get => _mouseDrag; set
             {
@@ -18,7 +18,7 @@ namespace MBBSlib.MonoGame
             }
         }
         public static Vector2 MouseDragDelta => _mouseDrag ? _mouseDragController.Drag : throw new MemberAccessException("Mouse drag calculation is not enabled");
-        private static MouseDragController _mouseDragController = new MouseDragController();
+        private static readonly MouseDragController _mouseDragController = new MouseDragController();
         internal static readonly Dictionary<Keys, Action> _actions = new Dictionary<Keys, Action>();
         public static void BindKey(Keys key, Action action) => _actions.Add(key, action);
         public static bool IsKeyDown(Keys key)
@@ -31,7 +31,7 @@ namespace MBBSlib.MonoGame
             KeyboardState state = Keyboard.GetState();
             return state.IsKeyUp(key);
         }
-        private static Dictionary<Keys, bool> _keysClicked = new Dictionary<Keys, bool>();
+        private static readonly Dictionary<Keys, bool> _keysClicked = new Dictionary<Keys, bool>();
 
         public static bool IsKeyClicked(Keys key)
         {

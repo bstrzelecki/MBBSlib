@@ -5,7 +5,7 @@ namespace MBBSlib.Local
 {
     public static class Localizations
     {
-        static Dictionary<string, string> locals = new Dictionary<string, string>();
+        static readonly Dictionary<string, string> locals = new Dictionary<string, string>();
         /// <summary>
         /// Loads and fills strings to RAM
         /// </summary>
@@ -13,7 +13,7 @@ namespace MBBSlib.Local
         public static void LoadTranslation(string fileName)
         {
             locals.Clear();
-            XDocument doc = XDocument.Load(fileName);
+            var doc = XDocument.Load(fileName);
             XElement root = doc.Root;
 
             foreach (var n in root.Elements("t"))
@@ -27,7 +27,7 @@ namespace MBBSlib.Local
         /// <returns>Save output with .Save(s) or access via IntelliSense</returns>
         public static XDocument GetTemplate()
         {
-            XDocument doc = new XDocument();
+            var doc = new XDocument();
             doc.Add(new XElement("root"));
             XElement root = doc.Root;
             root.Add(new XElement("t", new XElement("key"), new XElement("string")));

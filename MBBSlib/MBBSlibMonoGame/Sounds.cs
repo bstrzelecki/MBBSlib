@@ -6,8 +6,8 @@ namespace MBBSlib.MonoGame
 {
     public static class Sounds
     {
-        public static float Volume { get { return MediaPlayer.Volume; } set { MediaPlayer.Volume = value; } }
-        private static Dictionary<string, Song> songs = new Dictionary<string, Song>();
+        public static float Volume { get => MediaPlayer.Volume; set => MediaPlayer.Volume = value; }
+        private static readonly Dictionary<string, Song> songs = new Dictionary<string, Song>();
         public static void Loop(Song song)
         {
             MediaPlayer.Play(song);
@@ -31,7 +31,7 @@ namespace MBBSlib.MonoGame
             }
             else
             {
-                Song s = Song.FromUri(song, new Uri(Environment.CurrentDirectory + @"Content\Audio\" + song));
+                var s = Song.FromUri(song, new Uri(Environment.CurrentDirectory + @"Content\Audio\" + song));
                 songs.Add(song, s);
                 return s;
             }

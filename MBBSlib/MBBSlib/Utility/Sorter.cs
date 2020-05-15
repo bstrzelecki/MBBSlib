@@ -4,7 +4,7 @@ namespace MBBSlib.Utility
 {
     class Sorter
     {
-        List<int> a = new List<int>();
+        readonly List<int> a = new List<int>();
         public Sorter()
         {
 
@@ -12,9 +12,6 @@ namespace MBBSlib.Utility
     }
     public static class SortExtensions
     {
-        public static IEnumerable<T> S<T>(this IEnumerable<T> tab)
-        {
-            return tab;
-        }
+        public static IEnumerable<T> S<T>(this IEnumerable<T> tab) => tab;
     }
 }

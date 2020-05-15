@@ -41,7 +41,7 @@ namespace MBBSlib.MonoGame
             else
             {
                 Debug.WriteLine("Cannot find " + sprite);
-                Assembly myAssembly = Assembly.GetExecutingAssembly();
+                var myAssembly = Assembly.GetExecutingAssembly();
                 Stream myStream = myAssembly.GetManifestResourceStream("MBBSlib.MonoGame.Content.WhitePixel.png");
                 if (myStream != null)
                     Texture = Texture2D.FromStream(GameMain.graphicsDevice, myStream);
@@ -62,9 +62,6 @@ namespace MBBSlib.MonoGame
 
             return sprite.Texture;
         }
-        public override string ToString()
-        {
-            return textureName;
-        }
+        public override string ToString() => textureName;
     }
 }

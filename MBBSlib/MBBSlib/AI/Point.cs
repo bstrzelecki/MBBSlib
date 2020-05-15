@@ -28,17 +28,11 @@
                 return true;
             return false;
         }
-        public override string ToString()
-        {
-            return $"({X}, {Y})";
-        }
+        public override string ToString() => $"({X}, {Y})";
 
-        public override bool Equals(object obj)
-        {
-            return obj is Point point &&
+        public override bool Equals(object obj) => obj is Point point &&
                    X == point.X &&
                    Y == point.Y;
-        }
 
         public override int GetHashCode()
         {

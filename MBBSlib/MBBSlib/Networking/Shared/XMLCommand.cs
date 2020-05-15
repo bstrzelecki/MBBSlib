@@ -15,22 +15,13 @@ namespace MBBSlib.Networking.Shared
     {
         private XDocument doc;
 
-        public int Id
-        {
-            get
-            {
-                return int.Parse(Header.Element("id").Value);
-            }
-        }
+        public int Id => int.Parse(Header.Element("id").Value);
         public int Sender
         {
-            get
-            {
-                return int.Parse(Header.Element("sender").Value);
-            }
+            get => int.Parse(Header.Element("sender").Value);
             set
             {
-                if (Header.Element("sender") == null)
+                if(Header.Element("sender") == null)
                 {
                     Header.Add(new XElement("sender"), value);
                 }
@@ -40,20 +31,8 @@ namespace MBBSlib.Networking.Shared
                 }
             }
         }
-        public XElement Data
-        {
-            get
-            {
-                return doc.Root.Element("Data");
-            }
-        }
-        internal XElement Header
-        {
-            get
-            {
-                return doc.Root.Element("Header");
-            }
-        }
+        public XElement Data => doc.Root.Element("Data");
+        internal XElement Header => doc.Root.Element("Header");
         /// <summary>
         /// Initializes object with default packet formating
         /// </summary>
@@ -68,7 +47,7 @@ namespace MBBSlib.Networking.Shared
         /// <param name="data"></param>
         public void AddKey(string key, object data)
         {
-            XElement e = new XElement(key);
+            var e = new XElement(key);
             e.SetAttributeValue("type", data.GetType().ToString());
             e.Value = data.ToString();
             Data.Add(e);
@@ -78,19 +57,13 @@ namespace MBBSlib.Networking.Shared
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public XElement GetKey(string key)
-        {
-            return Data.Element(key);
-        }
+        public XElement GetKey(string key) => Data.Element(key);
         /// <summary>
         /// Deserializes multiple keys from packet data with the same id
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public IEnumerable<XElement> GetKeys(string key)
-        {
-            return doc.Root.Elements(key);
-        }
+        public IEnumerable<XElement> GetKeys(string key) => doc.Root.Elements(key);
         public object GetValue(string key)
         {
             string s = Data.Element(key).Value;
@@ -100,18 +73,9 @@ namespace MBBSlib.Networking.Shared
 
             return obj;
         }
-        public T GetValue<T>(string key)
-        {
-            return (T)GetValue(key);
-        }
-        public int GetInt(string key)
-        {
-            return int.Parse(GetKey(key).Value);
-        }
-        public string GetString(string key)
-        {
-            return GetKey(key).Value;
-        }
+        public T GetValue<T>(string key) => (T)GetValue(key);
+        public int GetInt(string key) => int.Parse(GetKey(key).Value);
+        public string GetString(string key) => GetKey(key).Value;
         public bool ContainsKey(string s)
         {
             if (Data.Element(s) != null) return true;
@@ -128,7 +92,7 @@ namespace MBBSlib.Networking.Shared
         private void InitializeXML()
         {
             doc = new XDocument();
-            XElement packet = new XElement("Packet");
+            var packet = new XElement("Packet");
             packet.Add(new XElement("Header"));
             packet.Add(new XElement("Data"));
             doc.Add(packet);
@@ -148,8 +112,8 @@ namespace MBBSlib.Networking.Shared
         }
         private static byte[] Compress(byte[] data)
         {
-            MemoryStream output = new MemoryStream();
-            using (DeflateStream dstream = new DeflateStream(output, CompressionLevel.Optimal))
+            var output = new MemoryStream();
+            using (var dstream = new DeflateStream(output, CompressionLevel.Optimal))
             {
                 dstream.Write(data, 0, data.Length);
             }
@@ -158,9 +122,9 @@ namespace MBBSlib.Networking.Shared
 
         private static byte[] Decompress(byte[] data)
         {
-            MemoryStream input = new MemoryStream(data);
-            MemoryStream output = new MemoryStream();
-            using (DeflateStream dstream = new DeflateStream(input, CompressionMode.Decompress))
+            var input = new MemoryStream(data);
+            var output = new MemoryStream();
+            using (var dstream = new DeflateStream(input, CompressionMode.Decompress))
             {
                 dstream.CopyTo(output);
             }

@@ -28,22 +28,10 @@ namespace MBBSlib.MonoGame
         #endregion
 
         #region Simple draw sprites
-        public void Draw(Texture2D texture, Rectangle size)
-        {
-            _spriteBatch.Draw(texture, size, Color.White);
-        }
-        public void Draw(Texture2D texture, Rectangle size, Color color)
-        {
-            _spriteBatch.Draw(texture, size, color);
-        }
-        public void Draw(Texture2D texture, Vector2 position)
-        {
-            _spriteBatch.Draw(texture, position, Color.White);
-        }
-        public void Draw(Texture2D texture, Math.Vector2 position, Color color)
-        {
-            _spriteBatch.Draw(texture, new Vector2(position.x,position.y), color);
-        }
+        public void Draw(Texture2D texture, Rectangle size) => _spriteBatch.Draw(texture, size, Color.White);
+        public void Draw(Texture2D texture, Rectangle size, Color color) => _spriteBatch.Draw(texture, size, color);
+        public void Draw(Texture2D texture, Vector2 position) => _spriteBatch.Draw(texture, position, Color.White);
+        public void Draw(Texture2D texture, Math.Vector2 position, Color color) => _spriteBatch.Draw(texture, new Vector2(position.x, position.y), color);
         public void Draw(Texture2D texture, Math.Vector2 position)
         {
             var p = new Vector2(position.x, position.y);
@@ -54,32 +42,14 @@ namespace MBBSlib.MonoGame
             var p = new Vector2(position.x, position.y);
             _spriteBatch.Draw(new Sprite(texture), p, Color.White);
         }
-        public void Draw(Texture2D texture, Math.Vector2 position, float rotation, Math.Vector2 origin)
-        {
-            _spriteBatch.Draw(new Sprite(texture), new Rectangle((int)position.x, (int)position.y, texture.Width, texture.Height), null, Color.White, rotation, new Vector2(origin.x, origin.y), SpriteEffects.None, 0);
-        }
-        public void Draw(Texture2D texture, Vector2 position, Color color)
-        {
-            _spriteBatch.Draw(texture, position, color);
-        }
-        public void Draw(string textureName, Vector2 position)
-        {
-            _spriteBatch.Draw(new Sprite(textureName), position, Color.White);
-        }
-        public void Draw(string textureName, Vector2 position, Color color)
-        {
-            _spriteBatch.Draw(new Sprite(textureName), position, color);
-        }
+        public void Draw(Texture2D texture, Math.Vector2 position, float rotation, Math.Vector2 origin) => _spriteBatch.Draw(new Sprite(texture), new Rectangle((int)position.x, (int)position.y, texture.Width, texture.Height), null, Color.White, rotation, new Vector2(origin.x, origin.y), SpriteEffects.None, 0);
+        public void Draw(Texture2D texture, Vector2 position, Color color) => _spriteBatch.Draw(texture, position, color);
+        public void Draw(string textureName, Vector2 position) => _spriteBatch.Draw(new Sprite(textureName), position, Color.White);
+        public void Draw(string textureName, Vector2 position, Color color) => _spriteBatch.Draw(new Sprite(textureName), position, color);
         #endregion
 
-        public void DrawString(SpriteFont font, string text, Vector2 position, Color color)
-        {
-            _spriteBatch.DrawString(font, text, position, color);
-        }
-        public void DrawString(string text, Vector2 position, Color color)
-        {
-            _spriteBatch.DrawString(new Font("font"), text, position, color);
-        }
+        public void DrawString(SpriteFont font, string text, Vector2 position, Color color) => _spriteBatch.DrawString(font, text, position, color);
+        public void DrawString(string text, Vector2 position, Color color) => _spriteBatch.DrawString(new Font("font"), text, position, color);
         #region 3D renderer
         public void DrawMesh(Model model, Vector3 position)
         {

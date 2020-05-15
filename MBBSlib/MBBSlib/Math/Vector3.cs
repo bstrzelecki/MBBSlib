@@ -2,12 +2,12 @@
 {
     public struct Vector3
     {
-        public static Vector3 Down { get { return new Vector3(0, -1, 0); } }
-        public static Vector3 Up { get { return new Vector3(0, 1, 0); } }
-        public static Vector3 One { get { return new Vector3(1, 1, 0); } }
-        public static Vector3 Left { get { return new Vector3(-1, 0, 0); } }
-        public static Vector3 Right { get { return new Vector3(1, 0, 0); } }
-        public static Vector3 Zero { get { return new Vector3(0, 0, 0); } }
+        public static Vector3 Down => new Vector3(0, -1, 0);
+        public static Vector3 Up => new Vector3(0, 1, 0);
+        public static Vector3 One => new Vector3(1, 1, 0);
+        public static Vector3 Left => new Vector3(-1, 0, 0);
+        public static Vector3 Right => new Vector3(1, 0, 0);
+        public static Vector3 Zero => new Vector3(0, 0, 0);
 
         public float Magnitude => (float)(System.Math.Sqrt((x * x) + (y * y)));
         //TODO

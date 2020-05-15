@@ -41,10 +41,7 @@ namespace MBBSlib.Networking.Server
         /// </summary>
         /// <param name="id"></param>
         /// <param name="ici"></param>
-        public void RegisterInterpreter(int id, ICommandInterpreter ici)
-        {
-            _interpreters.Add(id, ici);
-        }
+        public void RegisterInterpreter(int id, ICommandInterpreter ici) => _interpreters.Add(id, ici);
         /// <summary>
         /// Unregisters command interpreter
         /// </summary>
@@ -133,7 +130,7 @@ namespace MBBSlib.Networking.Server
                         id = i;
                 }
 
-                ConnectedClient cl = new ConnectedClient(id, client, this);
+                var cl = new ConnectedClient(id, client, this);
                 _clients.Add(cl);
                 OnClientConnected?.Invoke(cl.Id);
                 OnMessageBroadcast?.Invoke($"{client.Client.RemoteEndPoint} connected.");

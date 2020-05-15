@@ -12,13 +12,7 @@ namespace MBBSlib.Networking.Shared
         /// <summary>
         /// Lengh of transmitted data
         /// </summary>
-        public int Size
-        {
-            get
-            {
-                return _data.Length;
-            }
-        }
+        public int Size => _data.Length;
         /// <summary>
         /// Command id
         /// </summary>
@@ -54,7 +48,7 @@ namespace MBBSlib.Networking.Shared
         }
         public static implicit operator XMLCommand(Command cmd)
         {
-            XMLCommand c = new XMLCommand();
+            var c = new XMLCommand();
             c.AddKey("id", cmd.Id);
             c.AddKey("sender", cmd.Sender);
             c.AddKey("data", Encoding.UTF8.GetString(cmd.DataForm));
@@ -65,9 +59,6 @@ namespace MBBSlib.Networking.Shared
         {
             return cmd._data;
         }
-        public override string ToString()
-        {
-            return Encoding.ASCII.GetString(DataForm);
-        }
+        public override string ToString() => Encoding.ASCII.GetString(DataForm);
     }
 }

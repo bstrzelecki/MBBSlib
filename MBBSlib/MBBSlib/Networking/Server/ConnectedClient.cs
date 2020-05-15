@@ -12,7 +12,7 @@ namespace MBBSlib.Networking.Server
 
         private readonly NetworkStream _stream;
         private readonly TCPServer _server;
-        private byte[] recieveBuffer = new byte[BUFFER_SIZE];
+        private readonly byte[] recieveBuffer = new byte[BUFFER_SIZE];
         internal ConnectedClient(int id, TcpClient client, TCPServer server)
         {
             Id = id;
@@ -58,7 +58,7 @@ namespace MBBSlib.Networking.Server
                 int bytes = _stream.EndRead(ar);
                 byte[] input = new byte[bytes];
                 Array.Copy(recieveBuffer, 0, input, 0, bytes);
-                XMLCommand cmd = new XMLCommand(input);
+                var cmd = new XMLCommand(input);
 
                 PacketRecieved(cmd);
                 _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
