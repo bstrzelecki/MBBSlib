@@ -9,12 +9,7 @@ namespace MBBSlib.AI
         readonly float[,] map;
         readonly int maxX = 0;
         readonly int maxY = 0;
-        float GetTileValue(Point p)
-        {
-            if (CheckPoint(p))
-                return map[p.X, p.Y];
-            return float.MaxValue;
-        }
+        float GetTileValue(Point p) => CheckPoint(p) ? map[p.X, p.Y] : float.MaxValue;
         float GetTileValue(Point p, int offX, int offY) => GetTileValue(new Point(p.X + offX, p.Y + offY));
         /// <summary>
         /// If true will ignore choke points
@@ -45,27 +40,23 @@ namespace MBBSlib.AI
             AddPoint(new Point(x, y + 1), points);
             AddPoint(new Point(x, y - 1), points);
 
-            if (GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
+            if(GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
                 AddPoint(new Point(x + 1, y + 1), points);
-            if (GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, -1) != float.MaxValue)
+            if(GetTileValue(point, 1, 0) != float.MaxValue && GetTileValue(point, 0, -1) != float.MaxValue)
                 AddPoint(new Point(x + 1, y - 1), points);
-            if (GetTileValue(point, -1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
+            if(GetTileValue(point, -1, 0) != float.MaxValue && GetTileValue(point, 0, 1) != float.MaxValue)
                 AddPoint(new Point(x - 1, y + 1), points);
-            if (GetTileValue(point, -1, 0) != float.MaxValue && GetTileValue(point, 0, -1) != float.MaxValue)
+            if(GetTileValue(point, -1, 0) != float.MaxValue && GetTileValue(point, 0, -1) != float.MaxValue)
                 AddPoint(new Point(x - 1, y - 1), points);
 
             return points;
         }
         private void AddPoint(Point p, List<Point> pp)
         {
-            if (CheckPoint(p))
+            if(CheckPoint(p))
                 pp.Add(p);
         }
-        private bool CheckPoint(Point p)
-        {
-            if (p.X >= 0 && p.X < maxX + 1 && p.Y >= 0 && p.Y < maxY + 1) return true;
-            return false;
-        }
+        private bool CheckPoint(Point p) => p.X >= 0 && p.X < maxX + 1 && p.Y >= 0 && p.Y < maxY + 1;
         /// <summary>
         /// Finds shortest bath from point A to point B
         /// </summary>
@@ -83,9 +74,9 @@ namespace MBBSlib.AI
 
             var origins = new Dictionary<Point, Point>();
             var scores = new Dictionary<Point, float>();
-            for (int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < map.GetUpperBound(0); x++)
             {
-                for (int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < map.GetUpperBound(1); y++)
                 {
                     scores.Add(new Point(x, y), float.PositiveInfinity);
                 }
@@ -93,9 +84,9 @@ namespace MBBSlib.AI
             scores[start] = 0;
 
             var finalScores = new Dictionary<Point, float>();
-            for (int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < map.GetUpperBound(0); x++)
             {
-                for (int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < map.GetUpperBound(1); y++)
                 {
                     finalScores.Add(new Point(x, y), float.PositiveInfinity);
                 }
@@ -103,31 +94,31 @@ namespace MBBSlib.AI
 
             finalScores[start] = HeuristicCostEstimate(start, end);
 
-            while (discovered.Count > 0)
+            while(discovered.Count > 0)
             {
                 //TODO optimalize
                 Point current = discovered.OrderBy(n => finalScores[n]).Take(1).Single();
-                if (current == end)
+                if(current == end)
                     return ReconstructPath(origins, current);
 
                 discovered.Remove(current);
                 evaluated.Add(current);
 
-                foreach (Point point in GetNeighbors(current))
+                foreach(Point point in GetNeighbors(current))
                 {
-                    if (ContainsPoint(evaluated, point)) continue;
+                    if(ContainsPoint(evaluated, point)) continue;
 
                     float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
 
-                    if (!discovered.Contains(point))
+                    if(!discovered.Contains(point))
                     {
                         discovered.Add(point);
                     }
-                    else if (tScore >= scores[point])
+                    else if(tScore >= scores[point])
                     {
                         continue;
                     }
-                    if (!ContainsPoint(origins, point))
+                    if(!ContainsPoint(origins, point))
                         origins.Add(point, current);
                     else
                         origins[point] = current;
@@ -148,7 +139,7 @@ namespace MBBSlib.AI
             var evaluated = new List<Point>();
 
             var discovered = new List<Point>();
-            foreach (Point s in starts)
+            foreach(Point s in starts)
             {
                 discovered.Add(s);
 
@@ -157,55 +148,55 @@ namespace MBBSlib.AI
             var origins = new Dictionary<Point, Point>();
             var scores = new Dictionary<Point, float>();
 
-            for (int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < map.GetUpperBound(0); x++)
             {
-                for (int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < map.GetUpperBound(1); y++)
                 {
                     scores.Add(new Point(x, y), float.PositiveInfinity);
                 }
             }
-            foreach (Point s in starts)
+            foreach(Point s in starts)
             {
                 scores[s] = 0;
             }
             var finalScores = new Dictionary<Point, float>();
-            for (int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < map.GetUpperBound(0); x++)
             {
-                for (int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < map.GetUpperBound(1); y++)
                 {
                     finalScores.Add(new Point(x, y), float.PositiveInfinity);
                 }
             }
 
-            foreach (Point s in starts)
+            foreach(Point s in starts)
             {
                 finalScores[s] = HeuristicCostEstimate(s, target);
             }
-            while (discovered.Count > 0)
+            while(discovered.Count > 0)
             {
                 //TODO optimalize
                 Point current = discovered.OrderBy(n => finalScores[n]).Take(1).Single();
-                if (current == target)
+                if(current == target)
                     return ReconstructPath(origins, current);
 
                 discovered.Remove(current);
                 evaluated.Add(current);
 
-                foreach (Point point in GetNeighbors(current))
+                foreach(Point point in GetNeighbors(current))
                 {
-                    if (ContainsPoint(evaluated, point)) continue;
+                    if(ContainsPoint(evaluated, point)) continue;
 
                     float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
 
-                    if (!discovered.Contains(point))
+                    if(!discovered.Contains(point))
                     {
                         discovered.Add(point);
                     }
-                    else if (tScore >= scores[point])
+                    else if(tScore >= scores[point])
                     {
                         continue;
                     }
-                    if (!ContainsPoint(origins, point))
+                    if(!ContainsPoint(origins, point))
                         origins.Add(point, current);
                     else
                         origins[point] = current;
@@ -218,17 +209,17 @@ namespace MBBSlib.AI
 
         private static bool ContainsPoint(List<Point> evaluated, Point point)
         {
-            foreach (Point p in evaluated)
+            foreach(Point p in evaluated)
             {
-                if (p == point) return true;
+                if(p == point) return true;
             }
             return false;
         }
         private static bool ContainsPoint(Dictionary<Point, Point> evaluated, Point point)
         {
-            foreach (Point p in evaluated.Keys)
+            foreach(Point p in evaluated.Keys)
             {
-                if (p == point) return true;
+                if(p == point) return true;
             }
             return false;
         }
@@ -247,7 +238,7 @@ namespace MBBSlib.AI
             {
                 current
             };
-            while (origins.ContainsKey(current))
+            while(origins.ContainsKey(current))
             {
                 current = origins[current];
                 path.Add(current);

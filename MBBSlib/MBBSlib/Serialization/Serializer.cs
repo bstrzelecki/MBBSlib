@@ -19,7 +19,7 @@ namespace MBBSlib.Serialization
             doc.Add(new XElement("Root"));
             XElement root = doc.Root;
 
-            foreach (string id in objs.Keys)
+            foreach(string id in objs.Keys)
             {
                 var compund = new NBTCompund(id);
                 objs[id].Save(compund);
@@ -31,7 +31,7 @@ namespace MBBSlib.Serialization
         {
             var doc = XDocument.Load(file);
             XElement root = doc.Root;
-            foreach (var id in objs.Keys)
+            foreach(var id in objs.Keys)
             {
                 objs[id].Load(new NBTCompund(root.Element(id)));
             }

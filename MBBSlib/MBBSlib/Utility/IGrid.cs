@@ -2,7 +2,7 @@
 
 namespace MBBSlib.Utility
 {
-    interface IGrid <T>
+    interface IGrid<T>
     {
         T this[int x, int y] { get; set; }
         void SetValue(int x, int y, T value);

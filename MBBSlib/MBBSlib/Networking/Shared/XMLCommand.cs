@@ -36,10 +36,7 @@ namespace MBBSlib.Networking.Shared
         /// <summary>
         /// Initializes object with default packet formating
         /// </summary>
-        public XMLCommand()
-        {
-            InitializeXML();
-        }
+        public XMLCommand() => InitializeXML();
         /// <summary>
         /// Adds key to the serializable packet
         /// </summary>
@@ -78,7 +75,7 @@ namespace MBBSlib.Networking.Shared
         public string GetString(string key) => GetKey(key).Value;
         public bool ContainsKey(string s)
         {
-            if (Data.Element(s) != null) return true;
+            if(Data.Element(s) != null) return true;
             return false;
         }
         public XMLCommand(int commandId, int sender, string key, object value)
@@ -113,7 +110,7 @@ namespace MBBSlib.Networking.Shared
         private static byte[] Compress(byte[] data)
         {
             var output = new MemoryStream();
-            using (var dstream = new DeflateStream(output, CompressionLevel.Optimal))
+            using(var dstream = new DeflateStream(output, CompressionLevel.Optimal))
             {
                 dstream.Write(data, 0, data.Length);
             }
@@ -124,15 +121,12 @@ namespace MBBSlib.Networking.Shared
         {
             var input = new MemoryStream(data);
             var output = new MemoryStream();
-            using (var dstream = new DeflateStream(input, CompressionMode.Decompress))
+            using(var dstream = new DeflateStream(input, CompressionMode.Decompress))
             {
                 dstream.CopyTo(output);
             }
             return output.ToArray();
         }
-        public static implicit operator XElement(XMLCommand cmd)
-        {
-            return cmd.Data;
-        }
+        public static implicit operator XElement(XMLCommand cmd) => cmd.Data;
     }
 }

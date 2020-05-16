@@ -55,10 +55,7 @@ namespace MBBSlib.Networking.Shared
 
             return c;
         }
-        public static implicit operator byte[](Command cmd)
-        {
-            return cmd._data;
-        }
+        public static implicit operator byte[](Command cmd) => cmd._data;
         public override string ToString() => Encoding.ASCII.GetString(DataForm);
     }
 }

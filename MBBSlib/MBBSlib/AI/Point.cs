@@ -18,13 +18,13 @@
         }
         public static bool operator ==(Point a, Point b)
         {
-            if (a.X == b.X && a.Y == b.Y)
+            if(a.X == b.X && a.Y == b.Y)
                 return true;
             return false;
         }
         public static bool operator !=(Point a, Point b)
         {
-            if (a.X != b.X || a.Y != b.Y)
+            if(a.X != b.X || a.Y != b.Y)
                 return true;
             return false;
         }

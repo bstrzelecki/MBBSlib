@@ -49,33 +49,12 @@ namespace MBBSlib.Math
         public override int GetHashCode() => HashCode.Combine(this);
 
         public override string ToString() => $"{x} {y}";
-        public static bool operator ==(Vector2 a, Vector2 b)
-        {
-            return (a.x == b.x && a.y == b.y);
-        }
-        public static bool operator !=(Vector2 a, Vector2 b)
-        {
-            return !(a.x == b.x && a.y == b.y);
-        }
-        public static Vector2 operator +(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x + b.x, a.y + b.y);
-        }
-        public static Vector2 operator -(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x - b.x, a.y - b.y);
-        }
-        public static Vector2 operator *(Vector2 a, float b)
-        {
-            return new Vector2(a.x * b, a.y * b);
-        }
-        public static Vector2 operator *(int b, Vector2 a)
-        {
-            return new Vector2(a.x * b, a.y * b);
-        }
-        public static Vector2 operator /(Vector2 a, float b)
-        {
-            return new Vector2(a.x / b, a.y / b);
-        }
+        public static bool operator ==(Vector2 a, Vector2 b) => (a.x == b.x && a.y == b.y);
+        public static bool operator !=(Vector2 a, Vector2 b) => !(a.x == b.x && a.y == b.y);
+        public static Vector2 operator +(Vector2 a, Vector2 b) => new Vector2(a.x + b.x, a.y + b.y);
+        public static Vector2 operator -(Vector2 a, Vector2 b) => new Vector2(a.x - b.x, a.y - b.y);
+        public static Vector2 operator *(Vector2 a, float b) => new Vector2(a.x * b, a.y * b);
+        public static Vector2 operator *(int b, Vector2 a) => new Vector2(a.x * b, a.y * b);
+        public static Vector2 operator /(Vector2 a, float b) => new Vector2(a.x / b, a.y / b);
     }
 }

@@ -33,7 +33,7 @@ namespace MBBSlib.Networking.Server
             {
                 _stream.BeginWrite(cmd, 0, cmd.Size, null, null);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 _server.OnSocketException?.Invoke(e);
             }
@@ -45,7 +45,7 @@ namespace MBBSlib.Networking.Server
                 byte[] arr = cmd.Serialize();
                 _stream.BeginWrite(arr, 0, arr.Length, null, null);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 _server.OnSocketException?.Invoke(e);
             }
@@ -63,7 +63,7 @@ namespace MBBSlib.Networking.Server
                 PacketRecieved(cmd);
                 _stream.BeginRead(recieveBuffer, 0, BUFFER_SIZE, RecieveCallBack, null);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 _server.OnSocketException?.Invoke(e);
                 this.Dispose();
@@ -72,7 +72,7 @@ namespace MBBSlib.Networking.Server
 
         private void PacketRecieved(XMLCommand cmd)
         {
-            if (_server._interpreters.ContainsKey(cmd.Id))
+            if(_server._interpreters.ContainsKey(cmd.Id))
                 _server._interpreters[cmd.Id].ExecuteCommand(cmd);
             _server.OnCommandRecieved?.Invoke(cmd);
         }

@@ -16,7 +16,7 @@ namespace MBBSlib.Local
             var doc = XDocument.Load(fileName);
             XElement root = doc.Root;
 
-            foreach (var n in root.Elements("t"))
+            foreach(var n in root.Elements("t"))
             {
                 locals.Add(n.Element("key").Value, n.Element("string").Value);
             }
@@ -40,7 +40,7 @@ namespace MBBSlib.Local
         /// <returns></returns>
         public static string T(this string t)
         {
-            if (!locals.ContainsKey(t))
+            if(!locals.ContainsKey(t))
             {
                 return "(ULT):" + t;
             }
@@ -53,7 +53,7 @@ namespace MBBSlib.Local
         /// <returns></returns>
         public static string Translate(this string t)
         {
-            if (!locals.ContainsKey(t))
+            if(!locals.ContainsKey(t))
             {
                 return "(ULT):" + t;
             }

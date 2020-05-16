@@ -21,7 +21,7 @@ namespace MBBSlib
             AllocConsole();
             var th = new Thread(() =>
             {
-                while (true)
+                while(true)
                 {
                     cmds.Add(Console.ReadLine());
                 }
@@ -33,14 +33,14 @@ namespace MBBSlib
         /// </summary>
         public static void ExecuteCommands()
         {
-            foreach (string cmd in cmds)
+            foreach(string cmd in cmds)
             {
                 try
                 {
                     string[] rg = cmd.Split('.');
                     string[] arg = rg[1].Split(' ');
                     var c = new List<string>();
-                    foreach (string n in arg)
+                    foreach(string n in arg)
                     {
                         c.Add(n);
                     }
@@ -49,7 +49,7 @@ namespace MBBSlib
                     var cp = new CommandCompund(rg[0], t, c.ToArray());
                     OnCmd(cp);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     Debug.WriteLine($"Command:{cmd} {e.ToString()}");
                 }
@@ -85,10 +85,7 @@ namespace MBBSlib
         /// <param name="a">Name of sender class</param>
         /// <returns>Returns confirmation of vatidation sender class</returns>
         public bool Check(string a) => Target == a;
-        public static implicit operator String(CommandCompund command)
-        {
-            return command.Source;
-        }
+        public static implicit operator String(CommandCompund command) => command.Source;
         /// <summary>
         /// Gets Int32 value if specific argument
         /// </summary>
@@ -97,7 +94,7 @@ namespace MBBSlib
         public int GetInt(int i)
         {
             int temp;
-            if (int.TryParse(Values[i], out temp))
+            if(int.TryParse(Values[i], out temp))
             {
                 return temp;
             }
@@ -115,7 +112,7 @@ namespace MBBSlib
         public bool GetBool(int i)
         {
             bool temp;
-            if (bool.TryParse(Values[i], out temp))
+            if(bool.TryParse(Values[i], out temp))
             {
                 return temp;
             }

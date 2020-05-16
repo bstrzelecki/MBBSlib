@@ -24,19 +24,19 @@ namespace MBBSlib.Utility
         }
         public void SetValue(int x, int y, T value)
         {
-            if (x < 0 || y < 0 || x >= width || y >= height) throw new IndexOutOfRangeException();
-            array[x, y] = value; 
+            if(x < 0 || y < 0 || x >= width || y >= height) throw new IndexOutOfRangeException();
+            array[x, y] = value;
         }
         public T GetValue(int x, int y)
         {
-            if (x < 0 || y < 0 || x >= width || y >= height) throw new IndexOutOfRangeException();
+            if(x < 0 || y < 0 || x >= width || y >= height) throw new IndexOutOfRangeException();
             return array[x, y];
         }
         public bool Contains(T obj)
         {
             foreach(T t in array)
             {
-                if (obj.Equals(t)) return true;
+                if(obj.Equals(t)) return true;
             }
             return false;
         }
@@ -52,9 +52,9 @@ namespace MBBSlib.Utility
         public T[] GetColumn(int x)
         {
             var ar = new T[height];
-            for (int i = 0; i < x; i++)
+            for(int i = 0; i < x; i++)
             {
-                ar[i] = array[x,i];
+                ar[i] = array[x, i];
             }
             return ar;
         }
@@ -64,7 +64,7 @@ namespace MBBSlib.Utility
             {
                 for(int j = 0; j < height; j++)
                 {
-                    if (obj.Equals(array[i, j]))
+                    if(obj.Equals(array[i, j]))
                     {
                         return new Vector2(i, j);
                     }
@@ -87,9 +87,9 @@ namespace MBBSlib.Utility
         }
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            for (int i = 0; i < width; i++)
+            for(int i = 0; i < width; i++)
             {
-                for (int j = 0; j < height; j++)
+                for(int j = 0; j < height; j++)
                 {
                     info.AddValue($"{i}:{j}", array[i, j], typeof(T));
                 }
@@ -122,7 +122,7 @@ namespace MBBSlib.Utility
             {
                 x = 0;
                 y++;
-                if (y > array.GetLength(1))
+                if(y > array.GetLength(1))
                     return false;
             }
             Current = array[x, y];
