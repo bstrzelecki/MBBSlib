@@ -6,10 +6,10 @@ namespace MBBSlib.AI
 {
     public class Pathfinding
     {
-        readonly float[,] map;
-        readonly int maxX = 0;
-        readonly int maxY = 0;
-        float GetTileValue(Point p) => CheckPoint(p) ? map[p.X, p.Y] : float.MaxValue;
+        readonly float[,] _map;
+        readonly int _maxX = 0;
+        readonly int _maxY = 0;
+        float GetTileValue(Point p) => CheckPoint(p) ? _map[p.X, p.Y] : float.MaxValue;
         float GetTileValue(Point p, int offX, int offY) => GetTileValue(new Point(p.X + offX, p.Y + offY));
         /// <summary>
         /// If true will ignore choke points
@@ -22,9 +22,9 @@ namespace MBBSlib.AI
         /// <param name="map">weight map</param>
         public Pathfinding(float[,] map)
         {
-            this.map = map;
-            maxX = map.GetUpperBound(0);
-            maxY = map.GetUpperBound(1);
+            this._map = map;
+            _maxX = map.GetUpperBound(0);
+            _maxY = map.GetUpperBound(1);
         }
         private float HeuristicCostEstimate(Point start, Point end) => (float)System.Math.Sqrt(
             System.Math.Pow(start.X - end.X, 2) +
@@ -56,7 +56,7 @@ namespace MBBSlib.AI
             if(CheckPoint(p))
                 pp.Add(p);
         }
-        private bool CheckPoint(Point p) => p.X >= 0 && p.X < maxX + 1 && p.Y >= 0 && p.Y < maxY + 1;
+        private bool CheckPoint(Point p) => p.X >= 0 && p.X < _maxX + 1 && p.Y >= 0 && p.Y < _maxY + 1;
         /// <summary>
         /// Finds shortest bath from point A to point B
         /// </summary>
@@ -74,9 +74,9 @@ namespace MBBSlib.AI
 
             var origins = new Dictionary<Point, Point>();
             var scores = new Dictionary<Point, float>();
-            for(int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < _map.GetUpperBound(0); x++)
             {
-                for(int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < _map.GetUpperBound(1); y++)
                 {
                     scores.Add(new Point(x, y), float.PositiveInfinity);
                 }
@@ -84,9 +84,9 @@ namespace MBBSlib.AI
             scores[start] = 0;
 
             var finalScores = new Dictionary<Point, float>();
-            for(int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < _map.GetUpperBound(0); x++)
             {
-                for(int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < _map.GetUpperBound(1); y++)
                 {
                     finalScores.Add(new Point(x, y), float.PositiveInfinity);
                 }
@@ -108,7 +108,7 @@ namespace MBBSlib.AI
                 {
                     if(ContainsPoint(evaluated, point)) continue;
 
-                    float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
+                    float tScore = scores[current] + (Distance(current, point) * _map[point.X, point.Y]);
 
                     if(!discovered.Contains(point))
                     {
@@ -148,9 +148,9 @@ namespace MBBSlib.AI
             var origins = new Dictionary<Point, Point>();
             var scores = new Dictionary<Point, float>();
 
-            for(int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < _map.GetUpperBound(0); x++)
             {
-                for(int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < _map.GetUpperBound(1); y++)
                 {
                     scores.Add(new Point(x, y), float.PositiveInfinity);
                 }
@@ -160,9 +160,9 @@ namespace MBBSlib.AI
                 scores[s] = 0;
             }
             var finalScores = new Dictionary<Point, float>();
-            for(int x = 0; x < map.GetUpperBound(0); x++)
+            for(int x = 0; x < _map.GetUpperBound(0); x++)
             {
-                for(int y = 0; y < map.GetUpperBound(1); y++)
+                for(int y = 0; y < _map.GetUpperBound(1); y++)
                 {
                     finalScores.Add(new Point(x, y), float.PositiveInfinity);
                 }
@@ -186,7 +186,7 @@ namespace MBBSlib.AI
                 {
                     if(ContainsPoint(evaluated, point)) continue;
 
-                    float tScore = scores[current] + (Distance(current, point) * map[point.X, point.Y]);
+                    float tScore = scores[current] + (Distance(current, point) * _map[point.X, point.Y]);
 
                     if(!discovered.Contains(point))
                     {

@@ -22,8 +22,8 @@ namespace MBBSlib.Math
         /// <param name="rotation">Direction of vector in radians</param>
         public Vector2(float rotation)
         {
-            this.x = (float)System.Math.Cos(rotation);
-            this.y = (float)System.Math.Sin(rotation);
+            x = (float)System.Math.Cos(rotation);
+            y = (float)System.Math.Sin(rotation);
         }
         public Vector2(float x, float y)
         {
@@ -32,8 +32,8 @@ namespace MBBSlib.Math
         }
         public Vector2(byte[] array)
         {
-            this.x = BitConverter.ToInt32(array[0..4], 0);
-            this.y = BitConverter.ToInt32(array[4..8], 0);
+            x = BitConverter.ToInt32(array[0..4], 0);
+            y = BitConverter.ToInt32(array[4..8], 0);
         }
         public byte[] Bytes
         {
