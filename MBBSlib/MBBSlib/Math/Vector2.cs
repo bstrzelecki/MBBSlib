@@ -48,8 +48,8 @@ namespace MBBSlib.Math
         public override int GetHashCode() => HashCode.Combine(this);
 
         public override string ToString() => $"{x} {y}";
-        public static implicit operator Vector2(System.Numerics.Vector2 a) => new Vector2(a.X,a.Y); 
-        public static implicit operator System.Numerics.Vector2(Vector2 a) => new System.Numerics.Vector2(a.x,a.y); 
+        public static implicit operator Vector2(System.Numerics.Vector2 a) => new Vector2(a.X, a.Y);
+        public static implicit operator System.Numerics.Vector2(Vector2 a) => new System.Numerics.Vector2(a.x, a.y);
         public static bool operator ==(Vector2 a, Vector2 b) => (a.x == b.x && a.y == b.y);
         public static bool operator !=(Vector2 a, Vector2 b) => !(a.x == b.x && a.y == b.y);
         public static Vector2 operator +(Vector2 a, Vector2 b) => new Vector2(a.x + b.x, a.y + b.y);
