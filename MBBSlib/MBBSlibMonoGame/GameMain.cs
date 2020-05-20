@@ -64,11 +64,15 @@ namespace MBBSlib.MonoGame
         /// Base class of a game
         /// </summary>
         /// <param name="main"></param>
-        public GameMain(IStartingPoint main)
+        public GameMain()
         {
             Instance = this;
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "Content";         
+        }
+        [Obsolete]
+        public GameMain(IStartingPoint main) :this()
+        {
             _start = main;
         }
 
@@ -87,7 +91,7 @@ namespace MBBSlib.MonoGame
             IsMouseVisible = true;
             InitializeComponents();
             camera3D = new Camera3D(GraphicsDevice, Window);
-            _start.Start(this);
+            _start?.Start(this);
             Time.Initialize();
             new InputBindHandler();
 
