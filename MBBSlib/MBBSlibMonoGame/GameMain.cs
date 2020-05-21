@@ -32,13 +32,11 @@ namespace MBBSlib.MonoGame
         private static readonly Dictionary<string, Model> _models = new Dictionary<string, Model>();
 
         private static readonly Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
-        private static readonly Dictionary<string, object> _content = new Dictionary<string, object>();
         private static void AddSingleton(Type t, object obj)
         {
             if (_singletons.ContainsKey(t)) return;
             _singletons.Add(t, obj);
         }
-        public static T GetContent<T>(string key) => (T)_content[key];
         public static T GetGameComponent<T>() => (T)_singletons[typeof(T)];
         /// <summary>
         /// Returns a texture that corresponds to a given key
@@ -71,10 +69,7 @@ namespace MBBSlib.MonoGame
             Content.RootDirectory = "Content";         
         }
         [Obsolete]
-        public GameMain(IStartingPoint main) :this()
-        {
-            _start = main;
-        }
+        public GameMain(IStartingPoint main) : this() => _start = main;
 
         public static void RegisterUpdate(IUpdateable update) => queuedUpdates.Add(update);
         public static void RegisterRenderer(IDrawable renderer, int layer = 5) => queuedRenderers.Add(new Renderer(layer, renderer));
@@ -225,9 +220,12 @@ namespace MBBSlib.MonoGame
         /// Color of an background
         /// </summary>
         public Color BackgroundColor = Color.Black;
+
+
         /// <summary>
         /// Defoult graphic device
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public static GraphicsDevice graphicsDevice => Instance.GraphicsDevice;
         protected override void Draw(GameTime gameTime)
         {
