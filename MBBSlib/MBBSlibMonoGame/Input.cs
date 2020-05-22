@@ -11,7 +11,9 @@ namespace MBBSlib.MonoGame
         public static Vector2 MousePosition => GetMousePosition();
         public static int MouseScrollDelta => GetMouseScrollDelta();
         private static bool _mouseDrag;
-        public static bool MouseDrag { get => _mouseDrag; set
+        public static bool MouseDrag
+        {
+            get => _mouseDrag; set
             {
                 _mouseDrag = value;
                 GameMain.Instance.IsMouseVisible = !value;
@@ -35,16 +37,16 @@ namespace MBBSlib.MonoGame
 
         public static bool IsKeyClicked(Keys key)
         {
-            if (!_keysClicked.ContainsKey(key))
+            if(!_keysClicked.ContainsKey(key))
             {
                 _keysClicked.Add(key, false);
             }
-            if (IsKeyDown(key) && !_keysClicked[key])
+            if(IsKeyDown(key) && !_keysClicked[key])
             {
                 _keysClicked[key] = true;
                 return true;
             }
-            if (IsKeyUp(key) && _keysClicked[key])
+            if(IsKeyUp(key) && _keysClicked[key])
             {
                 _keysClicked[key] = false;
             }
@@ -54,12 +56,12 @@ namespace MBBSlib.MonoGame
         private static readonly bool[] _btnsClicked = new bool[3];
         public static bool IsMouseButtonClicked(int btn)
         {
-            if (IsMouseKeyDown(btn) && !_btnsClicked[btn])
+            if(IsMouseKeyDown(btn) && !_btnsClicked[btn])
             {
                 _btnsClicked[btn] = true;
                 return true;
             }
-            if (IsMouseKeyUp(btn) && _btnsClicked[btn])
+            if(IsMouseKeyUp(btn) && _btnsClicked[btn])
             {
                 _btnsClicked[btn] = false;
             }
@@ -89,7 +91,7 @@ namespace MBBSlib.MonoGame
         public static bool IsMouseKeyUp(int btn)
         {
             MouseState state = Mouse.GetState();
-            switch (btn)
+            switch(btn)
             {
                 case 0:
                     return state.LeftButton == ButtonState.Released;

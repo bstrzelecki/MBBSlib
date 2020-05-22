@@ -53,9 +53,9 @@ namespace MBBSlib.MonoGame
         #region 3D renderer
         public void DrawMesh(Model model, Vector3 position)
         {
-            foreach (ModelMesh mesh in model.Meshes)
+            foreach(ModelMesh mesh in model.Meshes)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach(BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
                     effect.AmbientLightColor = new Vector3(0, 0, 0);
@@ -68,9 +68,9 @@ namespace MBBSlib.MonoGame
         }
         public void DrawMesh(Model model, Vector3 position, Sprite texture)
         {
-            foreach (ModelMesh mesh in model.Meshes)
+            foreach(ModelMesh mesh in model.Meshes)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach(BasicEffect effect in mesh.Effects)
                 {
                     effect.View = GameMain.Instance.camera3D.viewMatrix;
                     effect.Projection = GameMain.Instance.camera3D.projectionMatrix;
@@ -89,15 +89,15 @@ namespace MBBSlib.MonoGame
             var effect = GetBasicEffect(_graphicsDevice);
             effect.TextureEnabled = true;
             effect.Texture = texture;
-            
-            if (!disableCulling)
+
+            if(!disableCulling)
             {
                 _graphicsDevice.RasterizerState = GetPrimitiveRasterizerState(disableCulling);
             }
             var vertexBuffer = new VertexBuffer(_graphicsDevice, typeof(VertexPositionTexture), mesh.Length, BufferUsage.WriteOnly);
             vertexBuffer.SetData(mesh);
             _graphicsDevice.SetVertexBuffer(vertexBuffer);
-            foreach (var pass in effect.CurrentTechnique.Passes)
+            foreach(var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 _graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, mesh.Length);
@@ -115,12 +115,14 @@ namespace MBBSlib.MonoGame
         {
             var effect = GetBasicEffect(_graphicsDevice);
             effect.VertexColorEnabled = true;
-            
-            var dss = new DepthStencilState();
-            dss.DepthBufferEnable = true;
+
+            var dss = new DepthStencilState
+            {
+                DepthBufferEnable = true
+            };
             _graphicsDevice.DepthStencilState = dss;
-            
-            if (!disableCulling)
+
+            if(!disableCulling)
             {
                 _graphicsDevice.RasterizerState = GetPrimitiveRasterizerState(disableCulling);
             }
@@ -128,7 +130,7 @@ namespace MBBSlib.MonoGame
             vertexBuffer.SetData(mesh);
             _graphicsDevice.SetVertexBuffer(vertexBuffer);
 
-            foreach (var pass in effect.CurrentTechnique.Passes)
+            foreach(var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 _graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, mesh.Length);
@@ -136,7 +138,7 @@ namespace MBBSlib.MonoGame
         }
         public void DrawPrimitives(VertexPositionColor[] mesh, Vector3 position, bool disableCulling = false)
         {
-            for (int i = 0; i < mesh.Length; i++)
+            for(int i = 0; i < mesh.Length; i++)
             {
                 mesh[i].Position += position;
             }
@@ -149,7 +151,7 @@ namespace MBBSlib.MonoGame
         };
         private RasterizerState GetPrimitiveRasterizerState(bool disableCulling) => new RasterizerState
         {
-            CullMode = disableCulling?CullMode.None:CullMode.CullClockwiseFace,
+            CullMode = disableCulling ? CullMode.None : CullMode.CullClockwiseFace,
             FillMode = FillMode.Solid,
             DepthClipEnable = true
         };
@@ -160,13 +162,7 @@ namespace MBBSlib.MonoGame
             _graphicsDevice.Dispose();
         }
 
-        public static explicit operator SpriteBatch(RenderBatch rb)
-        {
-            return rb._spriteBatch;
-        }
-        public static explicit operator GraphicsDevice(RenderBatch rb)
-        {
-            return rb._graphicsDevice;
-        }
+        public static explicit operator SpriteBatch(RenderBatch rb) => rb._spriteBatch;
+        public static explicit operator GraphicsDevice(RenderBatch rb) => rb._graphicsDevice;
     }
 }

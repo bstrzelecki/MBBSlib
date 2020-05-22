@@ -12,11 +12,9 @@ namespace MBBSlib.MonoGame._3D
     /// </summary>
     public class Camera3D
     {
-        private readonly GraphicsDevice _graphicsDevice = null;
         private readonly GameWindow _gameWindow = null;
 
-        private MouseState mState = default;
-        private KeyboardState kbState = default;
+        private MouseState _mState = default;
 
         public float MovementUnitsPerSecond { get; set; } = 30f;
         public float RotationRadiansPerSecond { get; set; } = 60f;
@@ -25,9 +23,7 @@ namespace MBBSlib.MonoGame._3D
         public float nearClipPlane = .05f;
         public float farClipPlane = 2000f;
 
-        private readonly float yMouseAngle = 0f;
-        private readonly float xMouseAngle = 0f;
-        private bool mouseLookIsUsed = true;
+        private bool _mouseLookIsUsed = true;
 
         private int _fpsKeyboardLayout = 1;
         private int _cameraTypeOption = 1;
@@ -66,7 +62,6 @@ namespace MBBSlib.MonoGame._3D
         /// </summary>
         public Camera3D(GraphicsDevice gfxDevice, GameWindow window)
         {
-            _graphicsDevice = gfxDevice;
             _gameWindow = window;
             ReCreateWorldAndView();
             ReCreateThePerspectiveProjectionMatrix(gfxDevice, fieldOfViewDegrees);
@@ -89,7 +84,7 @@ namespace MBBSlib.MonoGame._3D
         /// A free camera has no fixed horizon but can't gimble lock under normal rotation as the up changes as the camera moves.
         /// Most hybrid cameras are a blend of the two but all are based on one or both of the above.
         /// </summary>
-        private Vector3 up = Vector3.Up;
+        private Vector3 _up = Vector3.Up;
         /// <summary>
         /// This serves as the cameras world orientation like almost all 3d game objects they have a world matrix. 
         /// It holds all orientational values and is used to move the camera properly thru the world space.
@@ -128,7 +123,7 @@ namespace MBBSlib.MonoGame._3D
         {
             set
             {
-                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, value, up);
+                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, value, _up);
                 // since we know here that a change has occured to the cameras world orientations we can update the view matrix.
                 ReCreateWorldAndView();
             }
@@ -141,12 +136,12 @@ namespace MBBSlib.MonoGame._3D
         {
             set
             {
-                up = value;
+                _up = value;
                 _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, _camerasWorld.Forward, value);
                 // since we know here that a change has occured to the cameras world orientations we can update the view matrix.
                 ReCreateWorldAndView();
             }
-            get => up;
+            get => _up;
         }
 
         /// <summary>
@@ -156,7 +151,7 @@ namespace MBBSlib.MonoGame._3D
         {
             set
             {
-                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, value, up);
+                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, value, _up);
                 // since we know here that a change has occured to the cameras world orientations we can update the view matrix.
                 ReCreateWorldAndView();
             }
@@ -169,7 +164,7 @@ namespace MBBSlib.MonoGame._3D
         {
             set
             {
-                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, Vector3.Normalize(value - _camerasWorld.Translation), up);
+                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, Vector3.Normalize(value - _camerasWorld.Translation), _up);
                 // since we know here that a change has occured to the cameras world orientations we can update the view matrix.
                 ReCreateWorldAndView();
             }
@@ -181,7 +176,7 @@ namespace MBBSlib.MonoGame._3D
         {
             set
             {
-                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, Vector3.Normalize(value.Translation - _camerasWorld.Translation), up);
+                _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, Vector3.Normalize(value.Translation - _camerasWorld.Translation), _up);
                 // since we know here that a change has occured to the cameras world orientations we can update the view matrix.
                 ReCreateWorldAndView();
             }
@@ -218,18 +213,18 @@ namespace MBBSlib.MonoGame._3D
         private void ReCreateWorldAndView()
         {
             if(_cameraTypeOption == CAM_TYPE_OPTION_FIXED)
-                up = Vector3.Up;
+                _up = Vector3.Up;
             if(_cameraTypeOption == CAM_UI_OPTION_EDIT_LAYOUT)
-                up = _camerasWorld.Up;
+                _up = _camerasWorld.Up;
 
-            _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, _camerasWorld.Forward, up);
+            _camerasWorld = Matrix.CreateWorld(_camerasWorld.Translation, _camerasWorld.Forward, _up);
             viewMatrix = Matrix.CreateLookAt(_camerasWorld.Translation, _camerasWorld.Forward + _camerasWorld.Translation, _camerasWorld.Up);
         }
 
         /// <summary>
         /// Changes the perspective matrix to a new near far and field of view.
         /// </summary>
-        public void ReCreateThePerspectiveProjectionMatrix(GraphicsDevice gd, float fovInDegrees) => projectionMatrix = Matrix.CreatePerspectiveFieldOfView(fovInDegrees * (float)((3.14159265358f) / 180f), (float)GameMain.Instance.Resolution.Width / (float)GameMain.Instance.Resolution.Height, .05f, 1000f);
+        public void ReCreateThePerspectiveProjectionMatrix(GraphicsDevice gd, float fovInDegrees) => projectionMatrix = Matrix.CreatePerspectiveFieldOfView(fovInDegrees * ((3.14159265358f) / 180f), GameMain.Instance.Resolution.Width / (float)GameMain.Instance.Resolution.Height, .05f, 1000f);
         /// <summary>
         /// Changes the perspective matrix to a new near far and field of view.
         /// The projection matrix is typically only set up once at the start of the app.
@@ -240,7 +235,7 @@ namespace MBBSlib.MonoGame._3D
             this.fieldOfViewDegrees = MathHelper.ToRadians(fieldOfViewInDegrees);
             nearClipPlane = nearPlane;
             farClipPlane = farPlane;
-            float aspectRatio = (float)GameMain.Instance.Resolution.Width / (float)GameMain.Instance.Resolution.Height;
+            float aspectRatio = GameMain.Instance.Resolution.Width / (float)GameMain.Instance.Resolution.Height;
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(this.fieldOfViewDegrees, aspectRatio, nearClipPlane, farClipPlane);
         }
 
@@ -318,18 +313,17 @@ namespace MBBSlib.MonoGame._3D
 
             if(state.LeftButton == ButtonState.Pressed)
             {
-                mouseLookIsUsed = mouseLookIsUsed == false;
+                _mouseLookIsUsed = _mouseLookIsUsed == false;
             }
-            if(mouseLookIsUsed)
+            if(_mouseLookIsUsed)
             {
-                Vector2 diff = state.Position.ToVector2() - mState.Position.ToVector2();
+                Vector2 diff = state.Position.ToVector2() - _mState.Position.ToVector2();
                 if(diff.X != 0f)
                     RotateLeftOrRight(gameTime, diff.X);
                 if(diff.Y != 0f)
                     RotateUpOrDown(gameTime, diff.Y);
             }
-            mState = state;
-            kbState = kstate;
+            _mState = state;
         }
 
         /// <summary>
@@ -396,17 +390,16 @@ namespace MBBSlib.MonoGame._3D
                     RotateRollClockwise(gameTime);
             }
 
-            mouseLookIsUsed = state.RightButton == ButtonState.Pressed;
-            if(mouseLookIsUsed)
+            _mouseLookIsUsed = state.RightButton == ButtonState.Pressed;
+            if(_mouseLookIsUsed)
             {
-                Vector2 diff = state.Position.ToVector2() - mState.Position.ToVector2();
+                Vector2 diff = state.Position.ToVector2() - _mState.Position.ToVector2();
                 if(diff.X != 0f)
                     RotateLeftOrRight(gameTime, diff.X);
                 if(diff.Y != 0f)
                     RotateUpOrDown(gameTime, diff.Y);
             }
-            mState = state;
-            kbState = kstate;
+            _mState = state;
         }
 
         /// <summary>

@@ -12,16 +12,13 @@ namespace MBBSlib.MonoGame.UI
         public SpriteFont font;
         public bool IsVisible { get; set; } = true;
         public int TopBarWidth => Transform.Width - exitBtn.Size.Width;
-        public Window()
-        {
-            GameMain.RegisterRenderer(this);
-        }
+        public Window() => GameMain.RegisterRenderer(this);
 
         public void Dispose() => GameMain.UnregisterRenderer(this);
         public override void Draw(RenderBatch sprite)
         {
-            if (!IsVisible) return;
-            if (topBar != null && exitBtn != null)
+            if(!IsVisible) return;
+            if(topBar != null && exitBtn != null)
             {
                 sprite.Draw(topBar, new Rectangle(Transform.Location, new Point(TopBarWidth, 12)));
                 sprite.Draw(exitBtn, new Rectangle(TopBarWidth, 0, exitBtn.Size.Width, exitBtn.Size.Height));
@@ -33,7 +30,7 @@ namespace MBBSlib.MonoGame.UI
 
         public void Update()
         {
-            if (!IsVisible) return;
+            if(!IsVisible) return;
             //if(Input.GetMousePosition() > new Vector2(TopBarWidth, 0) && Input.GetMousePosition() < new Vector2(TopBarWidth + 12, 12))
             {
 

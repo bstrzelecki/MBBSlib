@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MBBSlib.Unity
+﻿namespace MBBSlib.Unity
 {
     public class Class1
     {

@@ -1,6 +1,5 @@
 ﻿using MBBSlib.MonoGame._3D;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -34,7 +33,7 @@ namespace MBBSlib.MonoGame
         private static readonly Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
         private static void AddSingleton(Type t, object obj)
         {
-            if (_singletons.ContainsKey(t)) return;
+            if(_singletons.ContainsKey(t)) return;
             _singletons.Add(t, obj);
         }
         public static T GetGameComponent<T>() => (T)_singletons[typeof(T)];
@@ -66,7 +65,7 @@ namespace MBBSlib.MonoGame
         {
             Instance = this;
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";         
+            Content.RootDirectory = "Content";
         }
         [Obsolete]
         public GameMain(IStartingPoint main) : this() => _start = main;
@@ -77,7 +76,7 @@ namespace MBBSlib.MonoGame
         public static void UnregisterRenderer(IDrawable renderer, int layer = 5)
         {
             var r = new Renderer(layer, renderer);
-            if (renderers.Contains(r))
+            if(renderers.Contains(r))
                 rmQueuedRenderers.Add(r);
         }
         protected override void Initialize()
@@ -104,17 +103,17 @@ namespace MBBSlib.MonoGame
                     {
                         object o = Activator.CreateInstance(a);
                         AddSingleton(a, o);
-                        if (a.GetInterface("IDrawable") != null )
+                        if(a.GetInterface("IDrawable") != null)
                         {
                             RegisterRenderer((IDrawable)o);
-                        } 
-                        if (a.GetInterface("IUpdateable") != null)
+                        }
+                        if(a.GetInterface("IUpdateable") != null)
                         {
                             RegisterUpdate((IUpdateable)o);
                         }
                     }
                 }
-                
+
             }
         }
 
@@ -139,19 +138,19 @@ namespace MBBSlib.MonoGame
             try
             {
                 string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Content");
-                
-                foreach (string file in files)
+
+                foreach(string file in files)
                 {
                     string f = file.Remove(0, file.LastIndexOf('\\') + 1);
                     f = f.Remove(f.Length - 4, 4);
                     Debug.WriteLine("Trying to load " + f);
-                    if (!_textures.ContainsKey(f) || _fonts.ContainsKey(f))
+                    if(!_textures.ContainsKey(f) || _fonts.ContainsKey(f))
                     {
                         Load(f);
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Debug.WriteLine(e.Data);
             }
@@ -177,7 +176,7 @@ namespace MBBSlib.MonoGame
                         _models.Add(id, Content.Load<Model>(id));
                         Debug.WriteLine("Loaded model: " + id);
                     }
-                    catch (Exception e)
+                    catch(Exception e)
                     {
                         Debug.WriteLine(e.ToString());
                     }
@@ -190,7 +189,7 @@ namespace MBBSlib.MonoGame
         protected override void Update(GameTime gameTime)
         {
             this.gameTime = gameTime;
-            if (DebugExit && (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)))
+            if(DebugExit && (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)))
             {
                 Exit();
             }
@@ -198,20 +197,20 @@ namespace MBBSlib.MonoGame
             {
                 Mouse.SetPosition(Resolution.Width / 2, Resolution.Height / 2);
             }
-            foreach (IUpdateable update in rmQueuedUpdates)
+            foreach(IUpdateable update in rmQueuedUpdates)
             {
-                if (updates.Contains(update))
+                if(updates.Contains(update))
                     updates.Remove(update);
             }
 
-            foreach (IUpdateable update in queuedUpdates)
+            foreach(IUpdateable update in queuedUpdates)
             {
                 updates.Add(update);
             }
 
             queuedUpdates.Clear();
-            if (updates.Count <= 0) return;
-            foreach (IUpdateable update in updates)
+            if(updates.Count <= 0) return;
+            foreach(IUpdateable update in updates)
             {
                 update.Update();
             }
@@ -233,12 +232,12 @@ namespace MBBSlib.MonoGame
 
 
 
-            foreach (Renderer draw in rmQueuedRenderers)
+            foreach(Renderer draw in rmQueuedRenderers)
             {
-                if (renderers.Contains(draw))
+                if(renderers.Contains(draw))
                     renderers.Remove(draw);
             }
-            foreach (Renderer update in queuedRenderers)
+            foreach(Renderer update in queuedRenderers)
             {
                 renderers.Add(update);
                 renderers = renderers.OrderBy(n => n.layer).ToList();
@@ -246,10 +245,10 @@ namespace MBBSlib.MonoGame
             queuedRenderers.Clear();
 
 
-            if (renderers.Count <= 0) return;
+            if(renderers.Count <= 0) return;
             _spriteBatch.Begin();
             var batch = new RenderBatch(_spriteBatch, GraphicsDevice);
-            foreach (Renderer draw in renderers)
+            foreach(Renderer draw in renderers)
             {
                 draw.drawable.Draw(batch);
             }

@@ -5,14 +5,8 @@ namespace MBBSlib.MonoGame
     public class Font
     {
         readonly string font = string.Empty;
-        public Font(string fontName)
-        {
-            font = fontName;
-        }
+        public Font(string fontName) => font = fontName;
 
-        public static implicit operator SpriteFont(Font font)
-        {
-            return GameMain.Instance.GetFont(font.font);
-        }
+        public static implicit operator SpriteFont(Font font) => GameMain.Instance.GetFont(font.font);
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MBBSlib.MonoGame.Integrations
+﻿namespace MBBSlib.MonoGame.Integrations
 {
     public static class Extensions
     {
