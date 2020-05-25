@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MBBSlib.MonoGame._3D
 {
@@ -99,7 +96,7 @@ namespace MBBSlib.MonoGame._3D
             public Vector3 UpVector => Vector3.Up;
             public void Update(Camera3D camera, GameTime gameTime)
             {
-                
+
                 MouseState state = Mouse.GetState(camera.GameWindow);
                 KeyboardState kstate = Keyboard.GetState();
                 if(kstate.IsKeyDown(Keys.W))
@@ -147,11 +144,11 @@ namespace MBBSlib.MonoGame._3D
                 {
                     camera.MoveDownInNonLocalSystemCoordinates(gameTime);
                 }
-                    Vector2 diff = state.Position.ToVector2() - _mState.Position.ToVector2();
-                    if(diff.X != 0f)
-                        camera.RotateLeftOrRight(gameTime, diff.X);
-                    if(diff.Y != 0f)
-                        camera.RotateUpOrDown(gameTime, diff.Y);
+                Vector2 diff = state.Position.ToVector2() - _mState.Position.ToVector2();
+                if(diff.X != 0f)
+                    camera.RotateLeftOrRight(gameTime, diff.X);
+                if(diff.Y != 0f)
+                    camera.RotateUpOrDown(gameTime, diff.Y);
                 _mState = state;
             }
         }
