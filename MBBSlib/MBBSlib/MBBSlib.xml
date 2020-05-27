@@ -1,0 +1,349 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MBBSlib</name>
+    </assembly>
+    <members>
+        <member name="P:MBBSlib.AI.Pathfinding.IgnoreClipping">
+            <summary>
+            If true will ignore choke points
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Pathfinding.#ctor(System.Single[0:,0:])">
+            <summary>
+            Crerates pathfinding instance
+            </summary>
+            <param name="map">weight map</param>
+        </member>
+        <member name="M:MBBSlib.AI.Pathfinding.GetPath(MBBSlib.AI.Point,MBBSlib.AI.Point)">
+            <summary>
+            Finds shortest bath from point A to point B
+            </summary>
+            <param name="start">Entry point</param>
+            <param name="end">Destination</param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.AI.Pathfinding.GetPath(System.Collections.Generic.List{MBBSlib.AI.Point},MBBSlib.AI.Point)">
+            <summary>
+            Finds shortest path from closest point
+            </summary>
+            <param name="starts">Entry point</param>
+            <param name="target">Destination</param>
+            <returns></returns>
+        </member>
+        <member name="F:MBBSlib.AI.Point.X">
+            <summary>
+            Integer coordinate
+            </summary>
+        </member>
+        <member name="F:MBBSlib.AI.Point.Y">
+            <summary>
+            Integer coordinate
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Point.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Defoult constructor
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:MBBSlib.Debugger.OpenConsole">
+            <summary>
+            Opens new window console (Closing console window will close entire application)
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Debugger.ExecuteCommands">
+            <summary>
+            Executes queued commands
+            </summary>
+        </member>
+        <member name="P:MBBSlib.CommandCompund.Target">
+            <summary>
+            Targetted class (unse check function instead of this property) 
+            </summary>
+        </member>
+        <member name="P:MBBSlib.CommandCompund.Source">
+            <summary>
+            Name of referenced class property (use this to check which property is going to be changed)
+            </summary>
+        </member>
+        <member name="P:MBBSlib.CommandCompund.Values">
+            <summary>
+            Array of arguments in commands
+            </summary>
+        </member>
+        <member name="M:MBBSlib.CommandCompund.Check(System.String)">
+            <summary>
+            Check name of target
+            </summary>
+            <param name="a">Name of sender class</param>
+            <returns>Returns confirmation of vatidation sender class</returns>
+        </member>
+        <member name="M:MBBSlib.CommandCompund.GetInt(System.Int32)">
+            <summary>
+            Gets Int32 value if specific argument
+            </summary>
+            <param name="i">index of argument form 0</param>
+            <returns>Int32</returns>
+        </member>
+        <member name="M:MBBSlib.CommandCompund.GetBool(System.Int32)">
+            <summary>
+            Gets Boolean value if specific argument
+            </summary>
+            <param name="i">index of argument form 0</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.LoadTranslation(System.String)">
+            <summary>
+            Loads and fills strings to RAM
+            </summary>
+            <param name="fileName">Direct path to lang.xml file</param>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.GetTemplate">
+            <summary>
+            Generates template document for quick copy/paste
+            </summary>
+            <returns>Save output with .Save(s) or access via IntelliSense</returns>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.T(System.String)">
+            <summary>
+            Alias for Translate()
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.Translate(System.String)">
+            <summary>
+            Replaces key with coresponding string in dictionary
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.Math.Vector2.#ctor(System.Single)">
+            <summary>
+            Creates vector with magnitude of 1 and given angle
+            </summary>
+            <param name="rotation">Direction of vector in radians</param>
+        </member>
+        <member name="T:MBBSlib.Networking.Client.TCPClient">
+            <summary>
+            Default cient networking class for tcp connection.
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Client.TCPClient.Id">
+            <summary>
+            Id of a client instance
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnCommandRecieved">
+            <summary>
+            Event that fires when client recieves a command.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnConnected">
+            <summary>
+            Event that fires whent client succesfuly connects to a remote host.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnCommandSent">
+            <summary>
+            Event that fires when client sents command to a remote host.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnNotManagedCommand">
+            <summary>
+            Event that fires when client recieves a command and wasnt managed by preprocessor.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnClientConnected">
+            <summary>
+            Event that fires when another client connects to the remote host.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnClientDisconnected">
+            <summary>
+            Event that fires when another client disconnects to the remote host.
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.Connect(System.String,System.Int32)">
+            <summary>
+            Starts connection with a remote host.
+            </summary>
+            <param name="ip">ipv4 address (4 bytes string)</param>
+            <param name="port">Server port</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.SendData(System.Int32,System.Byte[])">
+            <summary>
+            Sends data directly to connected remote host.
+            </summary>
+            <param name="cmd">Id of data type (1-int.max)</param>
+            <param name="data">1024 byte data array</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.SendData(MBBSlib.Networking.Shared.XMLCommand)">
+            <summary>
+            Sends data directly to connected remote host.
+            </summary>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.Dispose">
+            <summary>
+            Disconnects from servers and frees allocated memory
+            </summary>
+        </member>
+        <member name="T:MBBSlib.Networking.Server.TCPServer">
+            <summary>
+            Default server networking class for tcp connection.
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Server.TCPServer.Port">
+            <summary>
+            Port on what server will be listening 
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnClientConnected">
+            <summary>
+            Event that fires when client connects to the server
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnCommandRecieved">
+            <summary>
+            Event that fires when server recieves command from client
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnSocketException">
+            <summary>
+            Event that fires when excentpion is thrown
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnMessageBroadcast">
+            <summary>
+            Event that fires when servers outputs debug information
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.RegisterInterpreter(System.Int32,MBBSlib.Networking.Shared.ICommandInterpreter)">
+            <summary>
+            Registers command interpreter
+            </summary>
+            <param name="id"></param>
+            <param name="ici"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.UnregisterInterpreter(MBBSlib.Networking.Shared.ICommandInterpreter)">
+            <summary>
+            Unregisters command interpreter
+            </summary>
+            <param name="ici"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.Start">
+            <summary>
+            Start listening on predefined port
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.SendData(System.Int32,MBBSlib.Networking.Shared.Command)">
+            <summary>
+            Sends data to specified client
+            </summary>
+            <param name="clientid">Id of the client data will be sent</param>
+            <param name="cmd">Legacy command that will be delivered to specified client</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.SendData(System.Int32,MBBSlib.Networking.Shared.XMLCommand)">
+            <summary>
+            Sends data to specified client
+            </summary>
+            <param name="clientid">Id of the client data will be sent</param>
+            <param name="cmd">XML formatted command that will be delivered to specified client</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.BroadcastData(MBBSlib.Networking.Shared.XMLCommand,System.Int32[])">
+            <summary>
+            Sends data to all connected clients exept specified ones
+            </summary>
+            <param name="cmd">Command that will be delivered to clients</param>
+            <param name="ids">List of ids to which command will not be sent</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.Dispose">
+            <summary>
+            Clears memory and disconects all clients
+            </summary>
+        </member>
+        <member name="T:MBBSlib.Networking.Shared.Command">
+            <summary>
+            Default class for labeling tcp data
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.Size">
+            <summary>
+            Lengh of transmitted data
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.Id">
+            <summary>
+            Command id
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.DataForm">
+            <summary>
+            Transmited data
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.Sender">
+            <summary>
+            Id of origin ipendpoit (0 is reserved for server transmission)
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Shared.ConnectionData.BUFFER_SIZE">
+            <summary>
+            Size of network buffer
+            </summary>
+        </member>
+        <member name="T:MBBSlib.Networking.Shared.ICommandInterpreter">
+            <summary>
+            Interpreter that responds to client request at given id.
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.ICommandInterpreter.ExecuteCommand(MBBSlib.Networking.Shared.XMLCommand)">
+            <summary>
+            Code that will be executed during client request
+            </summary>
+            <param name="sender">Client id</param>
+            <param name="data">byte array of non compressed data stream</param>
+        </member>
+        <member name="T:MBBSlib.Networking.Shared.XMLCommand">
+            <summary>
+            TCP packet represented as xml document
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.#ctor">
+            <summary>
+            Initializes object with default packet formating
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.AddKey(System.String,System.Object)">
+            <summary>
+            Adds key to the serializable packet
+            </summary>
+            <param name="key"></param>
+            <param name="data"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.GetKey(System.String)">
+            <summary>
+            Deserializes key from packet data
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.GetKeys(System.String)">
+            <summary>
+            Deserializes multiple keys from packet data with the same id
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.Serialization.Serializer.Register(System.String,MBBSlib.Serialization.ISerializable)">
+            <summary>
+            Registers objects and issues serialization during static calls
+            </summary>
+            <param name="id">key of an object</param>
+            <param name="serializable"></param>
+        </member>
+    </members>
+</doc>

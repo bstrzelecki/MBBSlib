@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MBBSlib.AI
 {
-    class StateMachine
+    public class StateMachine
     {
         public IState CurrentState {
             get => _currentState;

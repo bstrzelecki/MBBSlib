@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace MBBSlib.AI
 {
+    /// <summary>
+    /// Implementaion of A* pathfinding algorythm
+    /// </summary>
     public class Pathfinding
     {
         readonly float[,] _map;

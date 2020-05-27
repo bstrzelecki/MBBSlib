@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MBBSlib.AI
 {
-    interface IState
+    public interface IState
     {
         void OnUpdate();
         void OnEnter();
