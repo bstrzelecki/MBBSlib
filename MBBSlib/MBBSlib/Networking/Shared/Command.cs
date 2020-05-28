@@ -27,6 +27,13 @@ namespace MBBSlib.Networking.Shared
         public int Sender { get; private set; }
 
         readonly byte[] _data = new byte[ConnectionData.BUFFER_SIZE];
+
+        /// <summary>
+        /// Legacy command for tcp communication
+        /// </summary>
+        /// <param name="commandId">Id of an action</param>
+        /// <param name="sender">Id of command origin</param>
+        /// <param name="data">Byte array of encoded(ASCII) string data</param>
         public Command(int commandId, int sender, byte[] data)
         {
             Array.Copy(BitConverter.GetBytes(commandId), 0, _data, 0, 4);
@@ -46,6 +53,10 @@ namespace MBBSlib.Networking.Shared
             Sender = BitConverter.ToInt32(_data[4..8]);
             DataForm = data[8..];
         }
+        /// <summary>
+        /// COnverts legacy command to xml format
+        /// </summary>
+        /// <param name="cmd"></param>
         public static implicit operator XMLCommand(Command cmd)
         {
             var c = new XMLCommand();
@@ -55,7 +66,15 @@ namespace MBBSlib.Networking.Shared
 
             return c;
         }
+        /// <summary>
+        /// Accesses byte data array
+        /// </summary>
+        /// <param name="cmd">Legacy command</param>
         public static implicit operator byte[](Command cmd) => cmd._data;
+        /// <summary>
+        /// Decodes byte data array to ASCII string
+        /// </summary>
+        /// <returns>ASCII encoded string</returns>
         public override string ToString() => Encoding.ASCII.GetString(DataForm);
     }
 }
