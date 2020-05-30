@@ -4,8 +4,15 @@ using System.IO;
 
 namespace MBBSlib.IO
 {
-    public class RegistryData
+    /// <summary>
+    /// Class for predefined registry manipulation
+    /// </summary>
+    public static class RegistryData
     {
+        /// <summary>
+        /// Prevides default path for storage, if doeant exist then creates one
+        /// </summary>
+        /// <returns>Default path, can be altered</returns>
         public static string GetPath()
         {
             string data = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SyncTool";
@@ -18,7 +25,7 @@ namespace MBBSlib.IO
             }
             catch
             {
-                ConfigureDirectory();
+                ConfigureDirectory("");
             }
             if(!Directory.Exists(data))
             {
@@ -26,14 +33,18 @@ namespace MBBSlib.IO
             }
             return data;
         }
-        public static void ConfigureDirectory()
+        /// <summary>
+        /// Creates default path and saves it in the registry
+        /// </summary>
+        /// <param name="name">Location in user documents</param>
+        public static void ConfigureDirectory(string name)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software", true);
-            key.CreateSubKey("Mabat");
-            key = Registry.CurrentUser.OpenSubKey(@"Software\Mabat", true);
-            key.CreateSubKey("SyncTool");
-            key = Registry.CurrentUser.OpenSubKey(@"Software\Mabat\SyncTool", true);
-            key.SetValue("path", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SyncTool");
+            key.CreateSubKey("MBBS");
+            key = Registry.CurrentUser.OpenSubKey(@"Software\MBBS", true);
+            key.CreateSubKey(name);
+            key = Registry.CurrentUser.OpenSubKey(@"Software\Mabat\" + name, true);
+            key.SetValue("path", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MBBS\" + name);
             key.Close();
         }
     }
