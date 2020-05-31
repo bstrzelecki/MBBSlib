@@ -4,8 +4,8 @@ namespace MBBSlib.MonoGame
 {
     public partial class GameMain
     {
-        private static List<Renderer> renderers = new List<Renderer>();
-        private static readonly List<IUpdateable> updates = new List<IUpdateable>();
+        private static List<Renderer> _renderers = new List<Renderer>();
+        private static readonly List<IUpdateable> _updates = new List<IUpdateable>();
         private static readonly List<IAudioSource> audioSources = new List<IAudioSource>();
         private readonly static List<Renderer> queuedRenderers = new List<Renderer>();
         private readonly static List<IUpdateable> queuedUpdates = new List<IUpdateable>();

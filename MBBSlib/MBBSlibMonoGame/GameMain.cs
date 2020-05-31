@@ -76,7 +76,7 @@ namespace MBBSlib.MonoGame
         public static void UnregisterRenderer(IDrawable renderer, int layer = 5)
         {
             var r = new Renderer(layer, renderer);
-            if(renderers.Contains(r))
+            if(_renderers.Contains(r))
                 rmQueuedRenderers.Add(r);
         }
         protected override void Initialize()
@@ -199,18 +199,18 @@ namespace MBBSlib.MonoGame
             }
             foreach(IUpdateable update in rmQueuedUpdates)
             {
-                if(updates.Contains(update))
-                    updates.Remove(update);
+                if(_updates.Contains(update))
+                    _updates.Remove(update);
             }
 
             foreach(IUpdateable update in queuedUpdates)
             {
-                updates.Add(update);
+                _updates.Add(update);
             }
 
             queuedUpdates.Clear();
-            if(updates.Count <= 0) return;
-            foreach(IUpdateable update in updates)
+            if(_updates.Count <= 0) return;
+            foreach(IUpdateable update in _updates)
             {
                 update.Update();
             }
@@ -234,21 +234,21 @@ namespace MBBSlib.MonoGame
 
             foreach(Renderer draw in rmQueuedRenderers)
             {
-                if(renderers.Contains(draw))
-                    renderers.Remove(draw);
+                if(_renderers.Contains(draw))
+                    _renderers.Remove(draw);
             }
             foreach(Renderer update in queuedRenderers)
             {
-                renderers.Add(update);
-                renderers = renderers.OrderBy(n => n.layer).ToList();
+                _renderers.Add(update);
+                _renderers = _renderers.OrderBy(n => n.layer).ToList();
             }
             queuedRenderers.Clear();
 
 
-            if(renderers.Count <= 0) return;
+            if(_renderers.Count <= 0) return;
             _spriteBatch.Begin();
             var batch = new RenderBatch(_spriteBatch, GraphicsDevice);
-            foreach(Renderer draw in renderers)
+            foreach(Renderer draw in _renderers)
             {
                 draw.drawable.Draw(batch);
             }
