@@ -4,6 +4,100 @@
         <name>MBBSlib</name>
     </assembly>
     <members>
+        <member name="T:MBBSlib.AI.BehaviorTree">
+            <summary>
+            Ai calculation pattern
+            </summary>
+        </member>
+        <member name="P:MBBSlib.AI.BehaviorTree.Root">
+            <summary>
+            Entry point for calculating ai
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.#ctor">
+            <summary>
+            Creates tree with empty root node
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.#ctor(MBBSlib.AI.ISelector[])">
+            <summary>
+            Creates tree and assings selectors to root node
+            </summary>
+            <param name="selectors">first branches of the tree</param>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.Update">
+            <summary>
+            Calculates ai cycle
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.BehaviorTree.RootNode">
+            <summary>
+            Entry point for behavior tree
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.RootNode.Add(MBBSlib.AI.ISelector)">
+            <summary>
+            Add selector that will be evaluated every update
+            </summary>
+            <param name="selector"></param>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.RootNode.op_Explicit(MBBSlib.AI.BehaviorTree.RootNode)~System.Collections.Generic.List{MBBSlib.AI.ISelector}">
+            <summary>
+            Converts rootNode to list of selectors
+            </summary>
+            <param name="node">Root node of the tree</param>
+        </member>
+        <member name="T:MBBSlib.AI.Leaf">
+            <summary>
+            End point of behavior tree
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Leaf.Execute">
+            <summary>
+            Calculates ai actions
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.ISelector">
+            <summary>
+            Interfeace for <see cref="T:MBBSlib.AI.BehaviorTree"/> branch selectors
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.ISelector.GetNode">
+            <summary>
+            Chooses nodes acording to set condition
+            </summary>
+            <returns>Next node</returns>
+        </member>
+        <member name="T:MBBSlib.AI.IState">
+            <summary>
+            State interface for <see cref="T:MBBSlib.AI.StateMachine"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.IState.OnUpdate">
+            <summary>
+            Method called if this state is active and <see cref="T:MBBSlib.AI.StateMachine"/>.Update() is called
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.IState.OnEnter">
+            <summary>
+            Method that is called when this state is set by <see cref="T:MBBSlib.AI.StateMachine"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.IState.OnExit">
+            <summary>
+            Method that is called when <see cref="T:MBBSlib.AI.StateMachine"/> switches from this state to another
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.Node">
+            <summary>
+            This class provides disambiguation for <see cref="T:System.Object"/> and <see cref="T:MBBSlib.AI.BehaviorTree"/> nodes
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.Pathfinding">
+            <summary>
+            Implementaion of A* pathfinding algorythm
+            </summary>
+        </member>
         <member name="P:MBBSlib.AI.Pathfinding.IgnoreClipping">
             <summary>
             If true will ignore choke points
@@ -31,6 +125,11 @@
             <param name="target">Destination</param>
             <returns></returns>
         </member>
+        <member name="T:MBBSlib.AI.Point">
+            <summary>
+            Classes that storeas x and y integer coordinates
+            </summary>
+        </member>
         <member name="F:MBBSlib.AI.Point.X">
             <summary>
             Integer coordinate
@@ -47,6 +146,110 @@
             </summary>
             <param name="x"></param>
             <param name="y"></param>
+        </member>
+        <member name="M:MBBSlib.AI.Point.op_Equality(MBBSlib.AI.Point,MBBSlib.AI.Point)">
+            <summary>
+            Checks if points are equal
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns>Wiil retun true if both x and y coordinates are equal</returns>
+        </member>
+        <member name="M:MBBSlib.AI.Point.ToString">
+            <summary>
+            Parses both coordinates to string
+            </summary>
+            <returns> $"({X}, {Y})"</returns>
+        </member>
+        <member name="M:MBBSlib.AI.Point.Equals(System.Object)">
+            <summary>
+            Checks if points are equal
+            </summary>
+            <param name="obj">Should be instance of <see cref="T:MBBSlib.AI.Point"/> otherwise will return false</param>
+            <returns>Wiil retun true if both x and y coordinates are equal</returns>
+        </member>
+        <member name="M:MBBSlib.AI.Point.GetHashCode">
+            <summary>
+            Default calculate hashcode method
+            </summary>
+            <returns>Hashcode</returns>
+        </member>
+        <member name="T:MBBSlib.AI.Selector">
+            <summary>
+            Provedes next node in <see cref="T:MBBSlib.AI.BehaviorTree"/> (binary selector)
+            </summary>
+        </member>
+        <member name="F:MBBSlib.AI.Selector.OnTrue">
+            <summary>
+            Node that will bve returned by <see cref="M:MBBSlib.AI.Selector.GetNode"/> when <see cref="F:MBBSlib.AI.Selector._condition"/> returns true
+            </summary>
+        </member>
+        <member name="F:MBBSlib.AI.Selector.OnFalse">
+            <summary>
+            Node that will bve returned by <see cref="M:MBBSlib.AI.Selector.GetNode"/> when <see cref="F:MBBSlib.AI.Selector._condition"/> returns false
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Selector.#ctor(System.Func{System.Boolean},MBBSlib.AI.Node,MBBSlib.AI.Node)">
+            <summary>
+            Default constructor for <see cref="T:MBBSlib.AI.BehaviorTree"/> binary selector
+            </summary>
+            <param name="condition">Condition of <see cref="T:MBBSlib.AI.Selector"/></param>
+            <param name="trueNode"><see cref="F:MBBSlib.AI.Selector.OnTrue"/></param>
+            <param name="falseNode"><see cref="F:MBBSlib.AI.Selector.OnFalse"/></param>
+        </member>
+        <member name="M:MBBSlib.AI.Selector.GetNode">
+            <summary>
+            Implementation of <see cref="T:MBBSlib.AI.ISelector"/>
+            </summary>
+            <returns><seealso cref="T:MBBSlib.AI.ISelector"/></returns>
+        </member>
+        <member name="T:MBBSlib.AI.Sequence">
+            <summary>
+            More advanced version of <see cref="T:MBBSlib.AI.Selector"/> for <see cref="T:MBBSlib.AI.BehaviorTree"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Sequence.#ctor(System.Func{System.Int32},MBBSlib.AI.Node[])">
+            <summary>
+            COnstructor for ai sequence
+            </summary>
+            <param name="condition">Integer function</param>
+            <param name="nodes">Index of <paramref name="nodes"/>must corespond to <paramref name="condition"/> output</param>
+        </member>
+        <member name="M:MBBSlib.AI.Sequence.GetNode">
+            <summary>
+            Implementation of <see cref="T:MBBSlib.AI.ISelector"/>
+            </summary>
+            <returns><seealso cref="T:MBBSlib.AI.ISelector"/></returns>
+        </member>
+        <member name="T:MBBSlib.AI.StateMachine">
+            <summary>
+            Code pattern implementation for AI
+            </summary>
+        </member>
+        <member name="P:MBBSlib.AI.StateMachine.CurrentState">
+            <summary>
+            Currently active <see cref="T:MBBSlib.AI.IState"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.StateMachine.Update">
+            <summary>
+            Calls <see cref="M:MBBSlib.AI.IState.OnUpdate"/> of <see cref="P:MBBSlib.AI.StateMachine.CurrentState"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.StateMachine.AddLink(MBBSlib.AI.IState,MBBSlib.AI.IState,System.Func{System.Boolean})">
+            <summary>
+            Creates transitions between <see cref="T:MBBSlib.AI.IState"/>
+            </summary>
+            <param name="from"><see cref="T:MBBSlib.AI.IState"/> from which transition will be possible</param>
+            <param name="to"></param>
+            <param name="condition">If return true will make transition between states</param>
+        </member>
+        <member name="M:MBBSlib.AI.StateMachine.AddAnyLink(MBBSlib.AI.IState,System.Func{System.Boolean})">
+            <summary>
+            Creates transitions between <see cref="T:MBBSlib.AI.IState"/>
+            </summary>
+            <param name="to"></param>
+            <param name="condition">If return true will make transition between states</param>
         </member>
         <member name="M:MBBSlib.Debugger.OpenConsole">
             <summary>
@@ -94,6 +297,53 @@
             <param name="i">index of argument form 0</param>
             <returns>Boolean</returns>
         </member>
+        <member name="T:MBBSlib.Integrations.Achievement">
+            <summary>
+            Archievement engine 
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.Title">
+            <summary>
+            Display name of the <see cref="T:MBBSlib.Integrations.Achievement"/>
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.Descrition">
+            <summary>
+            Displayed description of <see cref="T:MBBSlib.Integrations.Achievement"/>
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.Key">
+            <summary>
+            Id of <see cref="T:MBBSlib.Integrations.Achievement"/>
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.IsTriggered">
+            <summary>
+            Is true when <see cref="T:MBBSlib.Integrations.Achievement"/> is already obtained
+            </summary>
+        </member>
+        <member name="T:MBBSlib.IO.RegistryData">
+            <summary>
+            Class for predefined registry manipulation
+            </summary>
+        </member>
+        <member name="M:MBBSlib.IO.RegistryData.GetPath">
+            <summary>
+            Prevides default path for storage, if doeant exist then creates one
+            </summary>
+            <returns>Default path, can be altered</returns>
+        </member>
+        <member name="M:MBBSlib.IO.RegistryData.ConfigureDirectory(System.String)">
+            <summary>
+            Creates default path and saves it in the registry
+            </summary>
+            <param name="name">Location in user documents</param>
+        </member>
+        <member name="T:MBBSlib.Local.Localizations">
+            <summary>
+            Class for handling localisations
+            </summary>
+        </member>
         <member name="M:MBBSlib.Local.Localizations.LoadTranslation(System.String)">
             <summary>
             Loads and fills strings to RAM
@@ -108,17 +358,18 @@
         </member>
         <member name="M:MBBSlib.Local.Localizations.T(System.String)">
             <summary>
-            Alias for Translate()
+            Replaces key with coresponding string in dictionary, alias for <see cref="M:MBBSlib.Local.Localizations.Translate(System.String)"/>
             </summary>
-            <param name="t"></param>
-            <returns></returns>
+            <param name="t">Translation key</param>
+            <returns>Localised string</returns>
         </member>
         <member name="M:MBBSlib.Local.Localizations.Translate(System.String)">
             <summary>
             Replaces key with coresponding string in dictionary
             </summary>
-            <param name="t"></param>
-            <returns></returns>
+            <seealso cref="M:MBBSlib.Local.Localizations.T(System.String)"/>
+            <param name="t">Translation key</param>
+            <returns>Localised string</returns>
         </member>
         <member name="M:MBBSlib.Math.Vector2.#ctor(System.Single)">
             <summary>
@@ -289,6 +540,32 @@
             <summary>
             Id of origin ipendpoit (0 is reserved for server transmission)
             </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.#ctor(System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            Legacy command for tcp communication
+            </summary>
+            <param name="commandId">Id of an action</param>
+            <param name="sender">Id of command origin</param>
+            <param name="data">Byte array of encoded(ASCII) string data</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.op_Implicit(MBBSlib.Networking.Shared.Command)~MBBSlib.Networking.Shared.XMLCommand">
+            <summary>
+            COnverts legacy command to xml format
+            </summary>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.op_Implicit(MBBSlib.Networking.Shared.Command)~System.Byte[]">
+            <summary>
+            Accesses byte data array
+            </summary>
+            <param name="cmd">Legacy command</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.ToString">
+            <summary>
+            Decodes byte data array to ASCII string
+            </summary>
+            <returns>ASCII encoded string</returns>
         </member>
         <member name="F:MBBSlib.Networking.Shared.ConnectionData.BUFFER_SIZE">
             <summary>

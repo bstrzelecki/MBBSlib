@@ -70,14 +70,14 @@ namespace MBBSlib.MonoGame
         [Obsolete]
         public GameMain(IStartingPoint main) : this() => _start = main;
 
-        public static void RegisterUpdate(IUpdateable update) => queuedUpdates.Add(update);
-        public static void RegisterRenderer(IDrawable renderer, int layer = 5) => queuedRenderers.Add(new Renderer(layer, renderer));
-        public static void UnregisterUpdate(IUpdateable update) => rmQueuedUpdates.Add(update);
+        public static void RegisterUpdate(IUpdateable update) => _queuedUpdates.Add(update);
+        public static void RegisterRenderer(IDrawable renderer, int layer = 5) => _queuedRenderers.Add(new Renderer(layer, renderer));
+        public static void UnregisterUpdate(IUpdateable update) => _rmQueuedUpdates.Add(update);
         public static void UnregisterRenderer(IDrawable renderer, int layer = 5)
         {
             var r = new Renderer(layer, renderer);
             if(_renderers.Contains(r))
-                rmQueuedRenderers.Add(r);
+                _rmQueuedRenderers.Add(r);
         }
         protected override void Initialize()
         {
@@ -197,18 +197,18 @@ namespace MBBSlib.MonoGame
             {
                 Mouse.SetPosition(Resolution.Width / 2, Resolution.Height / 2);
             }
-            foreach(IUpdateable update in rmQueuedUpdates)
+            foreach(IUpdateable update in _rmQueuedUpdates)
             {
                 if(_updates.Contains(update))
                     _updates.Remove(update);
             }
 
-            foreach(IUpdateable update in queuedUpdates)
+            foreach(IUpdateable update in _queuedUpdates)
             {
                 _updates.Add(update);
             }
 
-            queuedUpdates.Clear();
+            _queuedUpdates.Clear();
             if(_updates.Count <= 0) return;
             foreach(IUpdateable update in _updates)
             {
@@ -232,17 +232,17 @@ namespace MBBSlib.MonoGame
 
 
 
-            foreach(Renderer draw in rmQueuedRenderers)
+            foreach(Renderer draw in _rmQueuedRenderers)
             {
                 if(_renderers.Contains(draw))
                     _renderers.Remove(draw);
             }
-            foreach(Renderer update in queuedRenderers)
+            foreach(Renderer update in _queuedRenderers)
             {
                 _renderers.Add(update);
                 _renderers = _renderers.OrderBy(n => n.layer).ToList();
             }
-            queuedRenderers.Clear();
+            _queuedRenderers.Clear();
 
 
             if(_renderers.Count <= 0) return;
