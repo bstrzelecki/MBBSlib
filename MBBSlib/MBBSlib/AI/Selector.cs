@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MBBSlib.AI
 {
@@ -17,7 +15,7 @@ namespace MBBSlib.AI
         /// Node that will bve returned by <see cref="GetNode()"/> when <see cref="Selector._condition"/> returns false
         /// </summary>
         public Node OnFalse;
-        Func<bool> _condition;
+        readonly Func<bool> _condition;
         /// <summary>
         /// Default constructor for <see cref="BehaviorTree"/> binary selector
         /// </summary>

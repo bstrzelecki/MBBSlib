@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MBBSlib.AI
+﻿namespace MBBSlib.AI
 {
     /// <summary>
     /// State interface for <see cref="StateMachine"/>

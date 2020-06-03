@@ -9,7 +9,7 @@
         /// Currently delected variant <see cref="string.Empty"/> for default one
         /// </summary>
         public string Variant { get; protected set; } = string.Empty;
-        
+
         /// <summary>
         /// Allias for <see cref="Variant"/>
         /// </summary>

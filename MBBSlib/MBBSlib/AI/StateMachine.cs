@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MBBSlib.AI
 {
@@ -12,7 +11,8 @@ namespace MBBSlib.AI
         /// <summary>
         /// Currently active <see cref="IState"/>
         /// </summary>
-        public IState CurrentState {
+        public IState CurrentState
+        {
             get => _currentState;
             set
             {
@@ -20,7 +20,7 @@ namespace MBBSlib.AI
                 _currentState = value;
                 _currentState.OnEnter();
             }
-       }
+        }
         /// <summary>
         /// Calls <see cref="IState.OnUpdate()"/> of <see cref="CurrentState"/>
         /// </summary>
@@ -43,18 +43,17 @@ namespace MBBSlib.AI
         /// <param name="to"></param>
         /// <param name="condition">If return true will make transition between states</param>
         public void AddAnyLink(IState to, Func<bool> condition) => _anyLinks.Add(new Link(condition, to));
-        
-        
-        private IState _currentState;
 
-        Dictionary<IState, List<Link>> _stateLinks = new Dictionary<IState, List<Link>>();
-        List<Link> _anyLinks = new List<Link>();
+
+        private IState _currentState;
+        readonly Dictionary<IState, List<Link>> _stateLinks = new Dictionary<IState, List<Link>>();
+        readonly List<Link> _anyLinks = new List<Link>();
 
         private void EvaluateTransitions()
         {
             if(Calculate(_anyLinks)) return;
-            if(Calculate(_stateLinks[CurrentState]))return;
-            
+            if(Calculate(_stateLinks[CurrentState])) return;
+
             bool Calculate(List<Link> list)
             {
                 foreach(var link in list)

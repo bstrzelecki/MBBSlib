@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MBBSlib.AI
 {
@@ -9,8 +7,8 @@ namespace MBBSlib.AI
     /// </summary>
     public class Sequence : Node, ISelector
     {
-        Node[] _nodes;
-        Func<int> _condition;
+        readonly Node[] _nodes;
+        readonly Func<int> _condition;
 
         /// <summary>
         /// COnstructor for ai sequence
