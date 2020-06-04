@@ -6,17 +6,27 @@ using System.Runtime.Serialization;
 
 namespace MBBSlib.Utility
 {
+    /// <summary>
+    /// Grid data collection
+    /// </summary>
+    /// <typeparam name="T">Type of stored data</typeparam>
     public class Grid<T> : IEnumerable<T>, IGrid<T>, ISerializable
     {
-        private readonly T[,] array;
-        private readonly int width;
-        private readonly int height;
+        private readonly T[,] _array;
+        private readonly int _width;
+        private readonly int _height;
         public Grid(int width, int height)
         {
-            array = new T[width, height];
-            this.width = width;
-            this.height = height;
+            _array = new T[width, height];
+            this._width = width;
+            this._height = height;
         }
+        /// <summary>
+        /// Access to data at given index
+        /// </summary>
+        /// <param name="x">Data at row</param>
+        /// <param name="y">Data at column</param>
+        /// <returns>Data at given indexes</returns>
         public T this[int x, int y]
         {
             get => GetValue(x, y);
@@ -24,17 +34,17 @@ namespace MBBSlib.Utility
         }
         public void SetValue(int x, int y, T value)
         {
-            if(x < 0 || y < 0 || x >= width || y >= height) throw new IndexOutOfRangeException();
-            array[x, y] = value;
+            if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
+            _array[x, y] = value;
         }
         public T GetValue(int x, int y)
         {
-            if(x < 0 || y < 0 || x >= width || y >= height) throw new IndexOutOfRangeException();
-            return array[x, y];
+            if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
+            return _array[x, y];
         }
         public bool Contains(T obj)
         {
-            foreach(T t in array)
+            foreach(T t in _array)
             {
                 if(obj.Equals(t)) return true;
             }
@@ -42,29 +52,29 @@ namespace MBBSlib.Utility
         }
         public T[] GetRow(int y)
         {
-            var ar = new T[width];
+            var ar = new T[_width];
             for(int i = 0; i < y; i++)
             {
-                ar[i] = array[i, y];
+                ar[i] = _array[i, y];
             }
             return ar;
         }
         public T[] GetColumn(int x)
         {
-            var ar = new T[height];
+            var ar = new T[_height];
             for(int i = 0; i < x; i++)
             {
-                ar[i] = array[x, i];
+                ar[i] = _array[x, i];
             }
             return ar;
         }
         public Vector2 IndexOf(T obj)
         {
-            for(int i = 0; i < width; i++)
+            for(int i = 0; i < _width; i++)
             {
-                for(int j = 0; j < height; j++)
+                for(int j = 0; j < _height; j++)
                 {
-                    if(obj.Equals(array[i, j]))
+                    if(obj.Equals(_array[i, j]))
                     {
                         return new Vector2(i, j);
                     }
@@ -78,7 +88,7 @@ namespace MBBSlib.Utility
             x = (int)v.x;
             y = (int)v.y;
         }
-        public IEnumerator<T> GetEnumerator() => new GridEnumerator<T>(array);
+        public IEnumerator<T> GetEnumerator() => new GridEnumerator<T>(_array);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public Grid(SerializationInfo info, StreamingContext context)
@@ -87,11 +97,11 @@ namespace MBBSlib.Utility
         }
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            for(int i = 0; i < width; i++)
+            for(int i = 0; i < _width; i++)
             {
-                for(int j = 0; j < height; j++)
+                for(int j = 0; j < _height; j++)
                 {
-                    info.AddValue($"{i}:{j}", array[i, j], typeof(T));
+                    info.AddValue($"{i}:{j}", _array[i, j], typeof(T));
                 }
             }
         }
