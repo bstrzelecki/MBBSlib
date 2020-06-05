@@ -15,6 +15,11 @@ namespace MBBSlib.Utility
         private readonly T[,] _array;
         private readonly int _width;
         private readonly int _height;
+        /// <summary>
+        /// Creates grid with given dimensions
+        /// </summary>
+        /// <param name="width">Number of rows</param>
+        /// <param name="height">Number of columns</param>
         public Grid(int width, int height)
         {
             _array = new T[width, height];
