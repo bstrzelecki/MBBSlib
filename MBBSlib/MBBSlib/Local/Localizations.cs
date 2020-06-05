@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Xml.Linq;
 
 namespace MBBSlib.Local
@@ -9,12 +13,33 @@ namespace MBBSlib.Local
     public static class Localizations
     {
         static readonly Dictionary<string, string> _locals = new Dictionary<string, string>();
+
+        static string _systemLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        /// <summary>
+        /// ISO 629-1 language code that will by loaded by <see cref="LoadDefault()"/> when user's system language is not supported
+        /// </summary>
+        public static string DefaultLanguage = "en";
+        /// <summary>
+        /// Loads default translation based on <see cref="CultureInfo.CurrentCulture"/> in local folder
+        /// </summary>
+        public static void LoadDefault() {
+            try { 
+                LoadTranslation($"{Environment.CurrentDirectory} + \\local\\ + {_systemLanguage} + .xml");
+            }
+            catch
+            {
+                Debug.WriteLine($"Language with ISO 639-1 : {_systemLanguage} was not found in {$"{Environment.CurrentDirectory} + \\local\\ + {_systemLanguage} + .xml"} folder");
+                LoadTranslation($"{Environment.CurrentDirectory} + \\local\\ + {DefaultLanguage} + .xml");
+            }
+        }
+
         /// <summary>
         /// Loads and fills strings to RAM
         /// </summary>
         /// <param name="fileName">Direct path to lang.xml file</param>
         public static void LoadTranslation(string fileName)
         {
+            if(!File.Exists(fileName)) throw new FileNotFoundException();
             _locals.Clear();
             var doc = XDocument.Load(fileName);
             XElement root = doc.Root;
