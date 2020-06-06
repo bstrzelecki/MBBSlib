@@ -14,7 +14,7 @@ namespace MBBSlib.Local
     {
         static readonly Dictionary<string, string> _locals = new Dictionary<string, string>();
 
-        static string _systemLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        static readonly string _systemLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
         /// <summary>
         /// ISO 629-1 language code that will by loaded by <see cref="LoadDefault()"/> when user's system language is not supported
         /// </summary>
@@ -71,11 +71,27 @@ namespace MBBSlib.Local
         /// <returns>Localised string</returns>
         public static string T(this string t) => Translate(t);
         /// <summary>
+        /// Replaces key with coresponding string in dictionary, alias for <see cref="Translate(string, string)"/>
+        /// </summary>
+        /// <param name="t">Translation key</param>
+        /// <param name="defaultString">String that will be returnded if key is not present in dictionary</param>
+        /// <returns>Localised string</returns>
+        public static string T(this string t, string defaultString) => Translate(t, defaultString);
+        /// <summary>
         /// Replaces key with coresponding string in dictionary
         /// </summary>
         /// <seealso cref="T(string)"/>
         /// <param name="t">Translation key</param>
         /// <returns>Localised string</returns>
-        public static string Translate(this string t) => !_locals.ContainsKey(t) ? "(ULT):" + t : _locals[t];
+        public static string Translate(this string t) => t.Translate("(ULT):" + t);
+
+        /// <summary>
+        /// Replaces key with coresponding string in dictionary
+        /// </summary>
+        /// <param name="t">Translation key</param>
+        /// <param name="defaultString">String that will be returnded if key is not present in dictionary</param>
+        /// /// <seealso cref="T(string,string)"/>
+        /// <returns>Localised string</returns>
+        public static string Translate(this string t, string defaultString) => !_locals.ContainsKey(t) ? defaultString : _locals[t];
     }
 }
