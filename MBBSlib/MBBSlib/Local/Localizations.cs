@@ -22,8 +22,10 @@ namespace MBBSlib.Local
         /// <summary>
         /// Loads default translation based on <see cref="CultureInfo.CurrentCulture"/> in local folder
         /// </summary>
-        public static void LoadDefault() {
-            try { 
+        public static void LoadDefault()
+        {
+            try
+            {
                 LoadTranslation($"{Environment.CurrentDirectory} + \\local\\ + {_systemLanguage} + .xml");
             }
             catch
