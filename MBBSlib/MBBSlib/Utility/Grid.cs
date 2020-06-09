@@ -38,11 +38,11 @@ namespace MBBSlib.Utility
             set => SetValue(x, y, value);
         }
         /// <summary>
-        /// 
+        /// Sets the value at given index
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="value"></param>
+        /// <param name="x">Data at row</param>
+        /// <param name="y">Data at column</param>
+        /// <param name="value">Value that will be set</param>
         public void SetValue(int x, int y, T value)
         {
             if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
