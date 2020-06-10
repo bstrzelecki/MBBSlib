@@ -48,6 +48,12 @@ namespace MBBSlib.Utility
             if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
             _array[x, y] = value;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public T GetValue(int x, int y)
         {
             if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
