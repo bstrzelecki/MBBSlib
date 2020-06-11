@@ -49,16 +49,21 @@ namespace MBBSlib.Utility
             _array[x, y] = value;
         }
         /// <summary>
-        /// 
+        /// Gets the value at given index
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="x">Data at row</param>
+        /// <param name="y">Data at column</param>
+        /// <returns>Value at given index</returns>
         public T GetValue(int x, int y)
         {
             if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
             return _array[x, y];
         }
+        /// <summary>
+        /// Checks if vaule exist in the grid
+        /// </summary>
+        /// <param name="obj">Value reference that will be checked</param>
+        /// <returns>True if value exist in grid, othervise false</returns>
         public bool Contains(T obj)
         {
             foreach(T t in _array)
@@ -67,6 +72,11 @@ namespace MBBSlib.Utility
             }
             return false;
         }
+        /// <summary>
+        /// Gets the values at given row
+        /// </summary>
+        /// <param name="y">Index of row</param>
+        /// <returns><see cref="Array"/> of values at given row</returns>
         public T[] GetRow(int y)
         {
             var ar = new T[_width];
@@ -76,6 +86,11 @@ namespace MBBSlib.Utility
             }
             return ar;
         }
+        /// <summary>
+        /// Gets the values at given column
+        /// </summary>
+        /// <param name="x">Index of column</param>
+        /// <returns><see cref="Array"/> of values at given column</returns>
         public T[] GetColumn(int x)
         {
             var ar = new T[_height];
@@ -85,6 +100,11 @@ namespace MBBSlib.Utility
             }
             return ar;
         }
+        /// <summary>
+        /// Gets the first occurance of given value
+        /// </summary>
+        /// <param name="obj">Value to be found</param>
+        /// <returns>Index of first occurence of value</returns>
         public Vector2 IndexOf(T obj)
         {
             for(int i = 0; i < _width; i++)
