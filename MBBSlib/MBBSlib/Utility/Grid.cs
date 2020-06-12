@@ -119,6 +119,12 @@ namespace MBBSlib.Utility
             }
             return new Vector2(-1, -1);
         }
+        /// <summary>
+        /// Gets the first occurance of given value
+        /// </summary>
+        /// <param name="obj">Value to be found</param>
+        /// <param name="x">Row index of first occurence of value</param>
+        /// <param name="y">Column index of first occurence of value</param>
         public void IndexOf(T obj, out int x, out int y)
         {
             var v = IndexOf(obj);
