@@ -149,44 +149,51 @@ namespace MBBSlib.Utility
             }
         }
     }
+    /// <summary>
+    /// Supports iteration over <see cref="Grid{T}"/>
+    /// </summary>
+    /// <typeparam name="T">Value type to iterate</typeparam>
     public class GridEnumerator<T> : IEnumerator<T>
     {
+        /// <summary>
+        /// Currently selected element
+        /// </summary>
         public T Current { get; set; }
 
         object IEnumerator.Current => Current;
-        private T[,] array;
-        int x, y;
+        private T[,] _array;
+        int _x, _y;
         internal GridEnumerator(T[,] array)
         {
-            this.array = array;
+            _array = array;
             Current = array[0, 0];
         }
         public void Dispose()
         {
-            array = null;
-            x = 0;
-            y = 0;
+            _array = null;
+            _x = 0;
+            _y = 0;
         }
 
         public bool MoveNext()
         {
-            x++;
-            if(x > array.GetLength(0))
+            _x++;
+            if(_x > _array.GetLength(0))
             {
-                x = 0;
-                y++;
-                if(y > array.GetLength(1))
+                _x = 0;
+                _y++;
+                if(_y > _array.GetLength(1))
                     return false;
             }
-            Current = array[x, y];
+            Current = _array[_x, _y];
             return true;
         }
 
         public void Reset()
         {
-            x = 0;
-            y = 0;
-            Current = array[x, y];
+            _x = 0;
+            _y = 0;
+            Current = _array[_x, _y];
         }
     }
 }
