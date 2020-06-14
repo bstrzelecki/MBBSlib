@@ -51,7 +51,7 @@ namespace MBBSlib
                 }
                 catch(Exception e)
                 {
-                    Debug.WriteLine($"Command:{cmd} {e.ToString()}");
+                    Debug.WriteLine($"Command:{cmd} {e}");
                 }
             }
             cmds.Clear();

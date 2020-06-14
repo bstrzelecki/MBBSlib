@@ -131,13 +131,27 @@ namespace MBBSlib.Utility
             x = (int)v.x;
             y = (int)v.y;
         }
+        /// <summary>
+        /// Gets the <see cref="GridEnumerator{T}"/>
+        /// </summary>
+        /// <returns>Enumerator</returns>
         public IEnumerator<T> GetEnumerator() => new GridEnumerator<T>(_array);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        /// <summary>
+        /// (WIP)Serialization constructor
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
         public Grid(SerializationInfo info, StreamingContext context)
         {
             //TOOD
         }
+        /// <summary>
+        /// Gets the serialization data
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             for(int i = 0; i < _width; i++)
@@ -168,13 +182,19 @@ namespace MBBSlib.Utility
             _array = array;
             Current = array[0, 0];
         }
+        /// <summary>
+        /// Clears enumerator
+        /// </summary>
         public void Dispose()
         {
             _array = null;
             _x = 0;
             _y = 0;
         }
-
+        /// <summary>
+        /// Selects next element in sequence
+        /// </summary>
+        /// <returns></returns>
         public bool MoveNext()
         {
             _x++;
@@ -189,6 +209,9 @@ namespace MBBSlib.Utility
             return true;
         }
 
+        /// <summary>
+        /// Sets enumerator to first element
+        /// </summary>
         public void Reset()
         {
             _x = 0;
