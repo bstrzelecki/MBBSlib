@@ -3,10 +3,22 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MBBSlib.MonoGame._3D
 {
+    /// <summary>
+    /// Standard set of controllers 
+    /// </summary>
     public class CameraController
     {
+        /// <summary>
+        /// DIsables camera movement
+        /// </summary>
         public static ICameraController None = new EmptyCameraController();
+        /// <summary>
+        /// First person camera controller with <see cref="Vector3.Up"/> as Yaw axis
+        /// </summary>
         public static ICameraController Fps = new FpsCameraController();
+        /// <summary>
+        /// Camaera controller without lockek axis
+        /// </summary>
         public static ICameraController Free = new FreeCameraController();
 
         internal class EmptyCameraController : ICameraController
@@ -153,9 +165,20 @@ namespace MBBSlib.MonoGame._3D
             }
         }
     }
+    /// <summary>
+    /// Interface for camera controllers
+    /// </summary>
     public interface ICameraController
     {
+        /// <summary>
+        /// Input chandling event
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="gameTime"></param>
         void Update(Camera3D camera, GameTime gameTime);
+        /// <summary>
+        /// Locked rotation axis
+        /// </summary>
         Vector3 UpVector { get; }
     }
 }
