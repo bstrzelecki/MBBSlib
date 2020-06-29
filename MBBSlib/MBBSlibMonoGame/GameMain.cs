@@ -137,11 +137,11 @@ namespace MBBSlib.MonoGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             try
             {
-                string[] files = Directory.GetFiles(Environment.CurrentDirectory + "\\Content");
+                string[] files = Directory.GetFiles(Environment.CurrentDirectory + "/Content");
 
                 foreach(string file in files)
                 {
-                    string f = file.Remove(0, file.LastIndexOf('\\') + 1);
+                    string f = file.Remove(0, file.LastIndexOf('/') + 1);
                     f = f.Remove(f.Length - 4, 4);
                     Debug.WriteLine("Trying to load " + f);
                     if(!_textures.ContainsKey(f) || _fonts.ContainsKey(f))

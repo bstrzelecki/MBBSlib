@@ -6,6 +6,7 @@
     <Authors>Bartosz "Mabat25" Strzelecki</Authors>
     <Company>MBBS</Company>
     <Version>1.2.0</Version>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,8 +25,8 @@
     <Reference Include="MBBSlib">
       <HintPath>..\MBBSlib\bin\Debug\netstandard2.1\MBBSlib.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, PublicKeyToken=null">
+      <HintPath>bin\Debug\netstandard2.1\MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
 
