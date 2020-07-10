@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.ComponentModel;
 
 namespace MBBSlib.MonoGame
 {
@@ -20,10 +21,21 @@ namespace MBBSlib.MonoGame
             var p = new Vector2(position.x, position.y);
             _spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, Color.White);
         }
+        public void DrawRelative(Texture2D texture, Rectangle rect, Color color = default)
+        {
+            var p = new Vector2(rect.Location.X, rect.Location.Y);
+            _spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, color);
+        }
         public void DrawRelative(Texture2D texture, Math.Vector2 position, Color color)
         {
             var p = new Vector2(position.x, position.y);
             _spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, color);
+        }
+
+        public void DrawRelativeString(SpriteFont font, string text, Vector2 position, Color color = default)
+        {
+            var p = new Vector2(position.X, position.X);
+            _spriteBatch.DrawString(font, text, p - GameMain.Instance.camera2D.Position, color);
         }
         #endregion
 

@@ -1,0 +1,773 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MBBSlib</name>
+    </assembly>
+    <members>
+        <member name="T:MBBSlib.AI.BehaviorTree">
+            <summary>
+            Ai calculation pattern
+            </summary>
+        </member>
+        <member name="P:MBBSlib.AI.BehaviorTree.Root">
+            <summary>
+            Entry point for calculating ai
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.#ctor">
+            <summary>
+            Creates tree with empty root node
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.#ctor(MBBSlib.AI.ISelector[])">
+            <summary>
+            Creates tree and assings selectors to root node
+            </summary>
+            <param name="selectors">first branches of the tree</param>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.Update">
+            <summary>
+            Calculates ai cycle
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.BehaviorTree.RootNode">
+            <summary>
+            Entry point for behavior tree
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.RootNode.Add(MBBSlib.AI.ISelector)">
+            <summary>
+            Add selector that will be evaluated every update
+            </summary>
+            <param name="selector"></param>
+        </member>
+        <member name="M:MBBSlib.AI.BehaviorTree.RootNode.op_Explicit(MBBSlib.AI.BehaviorTree.RootNode)~System.Collections.Generic.List{MBBSlib.AI.ISelector}">
+            <summary>
+            Converts rootNode to list of selectors
+            </summary>
+            <param name="node">Root node of the tree</param>
+        </member>
+        <member name="T:MBBSlib.AI.Leaf">
+            <summary>
+            End point of behavior tree
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Leaf.Execute">
+            <summary>
+            Calculates ai actions
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.ISelector">
+            <summary>
+            Interfeace for <see cref="T:MBBSlib.AI.BehaviorTree"/> branch selectors
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.ISelector.GetNode">
+            <summary>
+            Chooses nodes acording to set condition
+            </summary>
+            <returns>Next node</returns>
+        </member>
+        <member name="T:MBBSlib.AI.IState">
+            <summary>
+            State interface for <see cref="T:MBBSlib.AI.StateMachine"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.IState.OnUpdate">
+            <summary>
+            Method called if this state is active and <see cref="T:MBBSlib.AI.StateMachine"/>.Update() is called
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.IState.OnEnter">
+            <summary>
+            Method that is called when this state is set by <see cref="T:MBBSlib.AI.StateMachine"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.IState.OnExit">
+            <summary>
+            Method that is called when <see cref="T:MBBSlib.AI.StateMachine"/> switches from this state to another
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.Node">
+            <summary>
+            This class provides disambiguation for <see cref="T:System.Object"/> and <see cref="T:MBBSlib.AI.BehaviorTree"/> nodes
+            </summary>
+        </member>
+        <member name="T:MBBSlib.AI.Pathfinding">
+            <summary>
+            Implementaion of A* pathfinding algorythm
+            </summary>
+        </member>
+        <member name="P:MBBSlib.AI.Pathfinding.IgnoreClipping">
+            <summary>
+            If true will ignore choke points
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Pathfinding.#ctor(System.Single[0:,0:])">
+            <summary>
+            Crerates pathfinding instance
+            </summary>
+            <param name="map">weight map</param>
+        </member>
+        <member name="M:MBBSlib.AI.Pathfinding.GetPath(MBBSlib.AI.Point,MBBSlib.AI.Point)">
+            <summary>
+            Finds shortest bath from point A to point B
+            </summary>
+            <param name="start">Entry point</param>
+            <param name="end">Destination</param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.AI.Pathfinding.GetPath(System.Collections.Generic.List{MBBSlib.AI.Point},MBBSlib.AI.Point)">
+            <summary>
+            Finds shortest path from closest point
+            </summary>
+            <param name="starts">Entry point</param>
+            <param name="target">Destination</param>
+            <returns></returns>
+        </member>
+        <member name="T:MBBSlib.AI.Point">
+            <summary>
+            Classes that storeas x and y integer coordinates
+            </summary>
+        </member>
+        <member name="F:MBBSlib.AI.Point.X">
+            <summary>
+            Integer coordinate
+            </summary>
+        </member>
+        <member name="F:MBBSlib.AI.Point.Y">
+            <summary>
+            Integer coordinate
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Point.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Defoult constructor
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:MBBSlib.AI.Point.op_Equality(MBBSlib.AI.Point,MBBSlib.AI.Point)">
+            <summary>
+            Checks if points are equal
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns>Wiil retun true if both x and y coordinates are equal</returns>
+        </member>
+        <member name="M:MBBSlib.AI.Point.ToString">
+            <summary>
+            Parses both coordinates to string
+            </summary>
+            <returns> $"({X}, {Y})"</returns>
+        </member>
+        <member name="M:MBBSlib.AI.Point.Equals(System.Object)">
+            <summary>
+            Checks if points are equal
+            </summary>
+            <param name="obj">Should be instance of <see cref="T:MBBSlib.AI.Point"/> otherwise will return false</param>
+            <returns>Wiil retun true if both x and y coordinates are equal</returns>
+        </member>
+        <member name="M:MBBSlib.AI.Point.GetHashCode">
+            <summary>
+            Default calculate hashcode method
+            </summary>
+            <returns>Hashcode</returns>
+        </member>
+        <member name="T:MBBSlib.AI.Selector">
+            <summary>
+            Provedes next node in <see cref="T:MBBSlib.AI.BehaviorTree"/> (binary selector)
+            </summary>
+        </member>
+        <member name="F:MBBSlib.AI.Selector.OnTrue">
+            <summary>
+            Node that will bve returned by <see cref="M:MBBSlib.AI.Selector.GetNode"/> when <see cref="F:MBBSlib.AI.Selector._condition"/> returns true
+            </summary>
+        </member>
+        <member name="F:MBBSlib.AI.Selector.OnFalse">
+            <summary>
+            Node that will bve returned by <see cref="M:MBBSlib.AI.Selector.GetNode"/> when <see cref="F:MBBSlib.AI.Selector._condition"/> returns false
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Selector.#ctor(System.Func{System.Boolean},MBBSlib.AI.Node,MBBSlib.AI.Node)">
+            <summary>
+            Default constructor for <see cref="T:MBBSlib.AI.BehaviorTree"/> binary selector
+            </summary>
+            <param name="condition">Condition of <see cref="T:MBBSlib.AI.Selector"/></param>
+            <param name="trueNode"><see cref="F:MBBSlib.AI.Selector.OnTrue"/></param>
+            <param name="falseNode"><see cref="F:MBBSlib.AI.Selector.OnFalse"/></param>
+        </member>
+        <member name="M:MBBSlib.AI.Selector.GetNode">
+            <summary>
+            Implementation of <see cref="T:MBBSlib.AI.ISelector"/>
+            </summary>
+            <returns><seealso cref="T:MBBSlib.AI.ISelector"/></returns>
+        </member>
+        <member name="T:MBBSlib.AI.Sequence">
+            <summary>
+            More advanced version of <see cref="T:MBBSlib.AI.Selector"/> for <see cref="T:MBBSlib.AI.BehaviorTree"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.Sequence.#ctor(System.Func{System.Int32},MBBSlib.AI.Node[])">
+            <summary>
+            COnstructor for ai sequence
+            </summary>
+            <param name="condition">Integer function</param>
+            <param name="nodes">Index of <paramref name="nodes"/>must corespond to <paramref name="condition"/> output</param>
+        </member>
+        <member name="M:MBBSlib.AI.Sequence.GetNode">
+            <summary>
+            Implementation of <see cref="T:MBBSlib.AI.ISelector"/>
+            </summary>
+            <returns><seealso cref="T:MBBSlib.AI.ISelector"/></returns>
+        </member>
+        <member name="T:MBBSlib.AI.StateMachine">
+            <summary>
+            Code pattern implementation for AI
+            </summary>
+        </member>
+        <member name="P:MBBSlib.AI.StateMachine.CurrentState">
+            <summary>
+            Currently active <see cref="T:MBBSlib.AI.IState"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.StateMachine.Update">
+            <summary>
+            Calls <see cref="M:MBBSlib.AI.IState.OnUpdate"/> of <see cref="P:MBBSlib.AI.StateMachine.CurrentState"/>
+            </summary>
+        </member>
+        <member name="M:MBBSlib.AI.StateMachine.AddLink(MBBSlib.AI.IState,MBBSlib.AI.IState,System.Func{System.Boolean})">
+            <summary>
+            Creates transitions between <see cref="T:MBBSlib.AI.IState"/>
+            </summary>
+            <param name="from"><see cref="T:MBBSlib.AI.IState"/> from which transition will be possible</param>
+            <param name="to"></param>
+            <param name="condition">If return true will make transition between states</param>
+        </member>
+        <member name="M:MBBSlib.AI.StateMachine.AddAnyLink(MBBSlib.AI.IState,System.Func{System.Boolean})">
+            <summary>
+            Creates transitions between <see cref="T:MBBSlib.AI.IState"/>
+            </summary>
+            <param name="to"></param>
+            <param name="condition">If return true will make transition between states</param>
+        </member>
+        <member name="M:MBBSlib.Debugger.OpenConsole">
+            <summary>
+            Opens new window console (Closing console window will close entire application)
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Debugger.ExecuteCommands">
+            <summary>
+            Executes queued commands
+            </summary>
+        </member>
+        <member name="P:MBBSlib.CommandCompund.Target">
+            <summary>
+            Targetted class (unse check function instead of this property) 
+            </summary>
+        </member>
+        <member name="P:MBBSlib.CommandCompund.Source">
+            <summary>
+            Name of referenced class property (use this to check which property is going to be changed)
+            </summary>
+        </member>
+        <member name="P:MBBSlib.CommandCompund.Values">
+            <summary>
+            Array of arguments in commands
+            </summary>
+        </member>
+        <member name="M:MBBSlib.CommandCompund.Check(System.String)">
+            <summary>
+            Check name of target
+            </summary>
+            <param name="a">Name of sender class</param>
+            <returns>Returns confirmation of vatidation sender class</returns>
+        </member>
+        <member name="M:MBBSlib.CommandCompund.GetInt(System.Int32)">
+            <summary>
+            Gets Int32 value if specific argument
+            </summary>
+            <param name="i">index of argument form 0</param>
+            <returns>Int32</returns>
+        </member>
+        <member name="M:MBBSlib.CommandCompund.GetBool(System.Int32)">
+            <summary>
+            Gets Boolean value if specific argument
+            </summary>
+            <param name="i">index of argument form 0</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="T:MBBSlib.Integrations.Achievement">
+            <summary>
+            Archievement engine 
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.Title">
+            <summary>
+            Display name of the <see cref="T:MBBSlib.Integrations.Achievement"/>
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.Descrition">
+            <summary>
+            Displayed description of <see cref="T:MBBSlib.Integrations.Achievement"/>
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.Key">
+            <summary>
+            Id of <see cref="T:MBBSlib.Integrations.Achievement"/>
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Integrations.Achievement.IsTriggered">
+            <summary>
+            Is true when <see cref="T:MBBSlib.Integrations.Achievement"/> is already obtained
+            </summary>
+        </member>
+        <member name="T:MBBSlib.IO.RegistryData">
+            <summary>
+            Class for predefined registry manipulation
+            </summary>
+        </member>
+        <member name="M:MBBSlib.IO.RegistryData.GetPath">
+            <summary>
+            Prevides default path for storage, if doeant exist then creates one
+            </summary>
+            <returns>Default path, can be altered</returns>
+        </member>
+        <member name="M:MBBSlib.IO.RegistryData.ConfigureDirectory(System.String)">
+            <summary>
+            Creates default path and saves it in the registry
+            </summary>
+            <param name="name">Location in user documents</param>
+        </member>
+        <member name="T:MBBSlib.Local.Localizations">
+            <summary>
+            Class for handling localisations
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Local.Localizations.DefaultLanguage">
+            <summary>
+            ISO 629-1 language code that will by loaded by <see cref="M:MBBSlib.Local.Localizations.LoadDefault"/> when user's system language is not supported
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.LoadDefault">
+            <summary>
+            Loads default translation based on <see cref="P:System.Globalization.CultureInfo.CurrentCulture"/> in local folder
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.LoadTranslation(System.String)">
+            <summary>
+            Loads and fills strings to RAM
+            </summary>
+            <param name="fileName">Direct path to lang.xml file</param>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.GetTemplate">
+            <summary>
+            Generates template document for quick copy/paste
+            </summary>
+            <returns>Save output with .Save(s) or access via IntelliSense</returns>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.T(System.String)">
+            <summary>
+            Replaces key with coresponding string in dictionary, alias for <see cref="M:MBBSlib.Local.Localizations.Translate(System.String)"/>
+            </summary>
+            <param name="t">Translation key</param>
+            <returns>Localised string</returns>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.T(System.String,System.String)">
+            <summary>
+            Replaces key with coresponding string in dictionary, alias for <see cref="M:MBBSlib.Local.Localizations.Translate(System.String,System.String)"/>
+            </summary>
+            <param name="t">Translation key</param>
+            <param name="defaultString">String that will be returnded if key is not present in dictionary</param>
+            <returns>Localised string</returns>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.Translate(System.String)">
+            <summary>
+            Replaces key with coresponding string in dictionary
+            </summary>
+            <seealso cref="M:MBBSlib.Local.Localizations.T(System.String)"/>
+            <param name="t">Translation key</param>
+            <returns>Localised string</returns>
+        </member>
+        <member name="M:MBBSlib.Local.Localizations.Translate(System.String,System.String)">
+            <summary>
+            Replaces key with coresponding string in dictionary
+            </summary>
+            <param name="t">Translation key</param>
+            <param name="defaultString">String that will be returnded if key is not present in dictionary</param>
+            /// <seealso cref="M:MBBSlib.Local.Localizations.T(System.String,System.String)"/>
+            <returns>Localised string</returns>
+        </member>
+        <member name="M:MBBSlib.Math.Vector2.#ctor(System.Single)">
+            <summary>
+            Creates vector with magnitude of 1 and given angle
+            </summary>
+            <param name="rotation">Direction of vector in radians</param>
+        </member>
+        <member name="T:MBBSlib.Networking.Client.TCPClient">
+            <summary>
+            Default cient networking class for tcp connection.
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Client.TCPClient.Id">
+            <summary>
+            Id of a client instance
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnCommandRecieved">
+            <summary>
+            Event that fires when client recieves a command.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnConnected">
+            <summary>
+            Event that fires whent client succesfuly connects to a remote host.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnCommandSent">
+            <summary>
+            Event that fires when client sents command to a remote host.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnNotManagedCommand">
+            <summary>
+            Event that fires when client recieves a command and wasnt managed by preprocessor.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnClientConnected">
+            <summary>
+            Event that fires when another client connects to the remote host.
+            </summary>
+        </member>
+        <member name="E:MBBSlib.Networking.Client.TCPClient.OnClientDisconnected">
+            <summary>
+            Event that fires when another client disconnects to the remote host.
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.Connect(System.String,System.Int32)">
+            <summary>
+            Starts connection with a remote host.
+            </summary>
+            <param name="ip">ipv4 address (4 bytes string)</param>
+            <param name="port">Server port</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.SendData(System.Int32,System.Byte[])">
+            <summary>
+            Sends data directly to connected remote host.
+            </summary>
+            <param name="cmd">Id of data type (1-int.max)</param>
+            <param name="data">1024 byte data array</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.SendData(MBBSlib.Networking.Shared.XMLCommand)">
+            <summary>
+            Sends data directly to connected remote host.
+            </summary>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Client.TCPClient.Dispose">
+            <summary>
+            Disconnects from servers and frees allocated memory
+            </summary>
+        </member>
+        <member name="T:MBBSlib.Networking.Server.TCPServer">
+            <summary>
+            Default server networking class for tcp connection.
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Server.TCPServer.Port">
+            <summary>
+            Port on what server will be listening 
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnClientConnected">
+            <summary>
+            Event that fires when client connects to the server
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnCommandRecieved">
+            <summary>
+            Event that fires when server recieves command from client
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnSocketException">
+            <summary>
+            Event that fires when excentpion is thrown
+            </summary>
+        </member>
+        <member name="F:MBBSlib.Networking.Server.TCPServer.OnMessageBroadcast">
+            <summary>
+            Event that fires when servers outputs debug information
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.RegisterInterpreter(System.Int32,MBBSlib.Networking.Shared.ICommandInterpreter)">
+            <summary>
+            Registers command interpreter
+            </summary>
+            <param name="id"></param>
+            <param name="ici"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.UnregisterInterpreter(MBBSlib.Networking.Shared.ICommandInterpreter)">
+            <summary>
+            Unregisters command interpreter
+            </summary>
+            <param name="ici"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.Start">
+            <summary>
+            Start listening on predefined port
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.SendData(System.Int32,MBBSlib.Networking.Shared.Command)">
+            <summary>
+            Sends data to specified client
+            </summary>
+            <param name="clientid">Id of the client data will be sent</param>
+            <param name="cmd">Legacy command that will be delivered to specified client</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.SendData(System.Int32,MBBSlib.Networking.Shared.XMLCommand)">
+            <summary>
+            Sends data to specified client
+            </summary>
+            <param name="clientid">Id of the client data will be sent</param>
+            <param name="cmd">XML formatted command that will be delivered to specified client</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.BroadcastData(MBBSlib.Networking.Shared.XMLCommand,System.Int32[])">
+            <summary>
+            Sends data to all connected clients exept specified ones
+            </summary>
+            <param name="cmd">Command that will be delivered to clients</param>
+            <param name="ids">List of ids to which command will not be sent</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Server.TCPServer.Dispose">
+            <summary>
+            Clears memory and disconects all clients
+            </summary>
+        </member>
+        <member name="T:MBBSlib.Networking.Shared.Command">
+            <summary>
+            Default class for labeling tcp data
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.Size">
+            <summary>
+            Lengh of transmitted data
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.Id">
+            <summary>
+            Command id
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.DataForm">
+            <summary>
+            Transmited data
+            </summary>
+        </member>
+        <member name="P:MBBSlib.Networking.Shared.Command.Sender">
+            <summary>
+            Id of origin ipendpoit (0 is reserved for server transmission)
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.#ctor(System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            Legacy command for tcp communication
+            </summary>
+            <param name="commandId">Id of an action</param>
+            <param name="sender">Id of command origin</param>
+            <param name="data">Byte array of encoded(ASCII) string data</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.op_Implicit(MBBSlib.Networking.Shared.Command)~MBBSlib.Networking.Shared.XMLCommand">
+            <summary>
+            COnverts legacy command to xml format
+            </summary>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.op_Implicit(MBBSlib.Networking.Shared.Command)~System.Byte[]">
+            <summary>
+            Accesses byte data array
+            </summary>
+            <param name="cmd">Legacy command</param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.Command.ToString">
+            <summary>
+            Decodes byte data array to ASCII string
+            </summary>
+            <returns>ASCII encoded string</returns>
+        </member>
+        <member name="F:MBBSlib.Networking.Shared.ConnectionData.BUFFER_SIZE">
+            <summary>
+            Size of network buffer
+            </summary>
+        </member>
+        <member name="T:MBBSlib.Networking.Shared.ICommandInterpreter">
+            <summary>
+            Interpreter that responds to client request at given id.
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.ICommandInterpreter.ExecuteCommand(MBBSlib.Networking.Shared.XMLCommand)">
+            <summary>
+            Code that will be executed during client request
+            </summary>
+            <param name="sender">Client id</param>
+            <param name="data">byte array of non compressed data stream</param>
+        </member>
+        <member name="T:MBBSlib.Networking.Shared.XMLCommand">
+            <summary>
+            TCP packet represented as xml document
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.#ctor">
+            <summary>
+            Initializes object with default packet formating
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.AddKey(System.String,System.Object)">
+            <summary>
+            Adds key to the serializable packet
+            </summary>
+            <param name="key"></param>
+            <param name="data"></param>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.GetKey(System.String)">
+            <summary>
+            Deserializes key from packet data
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.Networking.Shared.XMLCommand.GetKeys(System.String)">
+            <summary>
+            Deserializes multiple keys from packet data with the same id
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.Serialization.Serializer.Register(System.String,MBBSlib.Serialization.ISerializable)">
+            <summary>
+            Registers objects and issues serialization during static calls
+            </summary>
+            <param name="id">key of an object</param>
+            <param name="serializable"></param>
+        </member>
+        <member name="T:MBBSlib.Utility.Grid`1">
+            <summary>
+            Grid data collection
+            </summary>
+            <typeparam name="T">Type of stored data</typeparam>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates grid with given dimensions
+            </summary>
+            <param name="width">Number of rows</param>
+            <param name="height">Number of columns</param>
+        </member>
+        <member name="P:MBBSlib.Utility.Grid`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Access to data at given index
+            </summary>
+            <param name="x">Data at row</param>
+            <param name="y">Data at column</param>
+            <returns>Data at given indexes</returns>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.SetValue(System.Int32,System.Int32,`0)">
+            <summary>
+            Sets the value at given index
+            </summary>
+            <param name="x">Data at row</param>
+            <param name="y">Data at column</param>
+            <param name="value">Value that will be set</param>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.GetValue(System.Int32,System.Int32)">
+            <summary>
+            Gets the value at given index
+            </summary>
+            <param name="x">Data at row</param>
+            <param name="y">Data at column</param>
+            <returns>Value at given index</returns>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.Contains(`0)">
+            <summary>
+            Checks if vaule exist in the grid
+            </summary>
+            <param name="obj">Value reference that will be checked</param>
+            <returns>True if value exist in grid, othervise false</returns>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.GetRow(System.Int32)">
+            <summary>
+            Gets the values at given row
+            </summary>
+            <param name="y">Index of row</param>
+            <returns><see cref="T:System.Array"/> of values at given row</returns>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.GetColumn(System.Int32)">
+            <summary>
+            Gets the values at given column
+            </summary>
+            <param name="x">Index of column</param>
+            <returns><see cref="T:System.Array"/> of values at given column</returns>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.IndexOf(`0)">
+            <summary>
+            Gets the first occurance of given value
+            </summary>
+            <param name="obj">Value to be found</param>
+            <returns>Index of first occurence of value</returns>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.IndexOf(`0,System.Int32@,System.Int32@)">
+            <summary>
+            Gets the first occurance of given value
+            </summary>
+            <param name="obj">Value to be found</param>
+            <param name="x">Row index of first occurence of value</param>
+            <param name="y">Column index of first occurence of value</param>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.GetEnumerator">
+            <summary>
+            Gets the <see cref="T:MBBSlib.Utility.GridEnumerator`1"/>
+            </summary>
+            <returns>Enumerator</returns>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            (WIP)Serialization constructor
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:MBBSlib.Utility.Grid`1.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Gets the serialization data
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:MBBSlib.Utility.GridEnumerator`1">
+            <summary>
+            Supports iteration over <see cref="T:MBBSlib.Utility.Grid`1"/>
+            </summary>
+            <typeparam name="T">Value type to iterate</typeparam>
+        </member>
+        <member name="P:MBBSlib.Utility.GridEnumerator`1.Current">
+            <summary>
+            Currently selected element
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Utility.GridEnumerator`1.Dispose">
+            <summary>
+            Clears enumerator
+            </summary>
+        </member>
+        <member name="M:MBBSlib.Utility.GridEnumerator`1.MoveNext">
+            <summary>
+            Selects next element in sequence
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MBBSlib.Utility.GridEnumerator`1.Reset">
+            <summary>
+            Sets enumerator to first element
+            </summary>
+        </member>
+    </members>
+</doc>

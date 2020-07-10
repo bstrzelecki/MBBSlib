@@ -9,6 +9,7 @@ namespace MBBSlib.MonoGame
     {
         public static Vector2 cameraOffset;
         public static Vector2 MousePosition => GetMousePosition();
+        public static Vector2 RelativeMousePosition => MousePosition + GameMain.Instance.camera2D.Position;
         public static int MouseScrollDelta => GetMouseScrollDelta();
         private static bool _mouseDrag;
         public static bool MouseDrag
@@ -84,9 +85,8 @@ namespace MBBSlib.MonoGame
                 case 2:
                     return state.RightButton == ButtonState.Pressed;
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException();
             }
-            return false;
         }
         public static bool IsMouseKeyUp(int btn)
         {
@@ -99,6 +99,8 @@ namespace MBBSlib.MonoGame
                     return state.MiddleButton == ButtonState.Released;
                 case 2:
                     return state.RightButton == ButtonState.Released;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
             return false;
         }
