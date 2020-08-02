@@ -31,6 +31,20 @@ namespace MBBSlib.MonoGame
         private static readonly Dictionary<string, Model> _models = new Dictionary<string, Model>();
 
         private static readonly Dictionary<Type, object> _singletons = new Dictionary<Type, object>();
+        
+        private static List<Renderer> _renderers = new List<Renderer>();
+        private static readonly List<IUpdateable> _updates = new List<IUpdateable>();
+        private static readonly List<IAudioSource> _audioSources = new List<IAudioSource>();
+        private readonly static List<Renderer> _queuedRenderers = new List<Renderer>();
+        private readonly static List<IUpdateable> _queuedUpdates = new List<IUpdateable>();
+        private readonly static List<Renderer> _rmQueuedRenderers = new List<Renderer>();
+        private readonly static List<IUpdateable> _rmQueuedUpdates = new List<IUpdateable>();
+        /// <summary>
+        /// Registers existing audio source
+        /// </summary>
+        /// <param name="source"></param>
+        public void RegisterAudioSource(IAudioSource source) => _audioSources.Add(source);
+
         private static void AddSingleton(Type t, object obj)
         {
             if(_singletons.ContainsKey(t)) return;
@@ -73,6 +87,13 @@ namespace MBBSlib.MonoGame
         public static void RegisterUpdate(IUpdateable update) => _queuedUpdates.Add(update);
         public static void RegisterRenderer(IDrawable renderer, int layer = 5) => _queuedRenderers.Add(new Renderer(layer, renderer));
         public static void UnregisterUpdate(IUpdateable update) => _rmQueuedUpdates.Add(update);
+
+        public static void SetRendererLayer(IDrawable obj, int layer)
+        {
+            (from n in _renderers where n.drawable == obj select n).First().layer = layer;
+            _renderers = _renderers.OrderBy(n => n.layer).ToList();
+        }
+        
         public static void UnregisterRenderer(IDrawable renderer, int layer = 5)
         {
             var r = new Renderer(layer, renderer);
@@ -254,67 +275,6 @@ namespace MBBSlib.MonoGame
             }
 
             _spriteBatch.End();
-        }
-    }
-    /// <summary>
-    /// Registry of supported resolutions
-    /// </summary>
-    public struct Resolution
-    {
-
-        /// <summary>
-        /// Width in pixels
-        /// </summary>
-        public int Width;
-        /// <summary>
-        /// Height in pixels
-        /// </summary>
-        public int Height;
-        /// <summary>
-        /// SIze of windown in vector2
-        /// </summary>
-        public Vector2 Size => new Vector2(Width, Height);
-
-        /// <summary>
-        /// 3840x2160
-        /// </summary>
-        public static Resolution UHD => new Resolution(3840, 2160);
-        /// <summary>
-        /// 3200x1800
-        /// </summary>
-        public static Resolution QXGA => new Resolution(3200, 1800);
-        /// <summary>
-        /// 2560x1440
-        /// </summary>
-        public static Resolution QHD => new Resolution(2560, 1440);
-        /// <summary>
-        /// 2048x1152
-        /// </summary>
-        public static Resolution QWXGA => new Resolution(2048, 1152);
-        /// <summary>
-        /// 1920x1080
-        /// </summary>
-        public static Resolution FHD => new Resolution(1920, 1080);
-        /// <summary>
-        /// 1600x900
-        /// </summary>
-        public static Resolution HDp => new Resolution(1600, 900);
-        /// <summary>
-        /// 1280x720
-        /// </summary>
-        public static Resolution XGA => new Resolution(1280, 720);
-
-
-        /// <summary>
-        /// 960x540
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Current nameing style will create disambiguation between qHD and QHD")]
-        public static Resolution qHD => new Resolution(960, 540);
-
-        private Resolution(int width, int height)
-        {
-            Width = width;
-            Height = height;
         }
     }
 }

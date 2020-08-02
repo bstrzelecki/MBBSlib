@@ -205,6 +205,12 @@
             Last copy of GameMain class
             </summary>
         </member>
+        <member name="M:MBBSlib.MonoGame.GameMain.RegisterAudioSource(MBBSlib.MonoGame.IAudioSource)">
+            <summary>
+            Registers existing audio source
+            </summary>
+            <param name="source"></param>
+        </member>
         <member name="M:MBBSlib.MonoGame.GameMain.GetTexture(System.String)">
             <summary>
             Returns a texture that corresponds to a given key
@@ -242,11 +248,38 @@
             Defoult graphic device
             </summary>
         </member>
-        <member name="M:MBBSlib.MonoGame.GameMain.RegisterAudioSource(MBBSlib.MonoGame.IAudioSource)">
+        <member name="T:MBBSlib.MonoGame.IDrawable">
             <summary>
-            Registers existing audio source
+            Interface for renderer tcicks
             </summary>
-            <param name="source"></param>
+        </member>
+        <member name="M:MBBSlib.MonoGame.IDrawable.Draw(MBBSlib.MonoGame.RenderBatch)">
+            <summary>
+            Calls every <see cref="M:MBBSlib.MonoGame.GameMain.Draw(Microsoft.Xna.Framework.GameTime)"/>
+            </summary>
+            <param name="sprite"></param>
+        </member>
+        <member name="T:MBBSlib.MonoGame.MultiSprite">
+            <summary>
+            <see cref="T:MBBSlib.MonoGame.Sprite"/> implementation for animated textures
+            </summary>
+        </member>
+        <member name="P:MBBSlib.MonoGame.MultiSprite.Variant">
+            <summary>
+            Currently delected variant <see cref="F:System.String.Empty"/> for default one
+            </summary>
+        </member>
+        <member name="M:MBBSlib.MonoGame.MultiSprite.SetTextureVariant(System.String)">
+            <summary>
+            Allias for <see cref="P:MBBSlib.MonoGame.MultiSprite.Variant"/>
+            </summary>
+            <param name="variant">Variant to use, select <see cref="F:System.String.Empty"/> for default one</param>
+        </member>
+        <member name="M:MBBSlib.MonoGame.MultiSprite.#ctor(System.String)">
+            <summary>
+            Created pointer fo rtexture in registry
+            </summary>
+            <param name="sprite"></param>
         </member>
         <member name="T:MBBSlib.MonoGame.Resolution">
             <summary>
@@ -307,39 +340,6 @@
             <summary>
             960x540
             </summary>
-        </member>
-        <member name="T:MBBSlib.MonoGame.IDrawable">
-            <summary>
-            Interface for renderer tcicks
-            </summary>
-        </member>
-        <member name="M:MBBSlib.MonoGame.IDrawable.Draw(MBBSlib.MonoGame.RenderBatch)">
-            <summary>
-            Calls every <see cref="M:MBBSlib.MonoGame.GameMain.Draw(Microsoft.Xna.Framework.GameTime)"/>
-            </summary>
-            <param name="sprite"></param>
-        </member>
-        <member name="T:MBBSlib.MonoGame.MultiSprite">
-            <summary>
-            <see cref="T:MBBSlib.MonoGame.Sprite"/> implementation for animated textures
-            </summary>
-        </member>
-        <member name="P:MBBSlib.MonoGame.MultiSprite.Variant">
-            <summary>
-            Currently delected variant <see cref="F:System.String.Empty"/> for default one
-            </summary>
-        </member>
-        <member name="M:MBBSlib.MonoGame.MultiSprite.SetTextureVariant(System.String)">
-            <summary>
-            Allias for <see cref="P:MBBSlib.MonoGame.MultiSprite.Variant"/>
-            </summary>
-            <param name="variant">Variant to use, select <see cref="F:System.String.Empty"/> for default one</param>
-        </member>
-        <member name="M:MBBSlib.MonoGame.MultiSprite.#ctor(System.String)">
-            <summary>
-            Created pointer fo rtexture in registry
-            </summary>
-            <param name="sprite"></param>
         </member>
         <member name="T:MBBSlib.MonoGame.Time">
             <summary>
