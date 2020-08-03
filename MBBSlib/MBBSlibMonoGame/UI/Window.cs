@@ -1,40 +1,58 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
+using MBBSlib.MonoGame;
+using Microsoft.Xna.Framework;
 
 namespace MBBSlib.MonoGame.UI
 {
-    public class Window : ContentPane, IDisposable, IUpdateable
+    public class Window : Panel, MBBSlib.MonoGame.IUpdateable
     {
-        public string Title { get; set; } = "Window.";
-        public Sprite topBar;
-        public Sprite exitBtn;
-        public SpriteFont font;
-        public bool IsVisible { get; set; } = true;
-        public int TopBarWidth => Transform.Width - exitBtn.Size.Width;
-        public Window() => GameMain.RegisterRenderer(this);
-
-        public void Dispose() => GameMain.UnregisterRenderer(this);
-        public override void Draw(RenderBatch sprite)
+        private Point _dragStart;
+        private bool _isDragging;
+        public int DragMargin = 30;
+        public int TopMargin = 0;
+        private int _layer = 5;
+        private static int _focusedLayer = 5;
+        private static bool _isAnyWindowDragged = false;
+        public Window()
         {
-            if(!IsVisible) return;
-            if(topBar != null && exitBtn != null)
-            {
-                sprite.Draw(topBar, new Rectangle(Transform.Location, new Point(TopBarWidth, 12)));
-                sprite.Draw(exitBtn, new Rectangle(TopBarWidth, 0, exitBtn.Size.Width, exitBtn.Size.Height));
-                sprite.DrawString(font, Title, Transform.Location.ToVector2(), Color.White);
-            }
-            base.Draw(sprite);
-
+            GameMain.RegisterUpdate(this);
         }
+
+        public void Focus()
+        {
+            GameMain.SetRendererLayer(this, ++_focusedLayer);
+            _layer = _focusedLayer;
+        }
+
+        private Rectangle _dragRect => new Rectangle(Position, new Point(Size.Width, DragMargin));
 
         public void Update()
         {
-            if(!IsVisible) return;
-            //if(Input.GetMousePosition() > new Vector2(TopBarWidth, 0) && Input.GetMousePosition() < new Vector2(TopBarWidth + 12, 12))
-            {
+            WindowDrag();
+        }
 
+        private void WindowDrag()
+        {
+            if (_dragRect.Contains(Input.MousePosition) && Input.IsMouseKeyDown(0) && IsVisible && !_isDragging && !_isAnyWindowDragged)
+            {
+                Focus();
+                _dragStart = Input.MousePosition.ToPoint() - Position;
+                _isDragging = true;
+                _isAnyWindowDragged = true;
             }
+
+            if (_isDragging)
+                Position = Input.MousePosition.ToPoint() - _dragStart;
+
+            if (Input.IsMouseKeyUp(0) || !IsVisible)
+            {
+                _dragStart = Point.Zero;
+                _isDragging = false;
+                _isAnyWindowDragged = false;
+            }
+
+            Position = new Point(System.Math.Clamp(Position.X, 0, GameMain.Instance.Resolution.Width - Size.Width),
+                System.Math.Clamp(Position.Y, 0 + TopMargin, GameMain.Instance.Resolution.Height - Size.Height));
         }
     }
 }
