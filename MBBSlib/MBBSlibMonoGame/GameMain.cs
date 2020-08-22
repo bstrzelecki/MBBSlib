@@ -243,7 +243,7 @@ namespace MBBSlib.MonoGame
 
 
         /// <summary>
-        /// Defoult graphic device
+        /// Default graphic device
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public static GraphicsDevice graphicsDevice => Instance.GraphicsDevice;
@@ -271,7 +271,7 @@ namespace MBBSlib.MonoGame
             var batch = new RenderBatch(_spriteBatch, GraphicsDevice);
             foreach(Renderer draw in _renderers)
             {
-                draw.drawable.Draw(batch);
+                draw.drawable.Draw(batch); 
             }
 
             _spriteBatch.End();

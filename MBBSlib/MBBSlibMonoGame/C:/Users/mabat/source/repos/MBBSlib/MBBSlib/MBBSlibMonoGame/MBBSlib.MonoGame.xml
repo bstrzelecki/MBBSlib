@@ -245,7 +245,7 @@
         </member>
         <member name="P:MBBSlib.MonoGame.GameMain.graphicsDevice">
             <summary>
-            Defoult graphic device
+            Default graphic device
             </summary>
         </member>
         <member name="T:MBBSlib.MonoGame.IDrawable">

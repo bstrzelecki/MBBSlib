@@ -18,7 +18,7 @@ namespace MBBSlib.MonoGame.UI
             GameMain.RegisterUpdate(this);
         }
 
-        public void Focus()
+        public virtual void Focus()
         {
             GameMain.SetRendererLayer(this, ++_focusedLayer);
             _layer = _focusedLayer;
