@@ -17,7 +17,7 @@ namespace MBBSlib.MonoGame
         /// </summary>
         public int Height;
         /// <summary>
-        /// SIze of windown in vector2
+        /// Size of window in vector2
         /// </summary>
         public Vector2 Size => new Vector2(Width, Height);
 

@@ -113,7 +113,7 @@ namespace MBBSlib.MonoGame
 
         private class MouseDragController : IUpdateable
         {
-            public Vector2 Drag { get; set; }
+            public Vector2 Drag { get; private set; }
             public MouseDragController() => GameMain.RegisterUpdate(this);
             public void Update()
             {

@@ -8,8 +8,8 @@ namespace MBBSlib.MonoGame.UI
     {
         private Point _dragStart;
         private bool _isDragging;
-        public int DragMargin = 30;
-        public int TopMargin = 0;
+        public int DragMargin { get; set; } = 30;
+        public int TopMargin { get; set; } = 0;
         private int _layer = 5;
         private static int _focusedLayer = 5;
         private static bool _isAnyWindowDragged = false;
