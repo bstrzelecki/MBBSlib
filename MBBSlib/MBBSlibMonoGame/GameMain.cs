@@ -162,8 +162,7 @@ namespace MBBSlib.MonoGame
 
                 foreach(string file in files)
                 {
-                    string f = file.Remove(0, file.LastIndexOf('/') + 1);
-                    f = f.Remove(f.Length - 4, 4);
+                    string f = Path.GetFileNameWithoutExtension(file);
                     Debug.WriteLine("Trying to load " + f);
                     if(!_textures.ContainsKey(f) || _fonts.ContainsKey(f))
                     {
