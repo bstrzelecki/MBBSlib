@@ -234,6 +234,8 @@ namespace MBBSlib.MonoGame
             {
                 update.Update();
             }
+            // FIXME
+            Input.ExecuteBindedActions();
         }
         /// <summary>
         /// Color of an background

@@ -24,6 +24,16 @@ namespace MBBSlib.MonoGame
         private static readonly MouseDragController _mouseDragController = new MouseDragController();
         internal static readonly Dictionary<Keys, Action> _actions = new Dictionary<Keys, Action>();
         public static void BindKey(Keys key, Action action) => _actions.Add(key, action);
+        internal static void ExecuteBindedActions()
+        {
+            foreach(var key in _actions.Keys)
+            {
+                if (IsKeyClicked(key))
+                {
+                    _actions[key].Invoke();
+                }
+            }
+        }
         public static bool IsKeyDown(Keys key)
         {
             KeyboardState state = Keyboard.GetState();

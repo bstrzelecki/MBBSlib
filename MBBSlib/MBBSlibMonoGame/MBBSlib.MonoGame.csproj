@@ -22,15 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MBBSlib\MBBSlib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="MBBSlib">
       <HintPath>..\MBBSlib\bin\Debug\netstandard2.1\MBBSlib.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, PublicKeyToken=null">
-      <HintPath>bin\Debug\netstandard2.1\MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
 

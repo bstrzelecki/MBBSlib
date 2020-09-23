@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using static MBBSlib.Networking.Shared.ConnectionData;
 namespace MBBSlib.Networking.Server
 {
     /// <summary>
@@ -33,8 +34,8 @@ namespace MBBSlib.Networking.Server
         /// </summary>
         public Action<string> OnMessageBroadcast;
 
-        TcpListener _server;
-        readonly List<ConnectedClient> _clients = new List<ConnectedClient>();
+        private TcpListener _server;
+        private readonly List<ConnectedClient> _clients = new List<ConnectedClient>();
         internal readonly Dictionary<int, ICommandInterpreter> _interpreters = new Dictionary<int, ICommandInterpreter>();
         /// <summary>
         /// Registers command interpreter
@@ -115,7 +116,7 @@ namespace MBBSlib.Networking.Server
                 TcpClient client = _server.EndAcceptTcpClient(a);
                 ClearClientList();
                 int id = 0;
-                for(int i = 256; i > 0; i--)
+                for(int i = MAX_CLIENTS_CONNECTED; i > 0; i--)
                 {
                     bool isValid = true;
                     foreach(ConnectedClient c in _clients)

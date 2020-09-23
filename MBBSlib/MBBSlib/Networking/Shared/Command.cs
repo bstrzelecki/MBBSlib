@@ -54,7 +54,7 @@ namespace MBBSlib.Networking.Shared
             DataForm = data[8..];
         }
         /// <summary>
-        /// COnverts legacy command to xml format
+        /// Converts legacy command to xml format
         /// </summary>
         /// <param name="cmd"></param>
         public static implicit operator XMLCommand(Command cmd)
