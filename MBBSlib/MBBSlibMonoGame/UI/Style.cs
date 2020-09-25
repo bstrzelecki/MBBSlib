@@ -1,6 +1,6 @@
 namespace MBBSlib.MonoGame.UI
 {
-    public class Style<T> where T:Panel, new()
+    public class Style<T> where T : Panel, new()
     {
         public T Prefab { get; }
 

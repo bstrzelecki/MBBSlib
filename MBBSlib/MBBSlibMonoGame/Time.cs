@@ -35,7 +35,7 @@ namespace MBBSlib.MonoGame
             public TickCounter() => GameMain.RegisterUpdate(this);
             public void Update()
             {
-                if(IsPaused)
+                if (IsPaused)
                 {
                     DeltaTime = 0;
                     return;
@@ -44,7 +44,7 @@ namespace MBBSlib.MonoGame
                 DeltaTime = DeltaTime > 0 ? DeltaTime : 0;
                 _start = DateTime.Now.Millisecond;
                 _tickCounter += DeltaTime;
-                if(_tickCounter > TickTime)
+                if (_tickCounter > TickTime)
                 {
                     _tickCounter = 0;
                     OnTick?.Invoke();

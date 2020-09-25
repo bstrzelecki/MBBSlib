@@ -18,7 +18,7 @@
         {
             Variant = variant;
 
-            if(Variant == string.Empty || !TextureStorage.ContainsTextureKey($"{textureName}_{Variant}"))
+            if (Variant == string.Empty || !TextureStorage.ContainsTextureKey($"{textureName}_{Variant}"))
             {
                 Texture = TextureStorage.GetTexture(textureName);
             }

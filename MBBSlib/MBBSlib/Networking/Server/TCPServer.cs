@@ -49,9 +49,9 @@ namespace MBBSlib.Networking.Server
         /// <param name="ici"></param>
         public void UnregisterInterpreter(ICommandInterpreter ici)
         {
-            foreach(var i in _interpreters.Keys)
+            foreach (var i in _interpreters.Keys)
             {
-                if(_interpreters[i] == ici)
+                if (_interpreters[i] == ici)
                     _interpreters.Remove(i);
             }
         }
@@ -73,9 +73,9 @@ namespace MBBSlib.Networking.Server
         [Obsolete("Use xml version instead.")]
         public void SendData(int clientid, Command cmd)
         {
-            foreach(ConnectedClient c in _clients)
+            foreach (ConnectedClient c in _clients)
             {
-                if(c.Id == clientid)
+                if (c.Id == clientid)
                 {
                     c.SendData(cmd);
                 }
@@ -88,9 +88,9 @@ namespace MBBSlib.Networking.Server
         /// <param name="cmd">XML formatted command that will be delivered to specified client</param>
         public void SendData(int clientid, XMLCommand cmd)
         {
-            foreach(ConnectedClient c in _clients)
+            foreach (ConnectedClient c in _clients)
             {
-                if(c.Id == clientid)
+                if (c.Id == clientid)
                 {
                     c.SendData(cmd);
                 }
@@ -103,9 +103,9 @@ namespace MBBSlib.Networking.Server
         /// <param name="ids">List of ids to which command will not be sent</param>
         public void BroadcastData(XMLCommand cmd, params int[] ids)
         {
-            foreach(ConnectedClient c in _clients)
+            foreach (ConnectedClient c in _clients)
             {
-                if(!ids.Contains(c.Id))
+                if (!ids.Contains(c.Id))
                     c.SendData(cmd);
             }
         }
@@ -116,18 +116,18 @@ namespace MBBSlib.Networking.Server
                 TcpClient client = _server.EndAcceptTcpClient(a);
                 ClearClientList();
                 int id = 0;
-                for(int i = MAX_CLIENTS_CONNECTED; i > 0; i--)
+                for (int i = MAX_CLIENTS_CONNECTED; i > 0; i--)
                 {
                     bool isValid = true;
-                    foreach(ConnectedClient c in _clients)
+                    foreach (ConnectedClient c in _clients)
                     {
-                        if(c.Id == i)
+                        if (c.Id == i)
                         {
                             isValid = false;
                             break;
                         }
                     }
-                    if(isValid)
+                    if (isValid)
                         id = i;
                 }
 
@@ -137,16 +137,16 @@ namespace MBBSlib.Networking.Server
                 OnMessageBroadcast?.Invoke($"{client.Client.RemoteEndPoint} connected.");
                 _server.BeginAcceptTcpClient(AccepetedClientCallback, null);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 OnSocketException?.Invoke(e);
             }
         }
         private void ClearClientList()
         {
-            for(int i = 0; i < _clients.Count; i++)
+            for (int i = 0; i < _clients.Count; i++)
             {
-                if(_clients[i].Id == -1) _clients.RemoveAt(i);
+                if (_clients[i].Id == -1) _clients.RemoveAt(i);
             }
         }
         /// <summary>
@@ -154,7 +154,7 @@ namespace MBBSlib.Networking.Server
         /// </summary>
         public void Dispose()
         {
-            foreach(ConnectedClient c in _clients)
+            foreach (ConnectedClient c in _clients)
             {
                 c.Dispose();
             }

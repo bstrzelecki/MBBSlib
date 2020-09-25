@@ -36,66 +36,66 @@ namespace MBBSlib.MonoGame._3D
                 UpVector = camera.CameraWorld.Up;
                 MouseState state = Mouse.GetState(camera.GameWindow);
                 KeyboardState kstate = Keyboard.GetState();
-                if(kstate.IsKeyDown(Keys.E))
+                if (kstate.IsKeyDown(Keys.E))
                 {
                     camera.MoveForward(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.Q) == true)
+                else if (kstate.IsKeyDown(Keys.Q) == true)
                 {
                     camera.MoveBackward(gameTime);
                 }
-                if(kstate.IsKeyDown(Keys.W))
+                if (kstate.IsKeyDown(Keys.W))
                 {
                     camera.RotateUp(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.S) == true)
+                else if (kstate.IsKeyDown(Keys.S) == true)
                 {
                     camera.RotateDown(gameTime);
                 }
-                if(kstate.IsKeyDown(Keys.A) == true)
+                if (kstate.IsKeyDown(Keys.A) == true)
                 {
                     camera.RotateLeft(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.D) == true)
+                else if (kstate.IsKeyDown(Keys.D) == true)
                 {
                     camera.RotateRight(gameTime);
                 }
 
-                if(kstate.IsKeyDown(Keys.Left) == true)
+                if (kstate.IsKeyDown(Keys.Left) == true)
                 {
                     camera.MoveLeft(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.Right) == true)
+                else if (kstate.IsKeyDown(Keys.Right) == true)
                 {
                     camera.MoveRight(gameTime);
                 }
                 // rotate 
-                if(kstate.IsKeyDown(Keys.Up) == true)
+                if (kstate.IsKeyDown(Keys.Up) == true)
                 {
                     camera.MoveUp(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.Down) == true)
+                else if (kstate.IsKeyDown(Keys.Down) == true)
                 {
                     camera.MoveDown(gameTime);
                 }
 
                 // roll counter clockwise
-                if(kstate.IsKeyDown(Keys.Z) == true)
+                if (kstate.IsKeyDown(Keys.Z) == true)
                 {
                     camera.RotateRollCounterClockwise(gameTime);
                 }
                 // roll clockwise
-                else if(kstate.IsKeyDown(Keys.C) == true)
+                else if (kstate.IsKeyDown(Keys.C) == true)
                 {
                     camera.RotateRollClockwise(gameTime);
                 }
 
-                if(state.RightButton == ButtonState.Pressed)
+                if (state.RightButton == ButtonState.Pressed)
                 {
                     Vector2 diff = state.Position.ToVector2() - _mState.Position.ToVector2();
-                    if(diff.X != 0f)
+                    if (diff.X != 0f)
                         camera.RotateLeftOrRight(gameTime, diff.X);
-                    if(diff.Y != 0f)
+                    if (diff.Y != 0f)
                         camera.RotateUpOrDown(gameTime, diff.Y);
                 }
                 _mState = state;
@@ -111,55 +111,55 @@ namespace MBBSlib.MonoGame._3D
 
                 MouseState state = Mouse.GetState(camera.GameWindow);
                 KeyboardState kstate = Keyboard.GetState();
-                if(kstate.IsKeyDown(Keys.W))
+                if (kstate.IsKeyDown(Keys.W))
                 {
                     camera.MoveForward(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.S) == true)
+                else if (kstate.IsKeyDown(Keys.S) == true)
                 {
                     camera.MoveBackward(gameTime);
                 }
                 // strafe. 
-                if(kstate.IsKeyDown(Keys.A) == true)
+                if (kstate.IsKeyDown(Keys.A) == true)
                 {
                     camera.MoveLeft(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.D) == true)
+                else if (kstate.IsKeyDown(Keys.D) == true)
                 {
                     camera.MoveRight(gameTime);
                 }
 
                 // rotate 
-                if(kstate.IsKeyDown(Keys.Left) == true)
+                if (kstate.IsKeyDown(Keys.Left) == true)
                 {
                     camera.RotateLeft(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.Right) == true)
+                else if (kstate.IsKeyDown(Keys.Right) == true)
                 {
                     camera.RotateRight(gameTime);
                 }
                 // rotate 
-                if(kstate.IsKeyDown(Keys.Up) == true)
+                if (kstate.IsKeyDown(Keys.Up) == true)
                 {
                     camera.RotateUp(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.Down) == true)
+                else if (kstate.IsKeyDown(Keys.Down) == true)
                 {
                     camera.RotateDown(gameTime);
                 }
 
-                if(kstate.IsKeyDown(Keys.Q) == true)
+                if (kstate.IsKeyDown(Keys.Q) == true)
                 {
                     camera.MoveUpInNonLocalSystemCoordinates(gameTime);
                 }
-                else if(kstate.IsKeyDown(Keys.E) == true)
+                else if (kstate.IsKeyDown(Keys.E) == true)
                 {
                     camera.MoveDownInNonLocalSystemCoordinates(gameTime);
                 }
                 Vector2 diff = state.Position.ToVector2() - _mState.Position.ToVector2();
-                if(diff.X != 0f)
+                if (diff.X != 0f)
                     camera.RotateLeftOrRight(gameTime, diff.X);
-                if(diff.Y != 0f)
+                if (diff.Y != 0f)
                     camera.RotateUpOrDown(gameTime, diff.Y);
                 _mState = state;
             }

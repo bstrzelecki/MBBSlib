@@ -1,6 +1,5 @@
-using System;
-using MBBSlib.MonoGame;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MBBSlib.MonoGame.UI
 {
@@ -11,10 +10,10 @@ namespace MBBSlib.MonoGame.UI
         public Button()
         {
             GameMain.RegisterUpdate(this);
-            Text = new Text {Position = new Point(TextMarginLeft, TextMarginTop)};
+            Text = new Text { Position = new Point(TextMarginLeft, TextMarginTop) };
             Image = new Image();
             AddChildren(Image);
-            var stack = new StackPanel(Image, Text) {Orientation = Orientation.Horizontal};
+            var stack = new StackPanel(Image, Text) { Orientation = Orientation.Horizontal };
             AddChildren(stack);
         }
 
@@ -30,12 +29,12 @@ namespace MBBSlib.MonoGame.UI
             Image.Tint = prefab.Prefab.Image.Tint;
         }
 
-        public Button(string text, Style<Button> prefab):this(prefab)
+        public Button(string text, Style<Button> prefab) : this(prefab)
         {
             Text.Value = text;
         }
 
-        public Button(Sprite image, Style<Button> prefab):this(prefab)
+        public Button(Sprite image, Style<Button> prefab) : this(prefab)
         {
             Image.Value = image;
         }

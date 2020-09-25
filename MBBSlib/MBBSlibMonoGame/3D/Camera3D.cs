@@ -204,7 +204,7 @@ namespace MBBSlib.MonoGame._3D
         public float GetGimbleLockDangerValue()
         {
             var c0 = Vector3.Dot(World.Forward, World.Up);
-            if(c0 < 0f) c0 = -c0;
+            if (c0 < 0f) c0 = -c0;
             return c0;
         }
 

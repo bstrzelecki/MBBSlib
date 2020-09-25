@@ -1,4 +1,3 @@
-using MBBSlib.MonoGame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,14 +12,14 @@ namespace MBBSlib.MonoGame.UI
 
         public Text()
         {
-            
+
         }
         public Text(string value)
         {
             Value = value;
         }
 
-        public Text(string value, Style<Text> prefab):this(prefab)
+        public Text(string value, Style<Text> prefab) : this(prefab)
         {
             Value = value;
         }
@@ -29,14 +28,14 @@ namespace MBBSlib.MonoGame.UI
             Color = prefab.Prefab.Color;
             DrawBackground = prefab.Prefab.DrawBackground;
             Font = prefab.Prefab.Font;
-        }    
+        }
         public string Value
         {
             get => _value;
             set
             {
                 _value = value;
-                _textSize = ((SpriteFont) Font)?.MeasureString(Value) ?? Vector2.Zero;
+                _textSize = ((SpriteFont)Font)?.MeasureString(Value) ?? Vector2.Zero;
             }
         }
 
@@ -54,7 +53,7 @@ namespace MBBSlib.MonoGame.UI
             if (DrawBackground)
                 base.Draw(sprite);
             if (Value == string.Empty) return;
-            _textSize = ((SpriteFont) Font)?.MeasureString(Value) ?? Vector2.Zero;
+            _textSize = ((SpriteFont)Font)?.MeasureString(Value) ?? Vector2.Zero;
             sprite.DrawString(new Font("font"), Value, RelativePosition.ToVector2(), Color);
         }
     }

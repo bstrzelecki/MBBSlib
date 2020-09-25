@@ -41,12 +41,12 @@ namespace MBBSlib.Local
         /// <param name="fileName">Direct path to lang.xml file</param>
         public static void LoadTranslation(string fileName)
         {
-            if(!File.Exists(fileName)) throw new FileNotFoundException();
+            if (!File.Exists(fileName)) throw new FileNotFoundException();
             _locals.Clear();
             var doc = XDocument.Load(fileName);
             XElement root = doc.Root;
 
-            foreach(var n in root.Elements("t"))
+            foreach (var n in root.Elements("t"))
             {
                 _locals.Add(n.Attribute("key").Value, n.Attribute("string").Value);
             }

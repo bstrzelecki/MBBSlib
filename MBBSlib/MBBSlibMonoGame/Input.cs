@@ -26,7 +26,7 @@ namespace MBBSlib.MonoGame
         public static void BindKey(Keys key, Action action) => _actions.Add(key, action);
         internal static void ExecuteBindedActions()
         {
-            foreach(var key in _actions.Keys)
+            foreach (var key in _actions.Keys)
             {
                 if (IsKeyClicked(key))
                 {
@@ -48,16 +48,16 @@ namespace MBBSlib.MonoGame
 
         public static bool IsKeyClicked(Keys key)
         {
-            if(!_keysClicked.ContainsKey(key))
+            if (!_keysClicked.ContainsKey(key))
             {
                 _keysClicked.Add(key, false);
             }
-            if(IsKeyDown(key) && !_keysClicked[key])
+            if (IsKeyDown(key) && !_keysClicked[key])
             {
                 _keysClicked[key] = true;
                 return true;
             }
-            if(IsKeyUp(key) && _keysClicked[key])
+            if (IsKeyUp(key) && _keysClicked[key])
             {
                 _keysClicked[key] = false;
             }
@@ -67,12 +67,12 @@ namespace MBBSlib.MonoGame
         private static readonly bool[] _btnsClicked = new bool[3];
         public static bool IsMouseButtonClicked(int btn)
         {
-            if(IsMouseKeyDown(btn) && !_btnsClicked[btn])
+            if (IsMouseKeyDown(btn) && !_btnsClicked[btn])
             {
                 _btnsClicked[btn] = true;
                 return true;
             }
-            if(IsMouseKeyUp(btn) && _btnsClicked[btn])
+            if (IsMouseKeyUp(btn) && _btnsClicked[btn])
             {
                 _btnsClicked[btn] = false;
             }
@@ -86,7 +86,7 @@ namespace MBBSlib.MonoGame
         public static bool IsMouseKeyDown(int btn)
         {
             MouseState state = Mouse.GetState();
-            switch(btn)
+            switch (btn)
             {
                 case 0:
                     return state.LeftButton == ButtonState.Pressed;
@@ -101,7 +101,7 @@ namespace MBBSlib.MonoGame
         public static bool IsMouseKeyUp(int btn)
         {
             MouseState state = Mouse.GetState();
-            switch(btn)
+            switch (btn)
             {
                 case 0:
                     return state.LeftButton == ButtonState.Released;
@@ -127,7 +127,7 @@ namespace MBBSlib.MonoGame
             public MouseDragController() => GameMain.RegisterUpdate(this);
             public void Update()
             {
-                if(!MouseDrag) return;
+                if (!MouseDrag) return;
 
                 Drag = MousePosition - new Vector2(GameMain.Instance.Resolution.Width / 2, GameMain.Instance.Resolution.Height / 2);
                 Mouse.SetPosition(GameMain.Instance.Resolution.Width / 2, GameMain.Instance.Resolution.Height / 2);

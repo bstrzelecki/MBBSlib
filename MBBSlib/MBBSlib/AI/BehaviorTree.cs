@@ -22,7 +22,7 @@ namespace MBBSlib.AI
         public BehaviorTree(params ISelector[] selectors)
         {
             Root = new RootNode();
-            foreach(var s in selectors)
+            foreach (var s in selectors)
             {
                 Root.Add(s);
             }
@@ -38,10 +38,10 @@ namespace MBBSlib.AI
         private Leaf GetLeaf(Node node) => node is Leaf leaf ? leaf : node is ISelector selector ? GetLeaf(selector.GetNode()) : null;
         private Node GetFirstNode()
         {
-            foreach(var node in (List<ISelector>)Root)
+            foreach (var node in (List<ISelector>)Root)
             {
                 Node n = node.GetNode();
-                if(n != null) return n;
+                if (n != null) return n;
             }
             return null;
         }

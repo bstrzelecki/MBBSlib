@@ -25,7 +25,7 @@ namespace MBBSlib.MonoGame
         }
         private static Song GetSong(string song)
         {
-            if(songs.ContainsKey(song))
+            if (songs.ContainsKey(song))
             {
                 return songs[song];
             }
@@ -39,7 +39,7 @@ namespace MBBSlib.MonoGame
         private static Song _currentSong;
         private static void MediaPlayer_MediaStateChanged(object sender, EventArgs e)
         {
-            if(_currentSong == null) return;
+            if (_currentSong == null) return;
             MediaPlayer.Play(_currentSong);
         }
         public static void Stop()

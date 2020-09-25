@@ -21,7 +21,7 @@ namespace MBBSlib
             AllocConsole();
             var th = new Thread(() =>
             {
-                while(true)
+                while (true)
                 {
                     _cmds.Add(Console.ReadLine());
                 }
@@ -33,14 +33,14 @@ namespace MBBSlib
         /// </summary>
         public static void ExecuteCommands()
         {
-            foreach(string cmd in _cmds)
+            foreach (string cmd in _cmds)
             {
                 try
                 {
                     string[] rg = cmd.Split('.');
                     string[] arg = rg[1].Split(' ');
                     var c = new List<string>();
-                    foreach(string n in arg)
+                    foreach (string n in arg)
                     {
                         c.Add(n);
                     }
@@ -49,7 +49,7 @@ namespace MBBSlib
                     var cp = new CommandCompund(rg[0], t, c.ToArray());
                     OnCmd(cp);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Debug.WriteLine($"Command:{cmd} {e}");
                 }
@@ -93,7 +93,7 @@ namespace MBBSlib
         /// <returns>Int32</returns>
         public int GetInt(int i)
         {
-            if(int.TryParse(Values[i], out int temp))
+            if (int.TryParse(Values[i], out int temp))
             {
                 return temp;
             }
@@ -110,7 +110,7 @@ namespace MBBSlib
         /// <returns>Boolean</returns>
         public bool GetBool(int i)
         {
-            if(bool.TryParse(Values[i], out bool temp))
+            if (bool.TryParse(Values[i], out bool temp))
             {
                 return temp;
             }

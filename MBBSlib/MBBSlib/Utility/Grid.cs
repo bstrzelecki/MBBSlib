@@ -45,7 +45,7 @@ namespace MBBSlib.Utility
         /// <param name="value">Value that will be set</param>
         public void SetValue(int x, int y, T value)
         {
-            if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
+            if (x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
             _array[x, y] = value;
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace MBBSlib.Utility
         /// <returns>Value at given index</returns>
         public T GetValue(int x, int y)
         {
-            if(x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
+            if (x < 0 || y < 0 || x >= _width || y >= _height) throw new IndexOutOfRangeException();
             return _array[x, y];
         }
         /// <summary>
@@ -66,9 +66,9 @@ namespace MBBSlib.Utility
         /// <returns>True if value exist in grid, othervise false</returns>
         public bool Contains(T obj)
         {
-            foreach(T t in _array)
+            foreach (T t in _array)
             {
-                if(obj.Equals(t)) return true;
+                if (obj.Equals(t)) return true;
             }
             return false;
         }
@@ -80,7 +80,7 @@ namespace MBBSlib.Utility
         public T[] GetRow(int y)
         {
             var ar = new T[_width];
-            for(int i = 0; i < y; i++)
+            for (int i = 0; i < y; i++)
             {
                 ar[i] = _array[i, y];
             }
@@ -94,7 +94,7 @@ namespace MBBSlib.Utility
         public T[] GetColumn(int x)
         {
             var ar = new T[_height];
-            for(int i = 0; i < x; i++)
+            for (int i = 0; i < x; i++)
             {
                 ar[i] = _array[x, i];
             }
@@ -107,11 +107,11 @@ namespace MBBSlib.Utility
         /// <returns>Index of first occurence of value</returns>
         public Vector2 IndexOf(T obj)
         {
-            for(int i = 0; i < _width; i++)
+            for (int i = 0; i < _width; i++)
             {
-                for(int j = 0; j < _height; j++)
+                for (int j = 0; j < _height; j++)
                 {
-                    if(obj.Equals(_array[i, j]))
+                    if (obj.Equals(_array[i, j]))
                     {
                         return new Vector2(i, j);
                     }
@@ -154,9 +154,9 @@ namespace MBBSlib.Utility
         /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            for(int i = 0; i < _width; i++)
+            for (int i = 0; i < _width; i++)
             {
-                for(int j = 0; j < _height; j++)
+                for (int j = 0; j < _height; j++)
                 {
                     info.AddValue($"{i}:{j}", _array[i, j], typeof(T));
                 }
@@ -198,11 +198,11 @@ namespace MBBSlib.Utility
         public bool MoveNext()
         {
             _x++;
-            if(_x > _array.GetLength(0))
+            if (_x > _array.GetLength(0))
             {
                 _x = 0;
                 _y++;
-                if(_y > _array.GetLength(1))
+                if (_y > _array.GetLength(1))
                     return false;
             }
             Current = _array[_x, _y];

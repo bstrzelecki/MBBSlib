@@ -27,7 +27,7 @@ namespace MBBSlib.IO
             {
                 ConfigureDirectory("");
             }
-            if(!Directory.Exists(data))
+            if (!Directory.Exists(data))
             {
                 Directory.CreateDirectory(data);
             }

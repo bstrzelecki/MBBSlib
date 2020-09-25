@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using MBBSlib.MonoGame;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace MBBSlib.MonoGame.UI
 {

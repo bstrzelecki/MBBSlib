@@ -52,7 +52,7 @@ namespace MBBSlib.Random
 
         public bool MoveNext()
         {
-            if(i > 0)
+            if (i > 0)
             {
                 Current = rng.Next(min, max);
                 i--;

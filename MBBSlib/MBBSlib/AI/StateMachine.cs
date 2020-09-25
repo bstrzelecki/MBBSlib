@@ -51,14 +51,14 @@ namespace MBBSlib.AI
 
         private void EvaluateTransitions()
         {
-            if(Calculate(_anyLinks)) return;
-            if(Calculate(_stateLinks[CurrentState])) return;
+            if (Calculate(_anyLinks)) return;
+            if (Calculate(_stateLinks[CurrentState])) return;
 
             bool Calculate(List<Link> list)
             {
-                foreach(var link in list)
+                foreach (var link in list)
                 {
-                    if(link.Condition)
+                    if (link.Condition)
                     {
                         CurrentState = link.To;
                         return true;

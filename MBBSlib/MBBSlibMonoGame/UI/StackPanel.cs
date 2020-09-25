@@ -1,6 +1,5 @@
-using System.Linq;
-using MBBSlib.MonoGame;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace MBBSlib.MonoGame.UI
 {
@@ -30,11 +29,11 @@ namespace MBBSlib.MonoGame.UI
                 if (Orientation == Orientation.Horizontal)
                 {
                     rect.Width = sumx;
-                    rect.Height = Children.Select(child => child.Size.Height).Concat(new[] {0}).Max();
+                    rect.Height = Children.Select(child => child.Size.Height).Concat(new[] { 0 }).Max();
                 }
                 else
                 {
-                    rect.Width = Children.Select(child => child.Size.Width).Concat(new[] {0}).Max();
+                    rect.Width = Children.Select(child => child.Size.Width).Concat(new[] { 0 }).Max();
                     rect.Height = sumy;
                 }
 

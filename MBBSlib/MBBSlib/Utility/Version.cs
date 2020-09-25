@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace MBBSlib.Utility
 {
@@ -34,7 +30,7 @@ namespace MBBSlib.Utility
         }
         public static bool operator >(Version a, Version b)
         {
-            if(a._major > b._major)
+            if (a._major > b._major)
             {
                 return true;
             }
@@ -44,7 +40,7 @@ namespace MBBSlib.Utility
                 {
                     return true;
                 }
-                if(a._minor == b._minor && a._patch > b._patch)
+                if (a._minor == b._minor && a._patch > b._patch)
                 {
                     return true;
                 }
@@ -72,7 +68,7 @@ namespace MBBSlib.Utility
         }
         public static bool operator >=(Version a, Version b)
         {
-            if(a._major >= b._major)
+            if (a._major >= b._major)
             {
                 return true;
             }
@@ -82,7 +78,7 @@ namespace MBBSlib.Utility
                 {
                     return true;
                 }
-                if(a._minor == b._minor && a._patch >= b._patch)
+                if (a._minor == b._minor && a._patch >= b._patch)
                 {
                     return true;
                 }

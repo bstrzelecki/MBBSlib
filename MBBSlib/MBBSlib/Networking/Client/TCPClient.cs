@@ -62,7 +62,7 @@ namespace MBBSlib.Networking.Client
         [Obsolete]
         public void SendData(int cmd, byte[] data)
         {
-            if(Id == -1)
+            if (Id == -1)
                 throw new Exception("Client has not connected to a remote host.");
 
             var c = new Command(cmd, Id, data);
@@ -76,7 +76,7 @@ namespace MBBSlib.Networking.Client
         /// <param name="cmd"></param>
         public void SendData(XMLCommand cmd)
         {
-            if(Id == -1)
+            if (Id == -1)
                 throw new Exception("Client has not been connected to a remote host.");
             cmd.Sender = Id;
 
@@ -102,7 +102,7 @@ namespace MBBSlib.Networking.Client
         }
         private void PacketRecieved(XMLCommand cmd)
         {
-            switch(cmd.Id)
+            switch (cmd.Id)
             {
                 case 0:
                     OnClientConnected?.Invoke(cmd.Sender);

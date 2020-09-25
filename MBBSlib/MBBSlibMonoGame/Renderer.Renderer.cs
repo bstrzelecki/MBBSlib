@@ -6,8 +6,8 @@ namespace MBBSlib.MonoGame
         public IDrawable drawable;
         public Renderer(int l, IDrawable draw)
         {
-           layer = l;
-           drawable = draw;
+            layer = l;
+            drawable = draw;
         }
     }
 }
