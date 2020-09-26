@@ -6,7 +6,6 @@ namespace MBBSlib.Networking.Shared
     /// <summary>
     /// Default class for labeling tcp data
     /// </summary>
-    [Obsolete("Use XMLCommand instead.")]
     public class Command
     {
         /// <summary>
