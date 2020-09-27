@@ -2,16 +2,32 @@
 
 namespace MBBSlib.Utility
 {
+    /// <summary>
+    /// Semantic versioning struct
+    /// </summary>
     public struct Version
     {
+        /// <summary>
+        /// MAJOR version when you make incompatible API changes
+        /// </summary>
         public int Major => _major;
+        /// <summary>
+        /// MINOR version when you add functionality in a backwards compatible manner
+        /// </summary>
         public int Minor => _minor;
+        /// <summary>
+        /// PATCH version when you make backwards compatible bug fixes
+        /// </summary>
         public int Patch => _patch;
 
         private int _major;
         private int _minor;
         private int _patch;
 
+        /// <summary>
+        /// Parses string to version struct MAJOR.MINOR.PATCH
+        /// </summary>
+        /// <param name="version">MAJOR.MINOR.PATCH</param>
         public Version(string version)
         {
             string[] v = version.Split('.');
@@ -22,6 +38,12 @@ namespace MBBSlib.Utility
             _minor = int.Parse(v[1]);
             _patch = int.Parse(v[2]);
         }
+        /// <summary>
+        /// Parses versions
+        /// </summary>
+        /// <param name="major"></param>
+        /// <param name="minor"></param>
+        /// <param name="patch"></param>
         public Version(int major, int minor, int patch)
         {
             _major = major;
@@ -121,6 +143,11 @@ namespace MBBSlib.Utility
         public override string ToString()
         {
             return $"{_major}.{_minor}.{_patch}";
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Major, Minor, Patch, _major, _minor, _patch);
         }
     }
 }
