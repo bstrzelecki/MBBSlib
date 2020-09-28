@@ -50,6 +50,19 @@ namespace MBBSlib.Utility
             _minor = minor;
             _patch = patch;
         }
+        public Version(byte[] array)
+        {
+            _major = BitConverter.ToInt32(array, 0);
+            _minor = BitConverter.ToInt32(array, sizeof(int));
+            _patch = BitConverter.ToInt32(array, 2 * sizeof(int));
+        }
+        public byte[] ToByteArray()
+        {
+            var arr = BitConverter.GetBytes(Major);
+            BitConverter.GetBytes(Minor).CopyTo(arr, sizeof(int));
+            BitConverter.GetBytes(Patch).CopyTo(arr, 2* sizeof(int));
+            return arr;
+        }
         public static bool operator >(Version a, Version b)
         {
             if (a._major > b._major)
