@@ -60,7 +60,7 @@ namespace MBBSlib.Utility
         {
             var arr = BitConverter.GetBytes(Major);
             BitConverter.GetBytes(Minor).CopyTo(arr, sizeof(int));
-            BitConverter.GetBytes(Patch).CopyTo(arr, 2* sizeof(int));
+            BitConverter.GetBytes(Patch).CopyTo(arr, 2 * sizeof(int));
             return arr;
         }
         public static bool operator >(Version a, Version b)
@@ -141,7 +141,7 @@ namespace MBBSlib.Utility
         }
         public static bool operator ==(Version a, Version b)
         {
-            return (a._major == b._major && a._minor == b._minor & a._patch == b._patch);
+            return (a._major == b._major && a._minor == b._minor && a._patch == b._patch);
         }
         public static bool operator !=(Version a, Version b)
         {
@@ -160,7 +160,7 @@ namespace MBBSlib.Utility
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Major, Minor, Patch, _major, _minor, _patch);
+            return HashCode.Combine(_major, _minor, _patch);
         }
     }
 }
