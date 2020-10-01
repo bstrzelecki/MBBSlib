@@ -50,12 +50,20 @@ namespace MBBSlib.Utility
             _minor = minor;
             _patch = patch;
         }
+        /// <summary>
+        /// Creates vector from byte array with size of 3 * <see cref="Int32"/>
+        /// </summary>
+        /// <param name="array"></param>
         public Version(byte[] array)
         {
             _major = BitConverter.ToInt32(array, 0);
             _minor = BitConverter.ToInt32(array, sizeof(int));
             _patch = BitConverter.ToInt32(array, 2 * sizeof(int));
         }
+        /// <summary>
+        /// Creates array with size of 3 * <see cref="Int32"/> and containing serialization info
+        /// </summary>
+        /// <returns></returns>
         public byte[] ToByteArray()
         {
             var arr = BitConverter.GetBytes(Major);
