@@ -20,9 +20,9 @@ namespace MBBSlib.Utility
         /// </summary>
         public int Patch => _patch;
 
-        private int _major;
-        private int _minor;
-        private int _patch;
+        private readonly int _major;
+        private readonly int _minor;
+        private readonly int _patch;
 
         /// <summary>
         /// Parses string to version struct MAJOR.MINOR.PATCH
