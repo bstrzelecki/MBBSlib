@@ -56,6 +56,9 @@ namespace MBBSlib.Utility
         /// <param name="array"></param>
         public Version(byte[] array)
         {
+            if (array.Length < 3 * sizeof(int))
+                throw new ArgumentException("Given array is too short.");
+
             _major = BitConverter.ToInt32(array, 0);
             _minor = BitConverter.ToInt32(array, sizeof(int));
             _patch = BitConverter.ToInt32(array, 2 * sizeof(int));
