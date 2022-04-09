@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 
 namespace MBBSlib.IO
@@ -19,9 +18,9 @@ namespace MBBSlib.IO
             try
             {
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Mabat\SyncTool", true);
-                data = (string)key.GetValue("path");
-                key.Close();
+                //RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Mabat\SyncTool", true);
+                //data = (string)key.GetValue("path");
+                //key.Close();
             }
             catch
             {
@@ -39,13 +38,13 @@ namespace MBBSlib.IO
         /// <param name="name">Location in user documents</param>
         public static void ConfigureDirectory(string name)
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software", true);
-            key.CreateSubKey("MBBS");
-            key = Registry.CurrentUser.OpenSubKey(@"Software\MBBS", true);
-            key.CreateSubKey(name);
-            key = Registry.CurrentUser.OpenSubKey(@"Software\Mabat\" + name, true);
-            key.SetValue("path", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MBBS\" + name);
-            key.Close();
+            // RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software", true);
+            // key.CreateSubKey("MBBS");
+            // key = Registry.CurrentUser.OpenSubKey(@"Software\MBBS", true);
+            // key.CreateSubKey(name);
+            // key = Registry.CurrentUser.OpenSubKey(@"Software\Mabat\" + name, true);
+            // key.SetValue("path", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\MBBS\" + name);
+            // key.Close();
         }
     }
 }

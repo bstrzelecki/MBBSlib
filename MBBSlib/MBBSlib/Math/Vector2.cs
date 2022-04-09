@@ -15,6 +15,17 @@ namespace MBBSlib.Math
         public Vector2 Normalized => (Magnitude != 0) ? new Vector2(x / Magnitude, y / Magnitude) : One;
         public float x;
         public float y;
+        
+        public float X {
+            get => x;
+            set => x = value;
+        }
+
+        public float Y {
+            get => y;
+            set => y = value;
+        }
+        
         /// <summary>
         /// Creates vector with magnitude of 1 and given angle
         /// </summary>

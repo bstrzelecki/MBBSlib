@@ -15,7 +15,7 @@ namespace MBBSlib.MonoGame
         }
 
         #region Relative sprite render
-        public void DrawRelative(Texture2D texture, Math.Vector2 position)
+        public void DrawRelative(Texture2D texture, MBBSlib.Math.Vector2 position)
         {
             var p = new Vector2(position.x, position.y);
             _spriteBatch.Draw(texture, p - GameMain.Instance.camera2D.Position, Color.White);

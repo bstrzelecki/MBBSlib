@@ -3,7 +3,7 @@ using System;
 
 namespace MBBSlib.MonoGame.UI
 {
-    public class Button : Panel, MBBSlib.MonoGame.IUpdateable
+    public class Button : Panel, MBBSlib.Visuals.IUpdateable
     {
         public bool UseTextSize = true;
 

@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using MBBSlib.Visuals;
+using IUpdateable = MBBSlib.Visuals.IUpdateable;
 
 namespace MBBSlib.MonoGame
 {

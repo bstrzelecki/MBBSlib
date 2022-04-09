@@ -6,6 +6,7 @@
     <Authors>Bartosz "Mabat' Strzelecki</Authors>
     <Company>MBBS</Company>
     <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -17,9 +18,4 @@
     <EmbeddedResource Remove="Physics\**" />
     <None Remove="Physics\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" />
-  </ItemGroup>
-
 </Project>

@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using MBBSlib.Utility;
+using IUpdateable = MBBSlib.Visuals.IUpdateable;
 
 namespace MBBSlib.MonoGame
 {

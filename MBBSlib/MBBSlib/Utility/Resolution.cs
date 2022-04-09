@@ -1,6 +1,7 @@
-using Microsoft.Xna.Framework;
 
-namespace MBBSlib.MonoGame
+using MBBSlib.Math;
+
+namespace MBBSlib.Utility
 {
     /// <summary>
     /// Registry of supported resolutions

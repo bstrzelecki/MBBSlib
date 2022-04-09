@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
+using MBBSlib.Math;
 
-namespace MBBSlib.MonoGame
+namespace MBBSlib.Utility
 {
     public class ShapeUtils
     {

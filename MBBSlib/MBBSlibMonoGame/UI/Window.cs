@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace MBBSlib.MonoGame.UI
 {
-    public class Window : Panel, MBBSlib.MonoGame.IUpdateable
+    public class Window : Panel, MBBSlib.Visuals.IUpdateable
     {
         private Point _dragStart;
         private bool _isDragging;

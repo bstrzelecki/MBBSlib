@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MBBSlib.MonoGame", "MBBSlib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MBBSlib.Unity", "MBBSlib.Unity\MBBSlib.Unity.csproj", "{BF3DA631-3D19-4B1C-AA9F-A25DADC4FCF3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MBBSlib.Raylib", "MBBSlib.Raylib\MBBSlib.Raylib.csproj", "{0D7498FF-82B4-49F0-A4B3-7F9EFDF7DC22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{BF3DA631-3D19-4B1C-AA9F-A25DADC4FCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF3DA631-3D19-4B1C-AA9F-A25DADC4FCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF3DA631-3D19-4B1C-AA9F-A25DADC4FCF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D7498FF-82B4-49F0-A4B3-7F9EFDF7DC22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D7498FF-82B4-49F0-A4B3-7F9EFDF7DC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D7498FF-82B4-49F0-A4B3-7F9EFDF7DC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D7498FF-82B4-49F0-A4B3-7F9EFDF7DC22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

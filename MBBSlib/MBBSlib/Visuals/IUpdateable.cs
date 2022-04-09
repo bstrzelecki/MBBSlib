@@ -1,4 +1,4 @@
-﻿namespace MBBSlib.MonoGame
+﻿namespace MBBSlib.Visuals
 {
     public interface IUpdateable
     {
